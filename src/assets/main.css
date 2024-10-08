@@ -1,0 +1,7 @@
+body {
+  background-color: color-mix(in srgb, Canvas, CanvasText 2.5%);
+  color: color-mix(in srgb, CanvasText, Canvas 15%);
+  color-scheme: light dark;
+  font-family: Arial, Helvetica, sans-serif;
+  /* https://dev.to/madsstoumann/dark-mode-in-3-lines-of-css-and-other-adventures-1ljj */
+}
