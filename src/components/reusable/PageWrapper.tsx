@@ -1,6 +1,6 @@
 export default function PageWrapper({ title, children } : {
   title: string,
-  children: JSX.Element | JSX.Element[]
+  children: JSX.Element | Array<JSX.Element | JSX.Element[] | boolean>
 }) {
   return (
     <>

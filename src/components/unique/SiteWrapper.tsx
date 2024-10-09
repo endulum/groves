@@ -56,6 +56,7 @@ export default function SiteWrapper({ user } : {
           }}
         >
           <div className="body nav-body flex-row">
+            <Link to="/communities">Communities</Link>
             {user ? (
               <>
                 <Link to="/account">Account Settings</Link>

@@ -46,7 +46,7 @@ export default [
     },
 
     rules: {
-
+      'no-underscore-dangle': 'off',
       // 'import/no-absolute-path': 'off',
       // 'import/no-unresolved': 'off',
       'react/react-in-jsx-scope': 'off',

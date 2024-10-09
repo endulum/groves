@@ -9,6 +9,8 @@ import Index from './components/routes/Index';
 import Login from './components/routes/Login';
 import Signup from './components/routes/Signup';
 import Account from './components/routes/Account';
+import Communities from './components/routes/Communities';
+import Community from './components/routes/Community';
 import { setStoredToken } from './functions/tokenUtils';
 
 export default function App() {
@@ -25,6 +27,8 @@ export default function App() {
     <Routes>
       <Route element={<PageWrapper user={user} />}>
         <Route path="/" element={<Index user={user} />} />
+        <Route path="/communities" element={<Communities />} />
+        <Route path="/community/:communityId" element={<Community />} />
         {user ? (
           <>
             <Route path="/account" element={<Account currentUsername={user.username} />} />
