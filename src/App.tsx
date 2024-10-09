@@ -4,7 +4,7 @@ import {
 // own imports
 import useInitUser from './hooks/useInitUser';
 import LoadingWrapper from './components/reusable/LoadingWrapper';
-import PageWrapper from './components/unique/PageWrapper';
+import PageWrapper from './components/unique/SiteWrapper';
 import Index from './components/routes/Index';
 import Login from './components/routes/Login';
 import Signup from './components/routes/Signup';
@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <Routes>
-      <Route element={<PageWrapper user={user} initUser={initUser} />}>
+      <Route element={<PageWrapper user={user} />}>
         <Route path="/" element={<Index user={user} />} />
         {user ? (
           <>
