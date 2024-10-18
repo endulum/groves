@@ -9,4 +9,4 @@ Groves is an arboreal clone of Reddit.
 - **Linting:** ESLint with the Airbnb style guide and React recommendations
 
 ## Todo
-- ~~Design page layout wrapper. Mix design of "old" and current Reddit frontend for a comfy middle-ground.~~ Do not think about design, this has been a roadblock. Apply barebones structuring and elements to the page, but no further.
+- ~~Design page layout wrapper. Mix design of "old" and current Reddit frontend for a comfy middle-ground.~~ Do not think about design, this has been a roadblock. Apply barebones structuring and elements to the page, but no further for now.
