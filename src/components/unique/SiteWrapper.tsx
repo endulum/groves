@@ -38,10 +38,11 @@ export default function SiteWrapper({ user } : {
                 <li><Link to="/signup">Sign up</Link></li>
               </>
             )}
+            <li><Link to="/communities">Explore communities</Link></li>
           </ul>
         </nav>
       </header>
-      <main>
+      <main className="flex-col">
         <Outlet />
       </main>
       <footer>

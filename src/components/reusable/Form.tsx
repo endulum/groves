@@ -16,7 +16,7 @@ export default function Form<T>({
 
   return (
     <form
-      className="flex-col"
+      className="post-form flex-col"
       onSubmit={(e) => {
         handleSubmit(e);
         onSubmit();
