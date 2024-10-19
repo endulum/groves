@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// own imports
+
 import doFetch from '../functions/doFetch';
 import { getStoredToken } from '../functions/tokenUtils';
 

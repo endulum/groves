@@ -1,26 +1,74 @@
-import { useDocumentTitle } from 'usehooks-ts';
+import { useState } from 'react';
 import Form from '../reusable/Form';
-import PageWrapper from '../reusable/PageWrapper';
+import InputRequirements from '../reusable/InputRequirements';
+import HeadingWrapper from '../reusable/HeadingWrapper';
+import Alert from '../reusable/Alert';
+import { User } from '../../types';
 
-export default function Account({ currentUsername }: {
-  currentUsername: string
+export default function Account({ user, setUser }: {
+  user: User,
+  setUser: React.Dispatch<React.SetStateAction<User | null>>
 }) {
-  useDocumentTitle(`${import.meta.env.VITE_APP_NAME} :: Account Settings`);
+  const [success, setSuccess] = useState<boolean>(false);
   return (
-    <PageWrapper title="Account Settings">
+    <HeadingWrapper title="Account Settings">
       <Form
-        destination={{ endpoint: '/account', method: 'POST' }}
-        onSuccess={() => { console.log('yippee'); }}
+        destination={{ endpoint: '/me', method: 'PUT' }}
+        onSubmit={() => {
+          if (success) setSuccess(false);
+        }}
+        onSuccess={(formData) => {
+          setSuccess(true);
+          if (formData.username !== user.username) {
+            setUser({ ...user, username: formData.username });
+          }
+          if (formData.bio !== user.bio) {
+            setUser({ ...user, bio: formData.bio });
+          }
+        }}
         buttonText="Submit"
       >
+        {success && <Alert type="success" message="Your details have been successfully changed." />}
+        <h3>Basic Details</h3>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="username">
           <span>Username</span>
-          <input type="text" id="username" defaultValue={currentUsername ?? ''} />
+          <InputRequirements
+            input={<input type="text" id="username" defaultValue={user.username} />}
+            requirements={[
+              {
+                description: 'Must be between 2 and 32 characters in length',
+                function: (x: string) => x.length >= 2 && x.length <= 32,
+              }, {
+                description: 'Must contain only lowercase letters, numbers, and hyphens',
+                function: (x: string) => x.match(/^[a-z0-9-]+$/g) !== null,
+              },
+            ]}
+          />
         </label>
 
+        <label htmlFor="bio">
+          <span>Bio</span>
+          <textarea id="bio" defaultValue={user.bio} maxLength={200} />
+        </label>
+
+        <div>
+          <h3>Password</h3>
+          <p>Leave this area blank if you do not wish to change your password.</p>
+        </div>
+
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="password">
           <span>New password</span>
-          <input type="password" id="password" />
+          <InputRequirements
+            input={<input type="password" id="password" />}
+            requirements={[
+              {
+                description: 'Must be 8 or more chatacters long',
+                function: (x: string) => x.length >= 8,
+              },
+            ]}
+          />
         </label>
 
         <label htmlFor="confirmPassword">
@@ -33,7 +81,6 @@ export default function Account({ currentUsername }: {
           <input type="password" id="currentPassword" />
         </label>
       </Form>
-    </PageWrapper>
-
+    </HeadingWrapper>
   );
 }

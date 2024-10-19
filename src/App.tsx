@@ -1,37 +1,38 @@
 import {
   Routes, Route, Link, Navigate, useNavigate,
 } from 'react-router-dom';
-// own imports
+
 import useInitUser from './hooks/useInitUser';
+import useLogger from './hooks/useLogger';
+
 import LoadingWrapper from './components/reusable/LoadingWrapper';
-import PageWrapper from './components/unique/SiteWrapper';
-import Index from './components/routes/Index';
+import SiteWrapper from './components/unique/SiteWrapper';
+import Account from './components/routes/Account';
 import Login from './components/routes/Login';
 import Signup from './components/routes/Signup';
-import Account from './components/routes/Account';
-import Communities from './components/routes/Communities';
-import Community from './components/routes/Community';
+
 import { setStoredToken } from './functions/tokenUtils';
 
 export default function App() {
   const navigate = useNavigate();
+
   const {
-    loading, error, user, initUser,
+    loading, error, user, setUser, initUser,
   } = useInitUser();
 
-  if (loading || error !== null) {
+  useLogger(loading, error, user);
+
+  if (loading === true || error !== null) {
     return <LoadingWrapper loading={loading} error={error} />;
   }
 
   return (
     <Routes>
-      <Route element={<PageWrapper user={user} />}>
-        <Route path="/" element={<Index user={user} />} />
-        <Route path="/communities" element={<Communities />} />
-        <Route path="/community/:communityId" element={<Community />} />
+      <Route element={<SiteWrapper user={user} />}>
+        <Route path="/" element={<p>Hi there</p>} />
         {user ? (
           <>
-            <Route path="/account" element={<Account currentUsername={user.username} />} />
+            <Route path="/account" element={<Account user={user} setUser={setUser} />} />
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/signup" element={<Navigate to="/" />} />
           </>
@@ -60,7 +61,6 @@ export default function App() {
             />
           </>
         )}
-
         <Route
           path="*"
           element={(

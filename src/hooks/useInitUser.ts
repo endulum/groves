@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// own imports
+
 import { type User } from '../types';
 import { getStoredToken, clearStoredToken } from '../functions/tokenUtils';
 import doFetch from '../functions/doFetch';
@@ -8,6 +8,7 @@ export default function useInitUser(): {
   loading: boolean,
   error: string | null,
   user: User | null,
+  setUser: React.Dispatch<React.SetStateAction<User | null>>,
   initUser: () => Promise<void>
 } {
   const [loading, setLoading] = useState<boolean>(true);
@@ -24,7 +25,7 @@ export default function useInitUser(): {
     } if (!loading) setLoading(true);
 
     const fetchResult = await doFetch<User>(
-      '/',
+      '/me',
       {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
@@ -45,6 +46,6 @@ export default function useInitUser(): {
   useEffect(() => { initUser(); }, []);
 
   return {
-    loading, error, user, initUser,
+    loading, error, user, setUser, initUser,
   };
 }

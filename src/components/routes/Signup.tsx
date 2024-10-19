@@ -1,15 +1,12 @@
-// own imports
-import { useDocumentTitle } from 'usehooks-ts';
 import Form from '../reusable/Form';
-import PageWrapper from '../reusable/PageWrapper';
+import HeadingWrapper from '../reusable/HeadingWrapper';
+import InputRequirements from '../reusable/InputRequirements';
 
 export default function Signup({ signUp }: {
   signUp: (username: string) => void
 }) {
-  useDocumentTitle(`${import.meta.env.VITE_APP_NAME} :: Sign Up`);
-
   return (
-    <PageWrapper title="Sign Up">
+    <HeadingWrapper title="Sign Up">
       <Form<null>
         destination={{ endpoint: '/signup', method: 'POST' }}
         onSuccess={(formData) => {
@@ -17,20 +14,42 @@ export default function Signup({ signUp }: {
         }}
         buttonText="Log In"
       >
+        {/* control association is already covered by the spread props */}
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="username">
           <span>Username</span>
-          <input type="text" id="username" autoComplete="off" />
+          <InputRequirements
+            input={<input type="text" id="username" autoComplete="off" />}
+            requirements={[
+              {
+                description: 'Must be between 2 and 32 characters in length',
+                function: (x: string) => x.length >= 2 && x.length <= 32,
+              }, {
+                description: 'Must contain only lowercase letters, numbers, and hyphens',
+                function: (x: string) => x.match(/^[a-z0-9-]+$/g) !== null,
+              },
+            ]}
+          />
         </label>
+        {/* control association is already covered by the spread props */}
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="password">
           <span>Password</span>
-          <input type="password" id="password" autoComplete="off" />
+          <InputRequirements
+            input={<input type="password" id="password" autoComplete="off" />}
+            requirements={[
+              {
+                description: 'Must be 8 or more chatacters long',
+                function: (x: string) => x.length >= 8,
+              },
+            ]}
+          />
         </label>
         <label htmlFor="confirmPassword">
           <span>Confirm password</span>
           <input type="password" id="confirmPassword" autoComplete="off" />
         </label>
       </Form>
-    </PageWrapper>
-
+    </HeadingWrapper>
   );
 }

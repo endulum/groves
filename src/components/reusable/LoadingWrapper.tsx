@@ -4,6 +4,10 @@ export default function LoadingWrapper(
     error: string | null
   },
 ): JSX.Element | undefined {
-  if (loading) return <p>Loading...</p>;
-  if (error !== null) return <p>error</p>;
+  return (
+    <div className="spacer flex-col">
+      {loading ? (<p>Loading...</p>) : ''}
+      {error !== null ? (<p>{error}</p>) : ''}
+    </div>
+  );
 }

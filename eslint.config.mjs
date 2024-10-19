@@ -61,6 +61,9 @@ export default [
       'no-console': ['warn', {
         allow: ['warn', 'error'],
       }],
+      'react/require-default-props': ['warn', {
+        functions: 'defaultArguments',
+      }],
     },
   },
 ];

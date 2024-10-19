@@ -1,17 +1,15 @@
 import { useLocation } from 'react-router-dom';
-// own imports
-import { useDocumentTitle } from 'usehooks-ts';
+
 import Form from '../reusable/Form';
-import PageWrapper from '../reusable/PageWrapper';
+import HeadingWrapper from '../reusable/HeadingWrapper';
 
 export default function Login({ logIn }: {
   logIn: (token: string) => void
 }) {
-  useDocumentTitle(`${import.meta.env.VITE_APP_NAME} :: Log In`);
   const { state } = useLocation();
 
   return (
-    <PageWrapper title="Log In">
+    <HeadingWrapper title="Log In">
       <Form<{ token: string }>
         destination={{ endpoint: '/login', method: 'POST' }}
         onSuccess={(_formData, fetchResult) => {
@@ -28,6 +26,6 @@ export default function Login({ logIn }: {
           <input type="password" id="password" autoComplete="on" />
         </label>
       </Form>
-    </PageWrapper>
+    </HeadingWrapper>
   );
 }

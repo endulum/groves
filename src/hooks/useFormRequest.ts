@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// own imports
+
 import doFetch from '../functions/doFetch';
 import { getStoredToken } from '../functions/tokenUtils';
 
@@ -30,7 +30,10 @@ export default function useFormRequest<T>(
     // from the event's own target, which is the HTML form
     const formData: Record<string, string> = {};
     Object.values(event.target).forEach((inputElement) => {
-      if (inputElement instanceof HTMLInputElement) {
+      if (
+        inputElement instanceof HTMLInputElement
+        || inputElement instanceof HTMLTextAreaElement
+      ) {
         formData[inputElement.id] = inputElement.value;
       }
     });
@@ -52,18 +55,20 @@ export default function useFormRequest<T>(
     );
     setLoading(false);
 
-    if (fetchResult.error) setError(fetchResult.error);
     if (
       fetchResult.status === 400
       && typeof fetchResult.data === 'object'
       && fetchResult.data !== null
       && 'errors' in fetchResult.data
     ) {
+      setError('There were some errors with your submission.');
       const inputErrorRecord: Record<string, string> = {};
       (fetchResult.data.errors as InputErrors).forEach((inputError) => {
         inputErrorRecord[inputError.path] = inputError.msg;
       });
       setInputErrors(inputErrorRecord);
+    } else if (fetchResult.error) {
+      setError(fetchResult.error);
     } else if (fetchResult.status === 200) {
       onSuccess(formData, fetchResult.data as T);
     }
