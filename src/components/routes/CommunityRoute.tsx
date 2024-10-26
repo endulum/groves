@@ -8,7 +8,10 @@ import LoadingWrapper from '../reusable/LoadingWrapper';
 export default function CommunityRoute() {
   const timerRef: { current: ReturnType<typeof setInterval> | null } = useRef(null);
 
-  const [params, setParams] = useState<Record<string, string | number>>({});
+  const [params, setParams] = useState<Record<string, string | number>>({
+    sort: 'activity'
+  });
+
   function formatQuery() {
     let queryString = '/communities';
     if (Object.keys(params).length > 0) {
@@ -96,8 +99,8 @@ export default function CommunityRoute() {
                   }}
                   defaultValue={params.page}
                 >
-                  {[...Array(data.pages)].map((page, index) => (
-                    <option key={page} value={index + 1}>{index + 1}</option>
+                  {[...Array(data.pages).keys()].map((page) => (
+                    <option key={page} value={page + 1}>{page + 1}</option>
                   ))}
                 </select>
               </label>
