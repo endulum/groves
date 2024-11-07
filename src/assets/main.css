@@ -49,6 +49,12 @@ a {
 
 header {
   margin-bottom: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  div {
+    align-items: center;
+    gap: 1rem;
+  }
 }
 
 main {

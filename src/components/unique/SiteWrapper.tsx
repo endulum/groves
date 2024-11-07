@@ -10,37 +10,29 @@ export default function SiteWrapper({ user } : {
 }) {
   return (
     <>
-      <header>
+      <header className='flex-row'>
         <Link to="/">
           <h1>{import.meta.env.VITE_APP_NAME}</h1>
         </Link>
-        {user ? (
-          <p>
-            Logged in as
-            {' '}
-            {user.username}
-          </p>
-        ) : (
-          <p>
-            Not logged in
-          </p>
-        )}
-        <nav>
-          <ul>
-            {user ? (
-              <>
-                <li><Link to="/account">Account settings</Link></li>
-                <li><a href="/" onClick={() => clearStoredToken()}>Log out</a></li>
-              </>
-            ) : (
-              <>
-                <li><Link to="/login">Log in</Link></li>
-                <li><Link to="/signup">Sign up</Link></li>
-              </>
-            )}
-            <li><Link to="/communities">Explore communities</Link></li>
-          </ul>
-        </nav>
+        <div className='flex-row'>
+          {user ? (
+            <>
+              <p>
+                Logged in as
+                {' '}
+                <Link to={`/user/${user.username}`}>
+                  {user.username}
+                </Link>
+              </p>
+              <a href="/" onClick={() => clearStoredToken()}>Log out</a>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Log in</Link>
+              <Link to="/signup">Sign up</Link>
+            </>
+          )}
+        </div>
       </header>
       <main className="flex-col">
         <Outlet />

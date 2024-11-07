@@ -109,21 +109,24 @@ export default function CommunityRoute() {
             <ul className="communities flex-col">
               {data.communities.map((community: Community) => (
                 <li key={community.id} className="community">
-                  <h3>{community.canonicalName}</h3>
-                  <small>
-                    /
-                    {community.urlName}
-                  </small>
-                  <p><i>{community.description}</i></p>
-                  <p>
-                    {community._count.followers}
-                    {' '}
-                    followers |
-                    {' '}
-                    {community._count.posts}
-                    {' '}
-                    posts
-                  </p>
+                  <div>
+                    <h3>{community.canonicalName}</h3>
+                    <small>
+                      /
+                      {community.urlName}
+                    </small>
+                    <p><i>{community.description}</i></p>
+                    <p>
+                      {community._count.followers}
+                      {' '}
+                      followers |
+                      {' '}
+                      {community._count.posts}
+                      {' '}
+                      posts
+                    </p>
+                  </div>
+                
                 </li>
               ))}
             </ul>

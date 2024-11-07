@@ -10,7 +10,9 @@ import SiteWrapper from './components/unique/SiteWrapper';
 import Account from './components/routes/Account';
 import Login from './components/routes/Login';
 import Signup from './components/routes/Signup';
+import Index from './components/routes/Index';
 import CommunityRoute from './components/routes/CommunityRoute';
+import User from './components/routes/User';
 
 import { setStoredToken } from './functions/tokenUtils';
 
@@ -30,8 +32,9 @@ export default function App() {
   return (
     <Routes>
       <Route element={<SiteWrapper user={user} />}>
-        <Route path="/" element={<p>Hi there</p>} />
+        <Route path="/" element={<Index user={user} />} />
         <Route path="/communities" element={<CommunityRoute />} />
+        <Route path="/user/:user" element={<User />} />
         {user ? (
           <>
             <Route path="/account" element={<Account user={user} setUser={setUser} />} />

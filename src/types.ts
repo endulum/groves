@@ -1,7 +1,7 @@
 export type User = {
   username: string,
   id: number,
-  bio: string
+  bio: string,
 };
 
 export type Community = {
