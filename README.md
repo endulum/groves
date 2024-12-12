@@ -18,4 +18,5 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Extract border-radius to own var
 - [x] Add "last activity" stat to each community in search
 - [x] Break down flex properties into classes for smaller elements
-- [ ] Seriously figure out container queries, have community search entry not be squished
+- [x] Seriously figure out container queries, have community search entry not be squished
+- [ ] Community page

@@ -84,7 +84,7 @@ export function CommunitySearchRoute() {
                     <small>{comm._count.posts}</small>
                   </div>
                 </div>
-                <small>
+                <small className="community-lastactivity">
                   Last activity{" "}
                   {DateTime.fromISO(comm.lastActivity).toRelative()}
                 </small>
