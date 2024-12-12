@@ -25,3 +25,7 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Add forest icon to community search entry?
 - [x] Detangle `search-result` and `community` classes
 - [x] Have user action links redirect to login page with flash message
+- [x] Show posts in community
+- [ ] Show replies under post
+- [ ] Vote widgets
+- [ ] Add bio field to account settings

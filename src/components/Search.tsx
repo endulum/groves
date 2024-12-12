@@ -46,7 +46,7 @@ export function Search<T>({
         ...params.current,
         [e.target.id]: e.target.value,
       };
-      setUrl(`/communities?${paramsToString()}`);
+      setUrl(`${endpoint}?${paramsToString()}`);
     }, 750);
   };
 

@@ -4,10 +4,13 @@ import { DateTime } from "luxon";
 import { useGet } from "../../hooks/useGet";
 import { useLogger } from "../../hooks/useLogger";
 import { LoadingSpacer } from "../LoadingSpacer";
+import { PostsSubroute } from "./PostsSubroute";
 
 export function CommunityRoute() {
   const { community } = useParams();
   const { loading, error, data } = useGet<{
+    id: number;
+    urlName: string;
     canonicalName: string;
     created: string;
   }>(`/community/${community}`);
@@ -28,6 +31,7 @@ export function CommunityRoute() {
             day: "numeric",
           })}
         </p>
+        <PostsSubroute communityUrl={data.urlName} />
       </>
     );
 }

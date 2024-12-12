@@ -43,47 +43,50 @@ export function CommunitySearch() {
       }
       resultsPropertyName="communities"
       mapResults={(comm: CommunityResult) => (
-        <div className="community" key={comm.id}>
-          <div className="flex-col gap-0-25 align-start">
-            <div className="flex-row gap-0-75 align-start">
-              <Forest style={{ width: "2rem", height: "2rem" }} />
-              <div>
-                <h3>{comm.canonicalName}</h3>
-                <small>/{comm.urlName}</small>
-              </div>
-            </div>
-            {comm.description && <p>{comm.description}</p>}
-          </div>
-          <div className="flex-row gap-1">
-            <div className="flex-col gap-0-25 align-end">
-              <div className="flex-row gap-0-5">
-                <div
-                  className="flex-col"
-                  title={`${comm._count.followers} followers`}
-                >
-                  <PeopleAlt />
-                  <small>{comm._count.followers}</small>
-                </div>
-                <div
-                  className="flex-col"
-                  title={`${comm._count.followers} posts`}
-                >
-                  <Park />
-                  <small>{comm._count.posts}</small>
+        <div className="search-result community" key={comm.id}>
+          <div className="flex-row jc-spb gap-1">
+            <div className="flex-col gap-0-25 align-start">
+              <div className="flex-row gap-0-75 align-start">
+                <Forest style={{ width: "2rem", height: "2rem" }} />
+                <div>
+                  <h3>{comm.canonicalName}</h3>
+                  <small>/{comm.urlName}</small>
                 </div>
               </div>
-              <small className="community-lastactivity">
-                Last activity {DateTime.fromISO(comm.lastActivity).toRelative()}
-              </small>
+              {comm.description && <p>{comm.description}</p>}
             </div>
-            <Link
-              type="button"
-              className="button plain-accent-2"
-              to={`/community/${comm.urlName}`}
-              title="View community"
-            >
-              <ArrowForwardIos />
-            </Link>
+            <div className="flex-row gap-1">
+              <div className="flex-col gap-0-25 align-end">
+                <div className="flex-row gap-0-5">
+                  <div
+                    className="flex-col"
+                    title={`${comm._count.followers} followers`}
+                  >
+                    <PeopleAlt />
+                    <small>{comm._count.followers}</small>
+                  </div>
+                  <div
+                    className="flex-col"
+                    title={`${comm._count.followers} posts`}
+                  >
+                    <Park />
+                    <small>{comm._count.posts}</small>
+                  </div>
+                </div>
+                <small className="community-lastactivity">
+                  Last activity{" "}
+                  {DateTime.fromISO(comm.lastActivity).toRelative()}
+                </small>
+              </div>
+              <Link
+                type="button"
+                className="button plain-accent-2"
+                to={`/community/${comm.urlName}`}
+                title="View community"
+              >
+                <ArrowForwardIos />
+              </Link>
+            </div>
           </div>
         </div>
       )}
