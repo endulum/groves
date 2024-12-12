@@ -3,6 +3,7 @@ import {
   PeopleAlt,
   Park,
   AddCircle,
+  Forest,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
@@ -61,9 +62,14 @@ export function CommunitySearchRoute() {
         resultsPropertyName="communities"
         mapResults={(comm: CommunityResult) => (
           <div className="search-result community" key={comm.id}>
-            <div>
-              <h3>{comm.canonicalName}</h3>
-              <small>/{comm.urlName}</small>
+            <div className="flex-col gap-0-25 align-start">
+              <div className="flex-row gap-0-75 align-start">
+                <Forest style={{ width: "2rem", height: "2rem" }} />
+                <div>
+                  <h3>{comm.canonicalName}</h3>
+                  <small>/{comm.urlName}</small>
+                </div>
+              </div>
               {comm.description && <p>{comm.description}</p>}
             </div>
             <div className="flex-row gap-1">

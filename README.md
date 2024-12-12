@@ -22,4 +22,5 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Isolate community search form into own component under `forms/`
 - [x] Community page
 - [ ] Extra prop "loading text" for loading spacer ("getting data", "searching posts", etc)
-- [ ] Add forest icon to community search entry?
+- [x] Add forest icon to community search entry?
+- [ ] Detangle `search-result` and `community` classes
