@@ -2,7 +2,6 @@ import { Warning, Loop } from "@mui/icons-material";
 
 import { useForm } from "../hooks/useForm";
 import { Alert } from "./Alert";
-import { Button } from "./Button";
 
 export function Form<T>({
   destination,
@@ -37,36 +36,38 @@ export function Form<T>({
       )}
       {/* todo: success or error message paragraph component */}
 
-      {children.map((child) => {
-        if (typeof child !== "boolean" && child.type === "label") {
-          return (
-            <label
-              {...child.props}
-              key={child.props.htmlFor}
-              className="form-label"
-            >
-              {child.props.children.filter(
-                (child: JSX.Element) => child.type === "span"
-              )}
-              {inputErrors && child.props.htmlFor in inputErrors ? (
-                <small className="form-error">
-                  <Warning />
-                  {inputErrors[child.props.htmlFor]}
-                </small>
-              ) : (
-                ""
-              )}
-              {child.props.children.filter(
-                (child: JSX.Element) => child.type !== "span"
-              )}
-            </label>
-            // would love to find an alternate solution to copying children and attributes
-            // as quick and convenient as this, because i hear prop spreading is not very savory
-          );
-        }
+      {children
+        .filter((c) => c)
+        .map((child) => {
+          if (typeof child !== "boolean" && child.type === "label") {
+            return (
+              <label
+                {...child.props}
+                key={child.props.htmlFor}
+                className="form-label"
+              >
+                {child.props.children.filter(
+                  (child: JSX.Element) => child.type === "span"
+                )}
+                {inputErrors && child.props.htmlFor in inputErrors ? (
+                  <small className="form-error">
+                    <Warning />
+                    {inputErrors[child.props.htmlFor]}
+                  </small>
+                ) : (
+                  ""
+                )}
+                {child.props.children.filter(
+                  (child: JSX.Element) => child.type !== "span"
+                )}
+              </label>
+              // would love to find an alternate solution to copying children and attributes
+              // as quick and convenient as this, because i hear prop spreading is not very savory
+            );
+          }
 
-        return child;
-      })}
+          return child;
+        })}
 
       <hr />
 

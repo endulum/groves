@@ -24,3 +24,4 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Extra prop "loading text" for loading spacer ("getting data", "searching posts", etc)
 - [x] Add forest icon to community search entry?
 - [x] Detangle `search-result` and `community` classes
+- [x] Have user action links redirect to login page with flash message

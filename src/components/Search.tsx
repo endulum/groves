@@ -2,7 +2,6 @@ import { useRef, useState, useEffect } from "react";
 import { FirstPage, LastPage, VisibilityOff } from "@mui/icons-material";
 
 import { useGet } from "../hooks/useGet";
-import { useLogger } from "../hooks/useLogger";
 import { LoadingSpacer } from "./LoadingSpacer";
 
 interface PagedResults {
@@ -56,7 +55,6 @@ export function Search<T>({
       [resultPropertyName: string]: Array<T>;
     }
   >(url);
-  useLogger({ data });
 
   useEffect(() => {
     get(false);
