@@ -137,14 +137,80 @@ main hr {
   border-top: 1px solid #ddd;
 }
 
-button[type="submit"] {
-  border-radius: 5px;
-  background-color: var(--accent1);
-  color: white;
-  font-weight: bold;
-}
-
 /* components */
+
+.button {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+
+  &:has(svg) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  &[disabled] {
+    opacity: 0.5;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+  &[disabled]:hover {
+    cursor: not-allowed;
+  }
+  &:not(:has(span)) {
+    padding: 0.5rem;
+  }
+
+  &.accent-1 {
+    background-color: var(--accent1);
+    color: white;
+    &:hover {
+      background-color: oklch(from var(--accent1) calc(l + 0.05) c h);
+    }
+  }
+
+  &.accent-2 {
+    background-color: var(--accent2);
+    color: white;
+    &:hover {
+      background-color: oklch(from var(--accent2) calc(l + 0.05) c h);
+    }
+  }
+
+  &.plain {
+    color: var(--fg);
+    background-color: transparent;
+    border: none;
+    &:hover {
+      background-color: #eee;
+    }
+  }
+
+  &.plain-accent-2 {
+    background-color: transparent;
+    border: none;
+    color: var(--accent2);
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+
+  &.over-accent-2 {
+    border: 1px solid oklch(from var(--accent1) calc(l + 0.5) c h / 0.25);
+    svg {
+      color: oklch(from var(--accent1) calc(l + 0.5) c h / 0.5);
+    }
+    &:hover {
+      border: 1px solid oklch(from var(--accent1) calc(l + 0.5) c h / 0.5);
+      svg {
+        color: oklch(from var(--accent1) calc(l + 0.5) c h / 0.75);
+      }
+    }
+  }
+}
 
 .header-top {
   display: flex;
@@ -202,47 +268,6 @@ nav {
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  .button {
-    border: 1px solid oklch(from var(--accent1) calc(l + 0.5) c h / 0.25);
-    svg {
-      color: oklch(from var(--accent1) calc(l + 0.5) c h / 0.5);
-    }
-    &:hover {
-      border: 1px solid oklch(from var(--accent1) calc(l + 0.5) c h / 0.5);
-      svg {
-        color: oklch(from var(--accent1) calc(l + 0.5) c h / 0.75);
-      }
-    }
-    &[href="/signup"] {
-      border: none;
-      background-color: var(--accent2);
-      svg { color: white; }
-    }
-  }
-}
-
-.button {
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  border-radius: 5px;
-  &:has(svg) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  &[disabled] {
-    opacity: 0.5;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-  &[disabled]:hover {
-    cursor: not-allowed;
-  }
-  &:not(:has(span)) {
-    padding: 0.5rem;
-  }
 }
 
 .alert {
@@ -375,28 +400,7 @@ form {
   }
 }
 
-.expander-button {
-  border: none;
-  width: 100%;
-  justify-content: space-between;
-  padding-left: 0;
-  padding-right: 0;
-  transition: padding 0.5s ease, margin 0.5s ease, background-color 0.5s ease;
-  &:hover {
-    padding-left: 1rem;
-    padding-right: 0.5rem;
-    background-color: #eee;
-  }
-}
-
-.expander-content {
-  padding-top: 1px;
-  overflow: hidden;
-  transition: height 0.5s ease;
-}
-
 .search-results {
-  /* border: 1px solid #ddd; */
   margin: 1rem 0;
   .spacer {
     margin: 2rem 0;
@@ -420,27 +424,12 @@ form {
   &+ .search-result {
     border-top: 1px solid #eee;
   }
-  /* .button {
-    background-color: var(--accent2);
-    color: white;
-  } */
-  .button {
-    color: oklch(from var(--fg) calc(l + 0.5) c h);
-    &:hover {
-      color: var(--fg)
-    }
-  }
 }
 
 .search-pages {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  .button {
-    background-color: var(--accent1);
-    color: white;
-    border: none;
-  }
 }
 
 .community-results-stats {

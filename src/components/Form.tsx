@@ -70,15 +70,23 @@ export function Form<T>({
 
       <hr />
 
-      <Button
+      <button
+        className="button accent-1"
         type="submit"
         disabled={loading}
-        text={loading ? "Processing..." : buttonText}
-        icon={loading ? <Loop className="spin" /> : undefined}
         onClick={() => {
           if (onClickSubmit) onClickSubmit();
         }}
-      />
+      >
+        {loading ? (
+          <>
+            <Loop className="spin" />
+            <span>Processing...</span>
+          </>
+        ) : (
+          <span>{buttonText}</span>
+        )}
+      </button>
     </form>
   );
 }

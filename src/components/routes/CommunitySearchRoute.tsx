@@ -26,7 +26,11 @@ export function CommunitySearchRoute() {
     <>
       <div className="heading-row">
         <h2>Explore Communities</h2>
-        <Link to="/communities/new" type="button" className="button">
+        <Link
+          to="/communities/new"
+          type="button"
+          className="button plain-accent-2"
+        >
           <AddCircle />
           <span>Create</span>
         </Link>
@@ -76,7 +80,7 @@ export function CommunitySearchRoute() {
               </div>
               <Link
                 type="button"
-                className="button"
+                className="button plain-accent-2"
                 to={`/community/${comm.urlName}`}
                 title="View community"
               >

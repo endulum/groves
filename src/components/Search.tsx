@@ -82,22 +82,22 @@ export function Search<T>({
       </div>
       <div className="search-pages">
         <button
-          className="button"
+          className="button accent-1"
           disabled={data == null || data?.links.prevPage === null}
           onClick={() => {
             if (data?.links.prevPage) setUrl(data.links.prevPage);
           }}
-          aria-label="Previous results"
+          title="Previous results"
         >
           <FirstPage />
         </button>
         <button
-          className="button"
+          className="button accent-1"
           disabled={data == null || data?.links.nextPage === null}
           onClick={() => {
             if (data?.links.nextPage) setUrl(data.links.nextPage);
           }}
-          aria-label="More results"
+          title="More results"
         >
           <LastPage />
         </button>

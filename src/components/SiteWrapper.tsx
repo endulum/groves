@@ -47,11 +47,15 @@ export function SiteWrapper({
                 </>
               ) : (
                 <>
-                  <Link type="button" className="button" to="/login">
+                  <Link
+                    type="button"
+                    className="button over-accent-2"
+                    to="/login"
+                  >
                     <Login />
                     <span>Log In</span>
                   </Link>
-                  <Link type="button" className="button" to="/signup">
+                  <Link type="button" className="button accent-2" to="/signup">
                     <Star />
                     <span>Sign Up</span>
                   </Link>
@@ -59,7 +63,7 @@ export function SiteWrapper({
               )}
               <button
                 type="button"
-                className="button"
+                className="button over-accent-2"
                 aria-controls="menu"
                 aria-expanded={expanded ? "true" : "false"}
                 onClick={() => {
