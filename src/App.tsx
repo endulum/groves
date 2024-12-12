@@ -20,6 +20,10 @@ export function App() {
         <Route path="/user/:user" element={<routes.UserRoute />} />
         <Route path="/communities" element={<routes.CommunitySearchRoute />} />
         <Route
+          path="/community/:community"
+          element={<routes.CommunityRoute />}
+        />
+        <Route
           path="/communities/new"
           element={<routes.CommunityCreateRoute />}
         />

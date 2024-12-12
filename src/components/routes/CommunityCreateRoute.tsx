@@ -1,31 +1,19 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form } from "../Form";
-import { Alert } from "../Alert";
 import { InputChecklist } from "../InputChecklist";
 
 export function CommunityCreateRoute() {
-  const [success, setSuccess] = useState<boolean>(false);
+  const navigate = useNavigate();
   return (
     <>
       <h2>Create a New Community</h2>
       <Form
         destination={{ method: "POST", endpoint: "/communities" }}
-        onClickSubmit={() => {
-          setSuccess(false);
-        }}
-        onSuccess={() => {
-          setSuccess(true);
+        onSuccess={(formData) => {
+          navigate(`/community/${formData.urlName}`);
         }}
         buttonText="Create"
       >
-        {success && (
-          <Alert type="success">
-            <p>
-              Your community has been created. You have been given admin
-              privileges over this community.
-            </p>
-          </Alert>
-        )}
         <label htmlFor="urlName">
           <span>URL Name</span>
           <small>
