@@ -18,6 +18,7 @@ export function App() {
       >
         <Route path="/" element={<routes.IndexRoute />} />
         <Route path="/user/:user" element={<routes.UserRoute />} />
+        <Route path="/communities" element={<routes.CommunitiesRoute />} />
         {user ? (
           <>
             <Route path="/account" element={<routes.AccountRoute />} />

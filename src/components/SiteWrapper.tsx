@@ -1,11 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
 import {
-  Diversity3,
   Login,
   Logout,
   Star,
   Menu,
   AccountCircle,
+  Forest,
+  Explore,
 } from "@mui/icons-material";
 
 import { type User } from "../types";
@@ -31,7 +32,7 @@ export function SiteWrapper({
         <div className="body">
           <div className="header-top">
             <Link to="/" className="logo">
-              <Diversity3 />
+              <Forest />
               <h1>{import.meta.env.VITE_APP_NAME}</h1>
             </Link>
             <nav>
@@ -80,6 +81,12 @@ export function SiteWrapper({
           >
             <hr />
             <ul>
+              <Link to="/communities" onClick={onLinkClick}>
+                <li>
+                  <Explore />
+                  <span>Explore Communities</span>
+                </li>
+              </Link>
               {context.user ? (
                 <>
                   <Link to="/account" onClick={onLinkClick}>
