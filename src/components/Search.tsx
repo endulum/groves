@@ -87,7 +87,7 @@ export function Search<T>({
           <LoadingSpacer loading={loading} error={error} />
         )}
       </div>
-      <div className="search-pages">
+      <div className="flex-row jc-spb">
         <button
           className="button accent-1"
           disabled={data == null || data?.links.prevPage === null}

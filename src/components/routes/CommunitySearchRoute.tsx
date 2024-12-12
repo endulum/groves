@@ -4,8 +4,8 @@ import {
   Park,
   AddCircle,
 } from "@mui/icons-material";
-
 import { Link } from "react-router-dom";
+import { DateTime } from "luxon";
 
 import { Search } from "../Search";
 
@@ -24,7 +24,7 @@ type CommunityResult = {
 export function CommunitySearchRoute() {
   return (
     <>
-      <div className="heading-row">
+      <div className="flex-row jc-spb">
         <h2>Explore Communities</h2>
         <Link
           to="/communities/new"
@@ -66,17 +66,28 @@ export function CommunitySearchRoute() {
               <small>/{comm.urlName}</small>
               {comm.description && <p>{comm.description}</p>}
             </div>
-            <div className="community-results-stats">
-              <div
-                className="stat"
-                title={`${comm._count.followers} followers`}
-              >
-                <PeopleAlt />
-                <small>{comm._count.followers}</small>
-              </div>
-              <div className="stat" title={`${comm._count.followers} posts`}>
-                <Park />
-                <small>{comm._count.posts}</small>
+            <div className="flex-row gap-1">
+              <div className="flex-col gap-0-25 align-end">
+                <div className="flex-row gap-0-5">
+                  <div
+                    className="flex-col"
+                    title={`${comm._count.followers} followers`}
+                  >
+                    <PeopleAlt />
+                    <small>{comm._count.followers}</small>
+                  </div>
+                  <div
+                    className="flex-col"
+                    title={`${comm._count.followers} posts`}
+                  >
+                    <Park />
+                    <small>{comm._count.posts}</small>
+                  </div>
+                </div>
+                <small>
+                  Last activity{" "}
+                  {DateTime.fromISO(comm.lastActivity).toRelative()}
+                </small>
               </div>
               <Link
                 type="button"
