@@ -107,7 +107,7 @@ a {
   color: var(--accent2);
 }
 
-h2 {
+h2, h3 {
   margin-bottom: 1rem;
 }
 
@@ -429,7 +429,7 @@ form {
   }
 }
 
-.search-page-buttons {
+.search-pages {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

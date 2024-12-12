@@ -11,4 +11,5 @@ Groves is an arboreal semiclone of Reddit.
 ## Todo
 
 - [x] Explore Communities page
-- [ ] Extract search into own component
+- [x] Extract search into own component
+- [ ] Create Community page
