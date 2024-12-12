@@ -19,8 +19,8 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Add "last activity" stat to each community in search
 - [x] Break down flex properties into classes for smaller elements
 - [x] Seriously figure out container queries, have community search entry not be squished
-- [ ] Isolate community search form into own component under `forms/`
+- [x] Isolate community search form into own component under `forms/`
 - [x] Community page
 - [ ] Extra prop "loading text" for loading spacer ("getting data", "searching posts", etc)
 - [x] Add forest icon to community search entry?
-- [ ] Detangle `search-result` and `community` classes
+- [x] Detangle `search-result` and `community` classes
