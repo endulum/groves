@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { FirstPage, LastPage } from "@mui/icons-material";
+import { FirstPage, LastPage, VisibilityOff } from "@mui/icons-material";
 
 import { useGet } from "../hooks/useGet";
 import { useLogger } from "../hooks/useLogger";
@@ -75,7 +75,14 @@ export function Search<T>({
       <hr />
       <div className="search-results">
         {data ? (
-          data[resultsPropertyName].map((result) => mapResults(result))
+          data[resultsPropertyName].length > 0 ? (
+            data[resultsPropertyName].map((result) => mapResults(result))
+          ) : (
+            <div className="spacer">
+              <VisibilityOff />
+              <p>No results found. Try another search.</p>
+            </div>
+          )
         ) : (
           <LoadingSpacer loading={loading} error={error} />
         )}

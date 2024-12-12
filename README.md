@@ -14,6 +14,7 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Extract search into own component
 - [x] Create Community page
 - [x] Fine-tune button types into classes
-- [ ] Spacer for no results found in search
+- [x] Spacer for no results found in search
 - [ ] Extract border-radius to own var
 - [ ] Add "last activity" stat to each community in search
+- [ ] Break down flex properties into classes for smaller elements
