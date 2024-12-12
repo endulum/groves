@@ -18,7 +18,11 @@ export function App() {
       >
         <Route path="/" element={<routes.IndexRoute />} />
         <Route path="/user/:user" element={<routes.UserRoute />} />
-        <Route path="/communities" element={<routes.CommunitiesRoute />} />
+        <Route path="/communities" element={<routes.CommunitySearchRoute />} />
+        <Route
+          path="/communities/new"
+          element={<routes.CommunityCreateRoute />}
+        />
         {user ? (
           <>
             <Route path="/account" element={<routes.AccountRoute />} />

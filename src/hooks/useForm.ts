@@ -32,7 +32,10 @@ export function useForm<T>(
     // from the event's own target, which is the HTML form
     const formData: Record<string, string> = {};
     Object.values(event.target).forEach((inputElement) => {
-      if (inputElement instanceof HTMLInputElement) {
+      if (
+        inputElement instanceof HTMLInputElement ||
+        inputElement instanceof HTMLTextAreaElement
+      ) {
         formData[inputElement.id] = inputElement.value;
       }
     });

@@ -1,4 +1,9 @@
-import { ArrowForwardIos, PeopleAlt, Park } from "@mui/icons-material";
+import {
+  ArrowForwardIos,
+  PeopleAlt,
+  Park,
+  AddCircle,
+} from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
 
@@ -16,10 +21,16 @@ type CommunityResult = {
   };
 };
 
-export function CommunitiesRoute() {
+export function CommunitySearchRoute() {
   return (
     <>
-      <h2>Explore Communities</h2>
+      <div className="heading-row">
+        <h2>Explore Communities</h2>
+        <Link to="/communities/new" type="button" className="button">
+          <AddCircle />
+          <span>Create</span>
+        </Link>
+      </div>
       <Search<CommunityResult>
         startingParams={{
           sort: "activity",
