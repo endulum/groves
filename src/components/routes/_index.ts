@@ -7,3 +7,4 @@ export { AccountRoute } from "./AccountRoute";
 export { CommunitySearchRoute } from "./CommunitySearchRoute";
 export { CommunityCreateRoute } from "./CommunityCreateRoute";
 export { CommunityRoute } from "./CommunityRoute";
+export { PostRoute } from "./PostRoute";

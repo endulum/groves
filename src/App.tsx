@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import { LoadingSpacer } from "./components/LoadingSpacer";
 import { SiteWrapper } from "./components/SiteWrapper";
-import { LoginRedirect } from "./components/LoginRedirect";
 import { useUser } from "./hooks/useUser";
 import * as routes from "./components/routes/_index";
 
@@ -24,6 +23,7 @@ export function App() {
           path="/community/:community"
           element={<routes.CommunityRoute />}
         />
+        <Route path="/post/:post" element={<routes.PostRoute />} />
         <Route
           path="/communities/new"
           element={<routes.CommunityCreateRoute />}

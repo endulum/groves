@@ -29,3 +29,5 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Show replies under post
 - [ ] Vote widgets
 - [ ] Add bio field to account settings
+- [ ] Two headers for comm view: comm details, and comm posts, titled Posts, put a `New` button there, and put a `Follow` button on the comm details heading
+- [ ] Detangle routes from forms?
