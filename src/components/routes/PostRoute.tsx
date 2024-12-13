@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { useGet } from "../../hooks/useGet";
 import { useLogger } from "../../hooks/useLogger";
 import { LoadingSpacer } from "../LoadingSpacer";
+import { RepliesSubroute } from "./RepliesSubroute";
 
 export function PostRoute() {
   const { post } = useParams();
@@ -25,8 +26,6 @@ export function PostRoute() {
     datePosted: string;
     lastEdited: null | string;
   }>(`/post/${post}`);
-
-  useLogger({ data });
 
   if (loading || error)
     return <LoadingSpacer loading={loading} error={error} />;
@@ -70,6 +69,7 @@ export function PostRoute() {
           </Markdown>
         </div>
         <hr />
+        <RepliesSubroute postId={data.id} />
       </>
     );
 }

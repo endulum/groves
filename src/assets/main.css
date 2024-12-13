@@ -496,3 +496,29 @@ form {
     }
   }
 }
+
+.replies {
+  margin-top: 1rem;
+}
+
+.reply {
+  width: 100%;
+  padding: 1rem;
+  padding-left: 1.5rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  &.shaded {
+    background-color: #fafafa;
+  }
+  &.first-level {
+    border-left: 3px double #ddd;
+  }
+}
+
+.reply-children {
+  margin-bottom: 1rem;
+}
+
+.reply-content {
+  padding-bottom: 1rem;
+}
