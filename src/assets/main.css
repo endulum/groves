@@ -522,3 +522,10 @@ form {
 .reply-content {
   padding-bottom: 1rem;
 }
+
+.reply-loadmore {
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

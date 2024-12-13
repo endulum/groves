@@ -4,6 +4,7 @@ import { DateTime } from "luxon";
 import { useGet } from "../../hooks/useGet";
 import { useLogger } from "../../hooks/useLogger";
 import { LoadingSpacer } from "../LoadingSpacer";
+import { useEffect, useState } from "react";
 
 interface Reply {
   author: {
@@ -28,7 +29,7 @@ export function RepliesSubroute({ postId }: { postId: string }) {
   const { loading, error, data } = useGet<{
     loadMoreChildren: string | null;
     children: Reply[];
-  }>(`/post/${postId}/replies?takePerLevel=2&takeAtRoot=1`);
+  }>(`/post/${postId}/replies`);
 
   useLogger({ data });
 
@@ -53,11 +54,58 @@ function Reply({
   shaded: boolean;
   firstLevel: boolean;
 }) {
+  const [loadChildren, setLoadChildren] = useState<string | null>(
+    data.loadChildren ?? null
+  );
+
+  const [loadMoreChildren, setLoadMoreChildren] = useState<string | null>(
+    data.loadMoreChildren ?? null
+  );
+
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
+
+  const [replyChildren, setReplyChildren] = useState<Reply[]>(
+    data.children ?? []
+  );
+
+  const {
+    loading,
+    error,
+    data: childrenData,
+    get,
+  } = useGet<{
+    loadChildren: string | null;
+    loadMoreChildren: string | null;
+    children: Reply[];
+  }>(nextUrl as string); // somehow assert that we'll only call this when the string is set
+
+  useEffect(() => {
+    get(false);
+  }, [nextUrl]);
+
+  useEffect(() => {
+    if (childrenData) {
+      setReplyChildren([...replyChildren, ...childrenData.children]);
+      setLoadChildren(childrenData.loadChildren);
+      setLoadMoreChildren(childrenData.loadMoreChildren);
+      setNextUrl(null);
+    }
+  }, [childrenData]);
+
+  const clickToLoadMoreChildren = () => {
+    setNextUrl(loadMoreChildren);
+  };
+
+  const clickToLoadChildren = () => {
+    setNextUrl(loadChildren);
+  };
+
   return (
     <div
       className={`reply${shaded ? " shaded" : ""}${
         firstLevel ? " first-level" : ""
       }`}
+      id={data.id}
     >
       <div className="reply-content">
         <small>
@@ -69,11 +117,16 @@ function Reply({
         </small>
         <br />
         {data.content}
+        <br />
+        <small>
+          <a href={`#${data.parentId}`}>parent</a>
+        </small>
       </div>
-      {data.children && data.children.length > 0 && (
+
+      {replyChildren.length > 0 && (
         <>
           <div className="reply-children flex-col align-start gap-0-5">
-            {data.children.map((child) => (
+            {replyChildren.map((child) => (
               <Reply
                 data={child}
                 shaded={!shaded}
@@ -82,16 +135,36 @@ function Reply({
               />
             ))}
           </div>
-          {data.loadMoreChildren && (
+          {loadMoreChildren && (
             <small>
-              <a href="#">Load more children...</a>
+              {loading ? (
+                <span>Loading...</span>
+              ) : (
+                <a
+                  className="reply-loadmore"
+                  onClick={clickToLoadMoreChildren}
+                  title={loadMoreChildren}
+                >
+                  Load more replies
+                </a>
+              )}
             </small>
           )}
         </>
       )}
-      {data.loadChildren && (
+      {loadChildren && (
         <small>
-          <a href="#">Load children...</a>
+          {loading ? (
+            <span>Loading...</span>
+          ) : (
+            <a
+              className="reply-loadmore"
+              onClick={clickToLoadChildren}
+              title={loadChildren}
+            >
+              Load replies
+            </a>
+          )}
         </small>
       )}
     </div>
