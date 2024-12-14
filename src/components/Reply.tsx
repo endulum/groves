@@ -105,7 +105,7 @@ export function Reply({
           {loadMoreChildren && (
             <small>
               {loading ? (
-                <span>Loading...</span>
+                <span>Loading more replies...</span>
               ) : (
                 <a
                   className="reply-loadmore"
@@ -124,7 +124,7 @@ export function Reply({
       {loadChildren && (
         <small>
           {loading ? (
-            <span>Loading...</span>
+            <span>Loading replies...</span>
           ) : (
             <a
               className="reply-loadmore"

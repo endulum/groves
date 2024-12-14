@@ -27,7 +27,13 @@ export function PostRoute() {
   }>(`/post/${post}`);
 
   if (loading || error)
-    return <LoadingSpacer loading={loading} error={error} />;
+    return (
+      <LoadingSpacer
+        loading={loading}
+        error={error}
+        customLoadingText="Getting post info..."
+      />
+    );
   if (data)
     return (
       <>

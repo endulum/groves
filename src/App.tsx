@@ -9,7 +9,13 @@ export function App() {
   const { loading, error, user, initUser, changeUsername } = useUser();
 
   if (loading || error)
-    return <LoadingSpacer loading={loading} error={error} />;
+    return (
+      <LoadingSpacer
+        loading={loading}
+        error={error}
+        customLoadingText="Starting up..."
+      />
+    );
 
   return (
     <Routes>

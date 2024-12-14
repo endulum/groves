@@ -15,7 +15,11 @@ export function RepliesSubroute({ postId }: { postId: string }) {
       <h3 className="mt-1">Replies</h3>
       <div className="replies flex-col align-start gap-0-5">
         {!data ? (
-          <LoadingSpacer loading={loading} error={error} />
+          <LoadingSpacer
+            loading={loading}
+            error={error}
+            customLoadingText="Getting replies..."
+          />
         ) : (
           <>
             {data.children.map((child) => (

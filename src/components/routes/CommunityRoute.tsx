@@ -18,7 +18,13 @@ export function CommunityRoute() {
   useLogger({ data });
 
   if (loading || error)
-    return <LoadingSpacer loading={loading} error={error} />;
+    return (
+      <LoadingSpacer
+        loading={loading}
+        error={error}
+        customLoadingText="Getting community info..."
+      />
+    );
   if (data)
     return (
       <>

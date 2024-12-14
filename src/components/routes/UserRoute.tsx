@@ -17,7 +17,13 @@ export function UserRoute() {
   useLogger({ data });
 
   if (loading || error)
-    return <LoadingSpacer loading={loading} error={error} />;
+    return (
+      <LoadingSpacer
+        loading={loading}
+        error={error}
+        customLoadingText="Getting user info..."
+      />
+    );
   if (data)
     return (
       <>

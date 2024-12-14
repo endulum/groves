@@ -21,7 +21,7 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Seriously figure out container queries, have community search entry not be squished
 - [x] Isolate community search form into own component under `forms/`
 - [x] Community page
-- [ ] Extra prop "loading text" for loading spacer ("getting data", "searching posts", etc)
+- [x] Extra prop "loading text" for loading spacer ("getting data", "searching posts", etc)
 - [x] Add forest icon to community search entry?
 - [x] Detangle `search-result` and `community` classes
 - [x] Have user action links redirect to login page with flash message
@@ -30,8 +30,8 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Vote widgets
 - [ ] Add bio field to account settings
 - [ ] Two headers for comm view: comm details, and comm posts, titled Posts, put a `New` button there, and put a `Follow` button on the comm details heading
-- [ ] Make replies collapsible
-- [ ] Ability to vote on posts, too
+- [ ] Make replies collapsible (!)
+- [ ] Ability to vote on posts, too (!)
 - [ ] Figure out what other links to put on each reply besides "parent"
 - - [ ] "Isolate" - goes to `/reply/____/replies`
 - [ ] Have white page span all device width on mobile

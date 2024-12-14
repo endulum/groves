@@ -3,9 +3,11 @@ import { Loop, Warning } from "@mui/icons-material";
 export function LoadingSpacer({
   loading,
   error,
+  customLoadingText,
 }: {
   loading: boolean;
   error: string | null;
+  customLoadingText?: string;
 }): JSX.Element | undefined {
   return (
     <div className="spacer">
@@ -17,7 +19,7 @@ export function LoadingSpacer({
       ) : loading ? (
         <>
           <Loop className="spin" />
-          <p>Loading...</p>
+          <p>{customLoadingText ?? "Loading..."}</p>
         </>
       ) : (
         ""

@@ -84,7 +84,11 @@ export function VoteWidget({ data }: { data: Reply }) {
       </button>
       <div
         className="flex-row gap-0-5"
-        title={`${upvotes} upvotes, ${downvotes} downvotes`}
+        title={
+          loading
+            ? "Casting vote..."
+            : `${upvotes} upvotes, ${downvotes} downvotes`
+        }
       >
         {loading ? (
           <Loop className="spin" style={{ width: "1.25rem" }} />

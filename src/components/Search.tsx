@@ -82,7 +82,11 @@ export function Search<T>({
             </div>
           )
         ) : (
-          <LoadingSpacer loading={loading} error={error} />
+          <LoadingSpacer
+            loading={loading}
+            error={error}
+            customLoadingText="Searching..."
+          />
         )}
       </div>
       <div className="flex-row jc-spb">
