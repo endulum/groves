@@ -30,8 +30,13 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Vote widgets
 - [ ] Add bio field to account settings
 - [ ] Two headers for comm view: comm details, and comm posts, titled Posts, put a `New` button there, and put a `Follow` button on the comm details heading
-- [ ] Make replies collapsible (!)
+- [x] Make replies collapsible
 - [ ] Ability to vote on posts, too (!)
 - [ ] Figure out what other links to put on each reply besides "parent"
 - - [ ] "Isolate" - goes to `/reply/____/replies`
 - [ ] Have white page span all device width on mobile
+- [ ] API idea: when making dummy replies,
+- - Generate random dates for the dummy data
+- - SORT the dummy data by those random dates
+- - Keep an array of availalbe parentids
+- - Pick a parentid at random when assigning a new reply

@@ -190,6 +190,14 @@ main hr {
   margin-bottom: 1rem;
 }
 
+.mt-0 {
+  margin-top: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
 /* components */
 
 .button {
@@ -510,6 +518,7 @@ form {
 }
 
 .reply {
+  position: relative;
   width: 100%;
   padding: 1rem;
   padding-left: 1.5rem;
@@ -529,6 +538,11 @@ form {
 
 .reply-content {
   padding-bottom: 1rem;
+  &.collapsed {
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .reply-loadmore {
@@ -549,5 +563,21 @@ form {
       height: 1.5rem;
       padding: 0.125rem;
     }
+  }
+}
+
+.reply-collapse {
+  background-color: white;
+  border-radius: 100%;
+  padding: 0.25rem !important;
+  border: none;
+  position: absolute;
+  left: -1rem;
+  top: 0.625rem;
+  svg {
+    color: var(--accent1);
+  }
+  &:hover svg {
+    color: oklch(from var(--accent1) calc(l + 0.25) c h);
   }
 }

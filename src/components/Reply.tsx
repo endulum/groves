@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 import { VoteWidget } from "./VoteWidget";
 import { useGet } from "../hooks/useGet";
@@ -28,6 +29,8 @@ export function Reply({
   const [replyChildren, setReplyChildren] = useState<Reply[]>(
     data.children ?? []
   );
+
+  const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const {
     loading,
@@ -60,6 +63,21 @@ export function Reply({
     setNextUrl(loadChildren);
   };
 
+  const gatherChildrenIds = (children: Reply[]): string[] => {
+    const ids: string[] = [];
+    children.forEach((child: Reply) => {
+      ids.push(child.id);
+      if (child.children) {
+        ids.push(...gatherChildrenIds(child.children));
+      }
+    });
+    return ids;
+  };
+
+  const getTotalChildCount = () => {
+    return gatherChildrenIds(replyChildren).length;
+  };
+
   return (
     <div
       className={`reply${shaded ? " shaded" : ""}${
@@ -67,74 +85,117 @@ export function Reply({
       }`}
       id={data.id}
     >
-      {/* content */}
-      <div className="reply-content flex-row gap-1">
-        <VoteWidget data={data} />
-        <div>
-          <small>
-            by{" "}
-            <Link to={`/user/${data.author.username}`}>
-              {data.author.username}
-            </Link>{" "}
-            {DateTime.fromISO(data.datePosted).toRelative()}
-          </small>
-          <br />
-          {data.content}
-          <br />
-          <small>
-            <a href={`#${data.parentId}`}>parent</a>
-          </small>
-        </div>
-      </div>
-
-      {/* list of children */}
-      {replyChildren.length > 0 && (
+      {collapsed ? (
         <>
-          <div className="reply-children flex-col align-start gap-0-5">
-            {replyChildren.map((child) => (
-              <Reply
-                data={child}
-                shaded={!shaded}
-                firstLevel={false}
-                key={child.id}
-              />
-            ))}
+          <button
+            className="button reply-collapse collapsed"
+            title="Show reply tree"
+            onClick={() => {
+              setCollapsed(false);
+            }}
+          >
+            <ExpandMore />
+          </button>
+          <div className="reply-content mb-0 collapsed">
+            <small>
+              <Link to={`/user/${data.author.username}`}>
+                {data.author.username}
+              </Link>{" "}
+              replied{" "}
+              <span title={data.datePosted}>
+                {DateTime.fromISO(data.datePosted).toRelative()}
+              </span>{" "}
+              with{" "}
+              <span>{data._count.upvotes - data._count.downvotes} points</span>
+              {" ("}
+              <span>{`${getTotalChildCount()} children`}</span>
+              {")"}
+            </small>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* content */}
+          <button
+            className="button reply-collapse expanded"
+            title="Hide reply tree"
+            onClick={() => {
+              setCollapsed(true);
+            }}
+          >
+            <ExpandLess />
+          </button>
+          <div className="reply-content flex-row gap-1">
+            <VoteWidget data={data} />
+            <div>
+              <small>
+                <Link to={`/user/${data.author.username}`}>
+                  {data.author.username}
+                </Link>{" "}
+                replied{" "}
+                <span title={data.datePosted}>
+                  {DateTime.fromISO(data.datePosted).toRelative()}
+                </span>
+              </small>
+              <br />
+              {data.content}
+              <br />
+              <small>
+                <a href={`#${data.parentId}`}>parent</a>
+              </small>
+            </div>
           </div>
 
-          {/* "load more children" link for child overflow */}
-          {loadMoreChildren && (
+          {/* list of children */}
+          {replyChildren.length > 0 && (
+            <>
+              <div className="reply-children flex-col align-start gap-0-5">
+                {replyChildren.map((child) => (
+                  <Reply
+                    data={child}
+                    shaded={!shaded}
+                    firstLevel={false}
+                    key={child.id}
+                  />
+                ))}
+              </div>
+
+              {/* "load more children" link for child overflow */}
+              {loadMoreChildren && (
+                <small>
+                  {loading ? (
+                    <span>Loading more replies...</span>
+                  ) : (
+                    <a
+                      className="reply-loadmore"
+                      onClick={clickToLoadMoreChildren}
+                      title={loadMoreChildren}
+                    >
+                      Load more replies
+                    </a>
+                  )}
+                </small>
+              )}
+            </>
+          )}
+
+          {/* "load children" link for revealing children */}
+          {loadChildren && (
             <small>
               {loading ? (
-                <span>Loading more replies...</span>
+                <span>Loading replies...</span>
               ) : (
                 <a
                   className="reply-loadmore"
-                  onClick={clickToLoadMoreChildren}
-                  title={loadMoreChildren}
+                  onClick={clickToLoadChildren}
+                  title={loadChildren}
                 >
-                  Load more replies
+                  Load replies
                 </a>
               )}
             </small>
           )}
         </>
-      )}
-
-      {/* "load children" link for revealing children */}
-      {loadChildren && (
-        <small>
-          {loading ? (
-            <span>Loading replies...</span>
-          ) : (
-            <a
-              className="reply-loadmore"
-              onClick={clickToLoadChildren}
-              title={loadChildren}
-            >
-              Load replies
-            </a>
-          )}
-        </small>
       )}
     </div>
   );
