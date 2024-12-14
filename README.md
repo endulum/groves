@@ -30,8 +30,8 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Vote widgets
 - [ ] Add bio field to account settings
 - [ ] Two headers for comm view: comm details, and comm posts, titled Posts, put a `New` button there, and put a `Follow` button on the comm details heading
-- [ ] Detangle routes from forms?
 - [ ] Make replies collapsible
-- [ ] Put vote widget to side of post title and source/author
-- [ ] Isolate option for each reply, route that focuses the reply
-- [ ] There's no error when removing downvote after upvoting, investigate?
+- [ ] Ability to vote on posts, too
+- [ ] Figure out what other links to put on each reply besides "parent"
+- - [ ] "Isolate" - goes to `/reply/____/replies`
+- [ ] Have white page span all device width on mobile

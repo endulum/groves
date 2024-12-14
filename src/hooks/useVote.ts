@@ -6,7 +6,6 @@ import { getStoredToken } from "../functions/tokenUtils";
 export function useVote(opts: {
   endpoint: string;
   voted: { upvoted: boolean; downvoted: boolean } | null;
-  canVote: boolean;
   score: number;
 }) {
   const [voted, setVoted] = useState<{
@@ -20,9 +19,7 @@ export function useVote(opts: {
     const token = getStoredToken();
     if (
       !token || // no token
-      voted === null || // there is no logged-in user
-      opts.canVote === false // the content is readonly or hidden
-      // in these cases, attempting to post is useless
+      voted === null // there is no logged-in user
     )
       return;
 

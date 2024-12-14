@@ -46,7 +46,8 @@ export function PostsSubroute({ communityUrl }: { communityUrl: string }) {
       }
       resultsPropertyName="posts"
       mapResults={(post: PostResult) => {
-        const score = post._count.upvotes - post._count.downvotes;
+        const { upvotes, downvotes } = post._count;
+        const score = upvotes - downvotes;
         return (
           <div className="search-result post" key={post.id}>
             <div className="flex-row jc-spb gap-1">
@@ -67,7 +68,7 @@ export function PostsSubroute({ communityUrl }: { communityUrl: string }) {
                 <div className="flex-row gap-0-5">
                   <div
                     className="flex-col"
-                    title={`${post._count.upvotes} upvotes, ${post._count.downvotes} downvotes`}
+                    title={`${upvotes} upvotes, ${downvotes} downvotes`}
                   >
                     <WbSunny
                       style={{ color: score > 0 ? "var(--accent2" : "#ddd" }}

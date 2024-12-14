@@ -4,7 +4,6 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { useGet } from "../../hooks/useGet";
-import { useLogger } from "../../hooks/useLogger";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { RepliesSubroute } from "./RepliesSubroute";
 
