@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import { doFetch } from "../functions/doFetch";
+import { getStoredToken } from "../functions/tokenUtils";
 
 export function useGet<T>(endpoint: string): {
   loading: boolean;
@@ -20,10 +21,10 @@ export function useGet<T>(endpoint: string): {
       if (data) setData(null);
     }
 
-    // const token = getStoredToken();
+    const token = getStoredToken();
     const fetchResult = await doFetch<T>(endpoint, {
       method: "GET",
-      // headers: token ? { Authorization: `Bearer ${token}` } : {},
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 
     setLoading(false);

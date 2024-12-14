@@ -26,8 +26,12 @@ Groves is an arboreal semiclone of Reddit.
 - [x] Detangle `search-result` and `community` classes
 - [x] Have user action links redirect to login page with flash message
 - [x] Show posts in community
-- [ ] Show replies under post
-- [ ] Vote widgets
+- [x] Show replies under post
+- [x] Vote widgets
 - [ ] Add bio field to account settings
 - [ ] Two headers for comm view: comm details, and comm posts, titled Posts, put a `New` button there, and put a `Follow` button on the comm details heading
 - [ ] Detangle routes from forms?
+- [ ] Make replies collapsible
+- [ ] Put vote widget to side of post title and source/author
+- [ ] Isolate option for each reply, route that focuses the reply
+- [ ] There's no error when removing downvote after upvoting, investigate?

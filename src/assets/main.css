@@ -529,3 +529,17 @@ form {
     text-decoration: underline;
   }
 }
+
+.vote-widget {
+  .button {
+    padding: 0.125rem;
+    &[disabled]:hover {
+      background-color: transparent;
+    }
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0.125rem;
+    }
+  }
+}
