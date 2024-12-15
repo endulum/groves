@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { DateTime } from "luxon";
 
 import { useGet } from "../../hooks/useGet";
-import { useLogger } from "../../hooks/useLogger";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { PostsSubroute } from "./PostsSubroute";
 
@@ -14,8 +13,6 @@ export function CommunityRoute() {
     canonicalName: string;
     created: string;
   }>(`/community/${community}`);
-
-  useLogger({ data });
 
   if (loading || error)
     return (

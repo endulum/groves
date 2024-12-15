@@ -1,11 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import { DateTime } from "luxon";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { RepliesSubroute } from "./RepliesSubroute";
+import { MDWrapper } from "../MDWrapper";
 
 export function PostRoute() {
   const { post } = useParams();
@@ -52,26 +51,7 @@ export function PostRoute() {
         </small>
         <h2>{data.title}</h2>
         <div className="post-content">
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            allowedElements={[
-              "a",
-              "strong",
-              "em",
-              "del",
-              "p",
-              "br",
-              "ul",
-              "ol",
-              "li",
-              "img",
-            ]}
-            unwrapDisallowed
-            skipHtml
-            className="post-content"
-          >
-            {data.content.split("\n").join("  \n  \n")}
-          </Markdown>
+          <MDWrapper content={data.content} />
         </div>
         <hr />
         <RepliesSubroute postId={data.id} />

@@ -4,7 +4,6 @@ import { DateTime } from "luxon";
 import { useGet } from "../../hooks/useGet";
 import { User } from "../../types";
 import { LoadingSpacer } from "../LoadingSpacer";
-import { useLogger } from "../../hooks/useLogger";
 
 interface UserData extends User {
   joined: string;
@@ -13,8 +12,6 @@ interface UserData extends User {
 export function UserRoute() {
   const { user } = useParams();
   const { loading, error, data } = useGet<UserData>(`/user/${user}`);
-
-  useLogger({ data });
 
   if (loading || error)
     return (

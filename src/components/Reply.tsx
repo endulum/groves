@@ -7,6 +7,7 @@ import { VoteWidget } from "./VoteWidget";
 import { useGet } from "../hooks/useGet";
 import { type Reply } from "../types";
 import { gatherChildrenIds } from "../functions/gatherChildrenIds";
+import { MDWrapper } from "./MDWrapper";
 
 export function Reply({
   data,
@@ -128,8 +129,7 @@ export function Reply({
                 </span>
               </small>
               <br />
-              {data.content}
-              <br />
+              <MDWrapper content={data.content} />
               <small>
                 <a href={`#${data.parentId}`}>parent</a>
               </small>
