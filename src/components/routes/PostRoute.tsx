@@ -6,14 +6,12 @@ import { LoadingSpacer } from "../LoadingSpacer";
 import { RepliesSubroute } from "./RepliesSubroute";
 import { IsolatedReplySubroute } from "./IsolatedReplySubroute";
 import { MDWrapper } from "../MDWrapper";
-import { useEffect } from "react";
-import { useLogger } from "../../hooks/useLogger";
 import { type User } from "../../types";
 
 export function PostRoute() {
   const { post, reply } = useParams();
   const { user } = useOutletContext<{ user: User }>();
-  const { loading, error, data, get } = useGet<{
+  const { loading, error, data } = useGet<{
     community: {
       id: number;
       urlName: string;
@@ -31,10 +29,6 @@ export function PostRoute() {
     datePosted: string;
     lastEdited: null | string;
   }>(`/post/${post}`);
-
-  useEffect(() => {
-    get(false);
-  }, [reply]);
 
   if (loading || error)
     return (
@@ -66,7 +60,16 @@ export function PostRoute() {
         </div>
         <hr />
         {reply ? (
-          <IsolatedReplySubroute postId={data.id} replyId={reply} />
+          <IsolatedReplySubroute
+            postId={data.id}
+            replyId={reply}
+            isMod={
+              user &&
+              [...data.community.moderators, data.community.adminId].includes(
+                user.id
+              )
+            }
+          />
         ) : (
           <RepliesSubroute
             postId={data.id}

@@ -10,17 +10,20 @@ import { Link } from "react-router-dom";
 export function IsolatedReplySubroute({
   postId,
   replyId,
+  isMod,
 }: {
   postId: string;
   replyId: string;
+  isMod: boolean;
 }) {
   const {
     loading: replyLoading,
     error: replyError,
     data: replyData,
+    get: replyGet,
   } = useGet<TReply>(`/reply/${replyId}`);
 
-  const { loading, error, data } = useGet<{
+  const { loading, error, data, get } = useGet<{
     children: TReply[];
   }>(`/reply/${replyId}/replies`);
 
@@ -33,6 +36,15 @@ export function IsolatedReplySubroute({
         children: data.children,
       });
   }, [replyData, data]);
+
+  const reloadReply = async () => {
+    setReply(null);
+    await Promise.all([replyGet(false), get(false)]);
+  };
+
+  useEffect(() => {
+    reloadReply();
+  }, [replyId]);
 
   return (
     <>
@@ -52,7 +64,7 @@ export function IsolatedReplySubroute({
           />
         )}
         {replyData && data && reply && (
-          <Reply data={reply} shaded={false} firstLevel={true} />
+          <Reply data={reply} shaded={false} firstLevel={true} isMod={isMod} />
         )}
       </div>
     </>
