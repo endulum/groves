@@ -24,8 +24,8 @@ export function ReplyForm({
         <textarea id="content" />
       </label>
 
-      <label htmlFor="parent" style={{ display: "none" }}>
-        <span></span>
+      <label htmlFor="parent">
+        <span style={{ display: "none" }}></span>
         <input type="hidden" id="parent" value={parentId ?? undefined} />
       </label>
     </Form>
