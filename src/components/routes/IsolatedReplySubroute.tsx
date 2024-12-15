@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { useGet } from "../../hooks/useGet";
 import { type Reply as TReply } from "../../types";
 import { LoadingSpacer } from "../LoadingSpacer";
-import { NullParentReplies, Reply } from "../Reply";
-import { useLogger } from "../../hooks/useLogger";
+import { Reply } from "../Reply";
 import { Alert } from "../Alert";
 import { Link } from "react-router-dom";
 
@@ -34,8 +33,6 @@ export function IsolatedReplySubroute({
         children: data.children,
       });
   }, [replyData, data]);
-
-  useLogger({ reply });
 
   return (
     <>

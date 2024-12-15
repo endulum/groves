@@ -3,7 +3,13 @@ import { LoadingSpacer } from "../LoadingSpacer";
 import { type Reply as TReply } from "../../types";
 import { NullParentReplies } from "../Reply";
 
-export function RepliesSubroute({ postId }: { postId: string }) {
+export function RepliesSubroute({
+  postId,
+  isMod,
+}: {
+  postId: string;
+  isMod: boolean;
+}) {
   const { loading, error, data } = useGet<TReply>(
     `/post/${postId}/replies?sort=best&takePerLevel=2`
   );
@@ -19,7 +25,7 @@ export function RepliesSubroute({ postId }: { postId: string }) {
             customLoadingText="Getting replies..."
           />
         )}
-        {data && <NullParentReplies data={data} />}
+        {data && <NullParentReplies data={data} isMod={isMod} />}
       </div>
     </>
   );

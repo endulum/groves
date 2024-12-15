@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, ShieldOutlined } from "@mui/icons-material";
 
 import { VoteWidget } from "./VoteWidget";
 import { useGet } from "../hooks/useGet";
@@ -14,10 +14,12 @@ export function Reply({
   data,
   shaded,
   firstLevel,
+  isMod,
 }: {
   data: Reply;
   shaded: boolean;
   firstLevel: boolean;
+  isMod: boolean;
 }) {
   const [loadChildren, setLoadChildren] = useState<string | null>(
     data.loadChildren ?? null
@@ -149,6 +151,7 @@ export function Reply({
                       type="button"
                       className="button plain-accent-2"
                       to={`/post/${data.postId}/reply/${data.parentId}`}
+                      title="Go to the parent of this post"
                     >
                       <small>parent</small>
                     </Link>
@@ -157,6 +160,7 @@ export function Reply({
                       type="button"
                       className="button plain-accent-2"
                       href={`#${data.parentId}`}
+                      title="Jump to the parent of this post"
                     >
                       <small>parent</small>
                     </a>
@@ -165,6 +169,7 @@ export function Reply({
                   type="button"
                   className="button plain-accent-2"
                   to={`/post/${data.postId}/reply/${data.id}`}
+                  title="View this post on its own"
                 >
                   <small>isolate</small>
                 </Link>
@@ -185,9 +190,22 @@ export function Reply({
                     <small>reply</small>
                   </button>
                 )}
-                {/* <small>
-                  
-                </small> */}
+                {isMod && (
+                  <>
+                    <button type="button" className="button plain-accent-2">
+                      <ShieldOutlined />
+                      <small>pin</small>
+                    </button>
+                    <button type="button" className="button plain-accent-2">
+                      <ShieldOutlined />
+                      <small>freeze</small>
+                    </button>
+                    <button type="button" className="button plain-accent-2">
+                      <ShieldOutlined />
+                      <small>hide</small>
+                    </button>
+                  </>
+                )}
               </div>
               {replying && (
                 <>
@@ -214,6 +232,7 @@ export function Reply({
                     data={child}
                     shaded={!shaded}
                     firstLevel={false}
+                    isMod={isMod}
                     key={child.id}
                   />
                 ))}
@@ -260,7 +279,13 @@ export function Reply({
   );
 }
 
-export function NullParentReplies({ data }: { data: Reply }) {
+export function NullParentReplies({
+  data,
+  isMod,
+}: {
+  data: Reply;
+  isMod: boolean;
+}) {
   // dry this up?
   const [loadMoreChildren, setLoadMoreChildren] = useState<string | null>(
     data.loadMoreChildren ?? null
@@ -301,7 +326,13 @@ export function NullParentReplies({ data }: { data: Reply }) {
   return (
     <>
       {replyChildren.map((child) => (
-        <Reply data={child} shaded={false} firstLevel={true} key={child.id} />
+        <Reply
+          data={child}
+          shaded={false}
+          firstLevel={true}
+          isMod={isMod}
+          key={child.id}
+        />
       ))}
 
       {data?.loadMoreChildren && (

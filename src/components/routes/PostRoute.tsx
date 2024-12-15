@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useOutletContext, useParams } from "react-router-dom";
 import { DateTime } from "luxon";
 
 import { useGet } from "../../hooks/useGet";
@@ -7,14 +7,19 @@ import { RepliesSubroute } from "./RepliesSubroute";
 import { IsolatedReplySubroute } from "./IsolatedReplySubroute";
 import { MDWrapper } from "../MDWrapper";
 import { useEffect } from "react";
+import { useLogger } from "../../hooks/useLogger";
+import { type User } from "../../types";
 
 export function PostRoute() {
   const { post, reply } = useParams();
+  const { user } = useOutletContext<{ user: User }>();
   const { loading, error, data, get } = useGet<{
     community: {
       id: number;
       urlName: string;
       canonicalName: string;
+      moderators: number[];
+      adminId: number;
     };
     author: {
       id: number;
@@ -63,7 +68,15 @@ export function PostRoute() {
         {reply ? (
           <IsolatedReplySubroute postId={data.id} replyId={reply} />
         ) : (
-          <RepliesSubroute postId={data.id} />
+          <RepliesSubroute
+            postId={data.id}
+            isMod={
+              user &&
+              [...data.community.moderators, data.community.adminId].includes(
+                user.id
+              )
+            }
+          />
         )}
       </>
     );
