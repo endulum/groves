@@ -6,6 +6,7 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { VoteWidget } from "./VoteWidget";
 import { useGet } from "../hooks/useGet";
 import { type Reply } from "../types";
+import { gatherChildrenIds } from "../functions/gatherChildrenIds";
 
 export function Reply({
   data,
@@ -61,17 +62,6 @@ export function Reply({
 
   const clickToLoadChildren = () => {
     setNextUrl(loadChildren);
-  };
-
-  const gatherChildrenIds = (children: Reply[]): string[] => {
-    const ids: string[] = [];
-    children.forEach((child: Reply) => {
-      ids.push(child.id);
-      if (child.children) {
-        ids.push(...gatherChildrenIds(child.children));
-      }
-    });
-    return ids;
   };
 
   const getTotalChildCount = () => {
@@ -198,5 +188,68 @@ export function Reply({
         </>
       )}
     </div>
+  );
+}
+
+export function NullParentReplies({ data }: { data: Reply }) {
+  // dry this up?
+  const [loadMoreChildren, setLoadMoreChildren] = useState<string | null>(
+    data.loadMoreChildren ?? null
+  );
+
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
+
+  const [replyChildren, setReplyChildren] = useState<Reply[]>(
+    data.children ?? []
+  );
+
+  const {
+    loading,
+    data: childrenData,
+    get,
+  } = useGet<{
+    loadChildren: string | null;
+    loadMoreChildren: string | null;
+    children: Reply[];
+  }>(nextUrl as string);
+
+  useEffect(() => {
+    get(false);
+  }, [nextUrl]);
+
+  useEffect(() => {
+    if (childrenData) {
+      setReplyChildren([...replyChildren, ...childrenData.children]);
+      setLoadMoreChildren(childrenData.loadMoreChildren);
+      setNextUrl(null);
+    }
+  }, [childrenData]);
+
+  const clickToLoadMoreChildren = () => {
+    setNextUrl(loadMoreChildren);
+  };
+
+  return (
+    <>
+      {replyChildren.map((child) => (
+        <Reply data={child} shaded={false} firstLevel={true} key={child.id} />
+      ))}
+
+      {data?.loadMoreChildren && (
+        <small>
+          {loading ? (
+            <span>Loading more replies...</span>
+          ) : (
+            <a
+              className="reply-loadmore"
+              onClick={clickToLoadMoreChildren}
+              title={nextUrl ?? undefined}
+            >
+              Load more replies
+            </a>
+          )}
+        </small>
+      )}
+    </>
   );
 }

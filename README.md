@@ -35,8 +35,6 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Figure out what other links to put on each reply besides "parent"
 - - [ ] "Isolate" - goes to `/reply/____/replies`
 - [ ] Have white page span all device width on mobile
-- [ ] API idea: when making dummy replies,
-- - Generate random dates for the dummy data
-- - SORT the dummy data by those random dates
-- - Keep an array of availalbe parentids
-- - Pick a parentid at random when assigning a new reply
+- [ ] CTAs
+- - "No replies, write a reply!"
+- - "No posts, make a post!"

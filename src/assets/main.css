@@ -537,6 +537,7 @@ form {
 }
 
 .reply-content {
+  align-items: start;
   padding-bottom: 1rem;
   &.collapsed {
     padding-bottom: 0;
@@ -553,6 +554,7 @@ form {
 }
 
 .vote-widget {
+  flex-shrink: 0;
   .button {
     padding: 0.125rem;
     &[disabled]:hover {
