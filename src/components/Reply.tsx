@@ -9,6 +9,8 @@ import { type Reply } from "../types";
 import { gatherChildrenIds } from "../functions/gatherChildrenIds";
 import { MDWrapper } from "./MDWrapper";
 import { ReplyForm } from "./ReplyForm";
+import { HideReply } from "./forms/ModReplyActions";
+import { useLogger } from "../hooks/useLogger";
 
 export function Reply({
   data,
@@ -38,6 +40,8 @@ export function Reply({
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const [replying, setReplying] = useState<boolean>(false);
+
+  const [hidden, setHidden] = useState<boolean>(data.hidden);
 
   const {
     loading,
@@ -81,6 +85,8 @@ export function Reply({
     setReplyChildren([...replyChildren, newReply]);
   };
 
+  useLogger({ hidden });
+
   return (
     <div
       className={`reply${shaded ? " shaded" : ""}${
@@ -101,9 +107,13 @@ export function Reply({
           </button>
           <div className="reply-content mb-0 collapsed">
             <small>
-              <Link to={`/user/${data.author.username}`}>
-                {data.author.username}
-              </Link>{" "}
+              {!hidden && data.author ? (
+                <Link to={`/user/${data.author.username}`}>
+                  {data.author.username}
+                </Link>
+              ) : (
+                "(hidden)"
+              )}{" "}
               replied{" "}
               <span title={data.datePosted}>
                 {DateTime.fromISO(data.datePosted).toRelative()}
@@ -132,16 +142,26 @@ export function Reply({
             <VoteWidget data={data} />
             <div className="reply-body">
               <small>
-                <Link to={`/user/${data.author.username}`}>
-                  {data.author.username}
-                </Link>{" "}
+                {!hidden && data.author ? (
+                  <Link to={`/user/${data.author.username}`}>
+                    {data.author.username}
+                  </Link>
+                ) : (
+                  "(hidden)"
+                )}{" "}
                 replied{" "}
                 <span title={data.datePosted}>
                   {DateTime.fromISO(data.datePosted).toRelative()}
                 </span>
               </small>
               <br />
-              <MDWrapper content={data.content} />
+              {!hidden && data.content ? (
+                <MDWrapper content={data.content} />
+              ) : (
+                <p>
+                  <i>this content has been hidden</i>
+                </p>
+              )}
 
               {/* action row */}
               <div className="link-row mt-0-5 flex-row gap-0-5">
@@ -196,14 +216,11 @@ export function Reply({
                       <ShieldOutlined />
                       <small>pin</small>
                     </button>
-                    <button type="button" className="button plain-accent-2">
-                      <ShieldOutlined />
-                      <small>freeze</small>
-                    </button>
-                    <button type="button" className="button plain-accent-2">
-                      <ShieldOutlined />
-                      <small>hide</small>
-                    </button>
+                    <HideReply
+                      replyId={data.id}
+                      hidden={hidden}
+                      setHidden={setHidden}
+                    />
                   </>
                 )}
               </div>

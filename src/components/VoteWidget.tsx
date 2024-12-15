@@ -18,9 +18,9 @@ export function VoteWidget({ data }: { data: Reply }) {
   });
 
   const getTitle = (type: "upvote" | "downvote", action: "add" | "remove") => {
-    if (voted === null) return "You must be logged in to vote on content.";
     if (data.canVote === false)
-      return "Voting is disabled on readonly content.";
+      return "Voting is disabled on readonly or hidden content.";
+    if (voted === null) return "You must be logged in to vote on content.";
     if (type === "upvote") {
       if (action === "add") {
         return voted.upvoted === true ? "You gave an upvote." : "Add an upvote";

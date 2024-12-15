@@ -34,7 +34,8 @@ export function useForm<T>(
     Object.values(event.target).forEach((inputElement) => {
       if (
         inputElement instanceof HTMLInputElement ||
-        inputElement instanceof HTMLTextAreaElement
+        inputElement instanceof HTMLTextAreaElement ||
+        inputElement instanceof HTMLButtonElement
       ) {
         formData[inputElement.id] = inputElement.value;
       }

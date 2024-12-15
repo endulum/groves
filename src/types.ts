@@ -8,14 +8,14 @@ export type Reply = {
   author: {
     id: number;
     username: string;
-  };
+  } | null;
   _count: {
     upvotes: number;
     downvotes: number;
     children: number;
   };
   id: string;
-  content: string;
+  content: string | null;
   parentId: string;
   datePosted: string;
   voted: {
@@ -26,4 +26,5 @@ export type Reply = {
   children?: Reply[];
   loadChildren?: string;
   loadMoreChildren?: string;
+  hidden: boolean;
 };
