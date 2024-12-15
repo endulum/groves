@@ -186,6 +186,10 @@ main hr {
   margin-top: 1rem;
 }
 
+.mt-0-5 {
+  margin-top: 0.5rem;
+}
+
 .mb-1 {
   margin-bottom: 1rem;
 }
@@ -361,6 +365,16 @@ nav {
     }
     svg {
       color: yellowgreen;
+    }
+  }
+  &.info {
+    background-color: oklch(from lightseagreen calc(l + 0.5) c h / 0.25);
+    color: oklch(from lightseagreen calc(l - 0.25) c h);
+    a {
+      color: oklch(from lightseagreen calc(l - 0.25) c h);
+    }
+    svg {
+      color: lightseagreen;
     }
   }
 }
@@ -585,5 +599,13 @@ form {
   }
   &:hover svg {
     color: oklch(from var(--accent1) calc(l + 0.25) c h);
+  }
+}
+
+.link-row {
+  margin-left: -0.5rem;
+  .button {
+    padding: 0.125rem 0.5rem;
+    line-height: 1.5rem;
   }
 }

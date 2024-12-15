@@ -140,10 +140,56 @@ export function Reply({
               </small>
               <br />
               <MDWrapper content={data.content} />
-              <small>
-                <a href={`#${data.parentId}`}>parent</a>
-              </small>
-              {replying ? (
+
+              {/* action row */}
+              <div className="link-row mt-0-5 flex-row gap-0-5">
+                {data.parentId &&
+                  (firstLevel ? (
+                    <Link
+                      type="button"
+                      className="button plain-accent-2"
+                      to={`/post/${data.postId}/reply/${data.parentId}`}
+                    >
+                      <small>parent</small>
+                    </Link>
+                  ) : (
+                    <a
+                      type="button"
+                      className="button plain-accent-2"
+                      href={`#${data.parentId}`}
+                    >
+                      <small>parent</small>
+                    </a>
+                  ))}
+                <Link
+                  type="button"
+                  className="button plain-accent-2"
+                  to={`/post/${data.postId}/reply/${data.id}`}
+                >
+                  <small>isolate</small>
+                </Link>
+                {replying ? (
+                  <button
+                    type="button"
+                    className="button plain-accent-2"
+                    onClick={() => setReplying(false)}
+                  >
+                    <small style={{ color: "crimson" }}>cancel replying</small>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="button plain-accent-2"
+                    onClick={() => setReplying(true)}
+                  >
+                    <small>reply</small>
+                  </button>
+                )}
+                {/* <small>
+                  
+                </small> */}
+              </div>
+              {replying && (
                 <>
                   <hr className="mb-1" />
                   <ReplyForm
@@ -154,24 +200,7 @@ export function Reply({
                       addNewReply(submissionResult as Reply);
                     }}
                   />
-                  <button
-                    className="button"
-                    onClick={() => {
-                      setReplying(false);
-                    }}
-                  >
-                    Cancel
-                  </button>
                 </>
-              ) : (
-                <button
-                  className="button"
-                  onClick={() => {
-                    setReplying(true);
-                  }}
-                >
-                  Write reply
-                </button>
               )}
             </div>
           </div>

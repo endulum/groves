@@ -4,11 +4,13 @@ import { DateTime } from "luxon";
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { RepliesSubroute } from "./RepliesSubroute";
+import { IsolatedReplySubroute } from "./IsolatedReplySubroute";
 import { MDWrapper } from "../MDWrapper";
+import { useEffect } from "react";
 
 export function PostRoute() {
-  const { post } = useParams();
-  const { loading, error, data } = useGet<{
+  const { post, reply } = useParams();
+  const { loading, error, data, get } = useGet<{
     community: {
       id: number;
       urlName: string;
@@ -24,6 +26,10 @@ export function PostRoute() {
     datePosted: string;
     lastEdited: null | string;
   }>(`/post/${post}`);
+
+  useEffect(() => {
+    get(false);
+  }, [reply]);
 
   if (loading || error)
     return (
@@ -54,7 +60,11 @@ export function PostRoute() {
           <MDWrapper content={data.content} />
         </div>
         <hr />
-        <RepliesSubroute postId={data.id} />
+        {reply ? (
+          <IsolatedReplySubroute postId={data.id} replyId={reply} />
+        ) : (
+          <RepliesSubroute postId={data.id} />
+        )}
       </>
     );
 }

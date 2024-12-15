@@ -32,8 +32,9 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Two headers for comm view: comm details, and comm posts, titled Posts, put a `New` button there, and put a `Follow` button on the comm details heading
 - [x] Make replies collapsible
 - [ ] Ability to vote on posts, too (!)
-- [ ] Figure out what other links to put on each reply besides "parent"
-- - [ ] "Isolate" - goes to `/reply/____/replies`
+- [x] Figure out what other links to put on each reply besides "parent"
+- - [x] "Isolate" - goes to `/reply/____/replies`
+- [ ] Mod actions on replies
 - [ ] Have white page span all device width on mobile
 - [ ] CTAs
 - - "No replies, write a reply!"
