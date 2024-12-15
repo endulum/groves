@@ -209,6 +209,7 @@ main hr {
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
+  line-height: 1rem;
 
   &:has(svg) {
     display: flex;
