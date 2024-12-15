@@ -546,6 +546,10 @@ form {
   }
 }
 
+.reply-body {
+  flex-grow: 1;
+}
+
 .reply-loadmore {
   &:hover {
     cursor: pointer;

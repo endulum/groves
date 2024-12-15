@@ -69,8 +69,6 @@ export function Form<T>({
           return child;
         })}
 
-      <hr />
-
       <button
         className="button accent-1"
         type="submit"

@@ -4,6 +4,7 @@ export type User = {
 };
 
 export type Reply = {
+  postId: string;
   author: {
     id: number;
     username: string;

@@ -8,6 +8,7 @@ import { useGet } from "../hooks/useGet";
 import { type Reply } from "../types";
 import { gatherChildrenIds } from "../functions/gatherChildrenIds";
 import { MDWrapper } from "./MDWrapper";
+import { ReplyForm } from "./ReplyForm";
 
 export function Reply({
   data,
@@ -34,6 +35,8 @@ export function Reply({
 
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
+  const [replying, setReplying] = useState<boolean>(false);
+
   const {
     loading,
     data: childrenData,
@@ -50,7 +53,10 @@ export function Reply({
 
   useEffect(() => {
     if (childrenData) {
-      setReplyChildren([...replyChildren, ...childrenData.children]);
+      setReplyChildren([
+        ...replyChildren,
+        ...childrenData.children.filter((r) => !replyChildren.includes(r)),
+      ]);
       setLoadChildren(childrenData.loadChildren);
       setLoadMoreChildren(childrenData.loadMoreChildren);
       setNextUrl(null);
@@ -67,6 +73,10 @@ export function Reply({
 
   const getTotalChildCount = () => {
     return gatherChildrenIds(replyChildren).length;
+  };
+
+  const addNewReply = (newReply: Reply) => {
+    setReplyChildren([...replyChildren, newReply]);
   };
 
   return (
@@ -118,7 +128,7 @@ export function Reply({
           </button>
           <div className="reply-content flex-row gap-1">
             <VoteWidget data={data} />
-            <div>
+            <div className="reply-body">
               <small>
                 <Link to={`/user/${data.author.username}`}>
                   {data.author.username}
@@ -133,6 +143,36 @@ export function Reply({
               <small>
                 <a href={`#${data.parentId}`}>parent</a>
               </small>
+              {replying ? (
+                <>
+                  <hr className="mb-1" />
+                  <ReplyForm
+                    postId={data.postId}
+                    parentId={data.id}
+                    onSuccess={(_submissionData, submissionResult) => {
+                      setReplying(false);
+                      addNewReply(submissionResult as Reply);
+                    }}
+                  />
+                  <button
+                    className="button"
+                    onClick={() => {
+                      setReplying(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="button"
+                  onClick={() => {
+                    setReplying(true);
+                  }}
+                >
+                  Write reply
+                </button>
+              )}
             </div>
           </div>
 
