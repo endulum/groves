@@ -1,8 +1,6 @@
 import { ShieldOutlined, Loop } from "@mui/icons-material";
 
 import { useForm } from "../../hooks/useForm";
-import { type Reply } from "../../types";
-import { useLogger } from "../../hooks/useLogger";
 
 export function HideReply({
   replyId,
@@ -13,7 +11,7 @@ export function HideReply({
   hidden: boolean;
   setHidden: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { loading, error, inputErrors, handleSubmit } = useForm(
+  const { loading, handleSubmit } = useForm(
     { endpoint: `/reply/${replyId}/status`, method: "PUT" },
     (submissionData, _submissionResult) => {
       setHidden(submissionData.hidden === "true");

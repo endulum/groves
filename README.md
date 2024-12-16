@@ -34,7 +34,7 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Ability to vote on posts, too (!)
 - [x] Figure out what other links to put on each reply besides "parent"
 - - [x] "Isolate" - goes to `/reply/____/replies`
-- [ ] Mod actions on replies
+- [x] Mod actions on replies
 - [ ] Have white page span all device width on mobile
 - [ ] CTAs
 - - "No replies, write a reply!"

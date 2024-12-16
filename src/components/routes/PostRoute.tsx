@@ -1,46 +1,29 @@
-import { Link, useOutletContext, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DateTime } from "luxon";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
-import { RepliesSubroute } from "./RepliesSubroute";
-import { IsolatedReplySubroute } from "./IsolatedReplySubroute";
 import { MDWrapper } from "../MDWrapper";
-import { type User } from "../../types";
+import { type Post } from "../../types";
+import { TopLevelReplies } from "../reply/TopLevelReplies";
+import { IsolatedReply } from "../reply/IsolatedReply";
 
 export function PostRoute() {
   const { post, reply } = useParams();
-  const { user } = useOutletContext<{ user: User }>();
-  const { loading, error, data } = useGet<{
-    community: {
-      id: number;
-      urlName: string;
-      canonicalName: string;
-      moderators: number[];
-      adminId: number;
-    };
-    author: {
-      id: number;
-      username: string;
-    };
-    title: string;
-    id: string;
-    content: string;
-    datePosted: string;
-    lastEdited: null | string;
-  }>(`/post/${post}`);
+  const { loading, error, data } = useGet<Post>(`/post/${post}`);
 
   if (loading || error)
     return (
       <LoadingSpacer
         loading={loading}
         error={error}
-        customLoadingText="Getting post info..."
+        customLoadingText="Getting post..."
       />
     );
   if (data)
     return (
       <>
+        {/* context subtext */}
         <small>
           Posted under{" "}
           <Link to={`/community/${data.community.urlName}`}>
@@ -52,35 +35,30 @@ export function PostRoute() {
           </Link>{" "}
           {DateTime.fromISO(data.datePosted).toRelative()}
           {data.lastEdited &&
-            `, edited ${DateTime.fromISO(data.lastEdited).toRelative()}`}
+            `, last edited ${DateTime.fromISO(data.lastEdited).toRelative()}`}
         </small>
+
+        {/* title and content */}
         <h2>{data.title}</h2>
         <div className="post-content">
           <MDWrapper content={data.content} />
         </div>
+
+        {/* replies */}
         <hr />
-        {reply ? (
-          <IsolatedReplySubroute
-            postId={data.id}
-            replyId={reply}
-            isMod={
-              user &&
-              [...data.community.moderators, data.community.adminId].includes(
-                user.id
-              )
-            }
-          />
-        ) : (
-          <RepliesSubroute
-            postId={data.id}
-            isMod={
-              user &&
-              [...data.community.moderators, data.community.adminId].includes(
-                user.id
-              )
-            }
-          />
-        )}
+        {/* <ReplyView postId={data.id} startingParent={reply} /> */}
+        <>
+          <h3 className="mt-1">Replies</h3>
+          <div className="replies flex-col align-start gap-0-5">
+            {reply ? (
+              // if startingParent is not null, we're viewing one comment and its children
+              <IsolatedReply postId={data.id} replyId={reply} />
+            ) : (
+              // if startingParent is null, we're viewing all top-level comments
+              <TopLevelReplies postId={data.id} />
+            )}
+          </div>
+        </>
       </>
     );
 }

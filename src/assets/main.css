@@ -556,12 +556,12 @@ form {
 }
 
 .reply-children {
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
 .reply-content {
   align-items: start;
-  padding-bottom: 1rem;
   &.collapsed {
     padding-bottom: 0;
     display: flex;

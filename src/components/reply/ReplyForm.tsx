@@ -1,5 +1,5 @@
-import { Reply } from "../types";
-import { Form } from "./Form";
+import { Reply } from "../../types";
+import { Form } from "../Form";
 
 export function ReplyForm({
   postId,
@@ -24,10 +24,11 @@ export function ReplyForm({
         <textarea id="content" />
       </label>
 
-      <label htmlFor="parent">
-        <span style={{ display: "none" }}></span>
-        <input type="hidden" id="parent" value={parentId ?? undefined} />
+      <label htmlFor="parent" style={{ display: "none" }} aria-hidden>
+        <span>Parent</span>
+        <input id="parent" autoComplete="off" value={parentId ?? undefined} />
       </label>
+      {/* i could use an input type="hidden" here but devtools issues makes a fuss */}
     </Form>
   );
 }
