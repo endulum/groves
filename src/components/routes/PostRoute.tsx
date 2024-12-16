@@ -7,10 +7,15 @@ import { MDWrapper } from "../MDWrapper";
 import { type Post } from "../../types";
 import { TopLevelReplies } from "../reply/TopLevelReplies";
 import { IsolatedReply } from "../reply/IsolatedReply";
+import { useState } from "react";
+import { useLogger } from "../../hooks/useLogger";
 
 export function PostRoute() {
   const { post, reply } = useParams();
   const { loading, error, data } = useGet<Post>(`/post/${post}`);
+
+  const [sort, setSort] = useState<string>("top");
+  useLogger({ sort });
 
   if (loading || error)
     return (
@@ -46,16 +51,34 @@ export function PostRoute() {
 
         {/* replies */}
         <hr />
-        {/* <ReplyView postId={data.id} startingParent={reply} /> */}
         <>
-          <h3 className="mt-1">Replies</h3>
+          <div className="flex-row jc-spb">
+            <h3 className="mt-1">Replies</h3>
+            <label htmlFor="sort" className="flex-row gap-1">
+              <span>Sort by:</span>
+              <select
+                id="sort"
+                value={sort}
+                onChange={(e) => {
+                  setSort(e.target.value);
+                }}
+              >
+                <option value="top">Top</option>
+                <option value="hot">Hot</option>
+                <option value="best">Best</option>
+                <option value="controversial">Controversial</option>
+                <option value="latest">Newest</option>
+              </select>
+            </label>
+          </div>
+
           <div className="replies flex-col align-start gap-0-5">
             {reply ? (
               // if startingParent is not null, we're viewing one comment and its children
-              <IsolatedReply postId={data.id} replyId={reply} />
+              <IsolatedReply postId={data.id} replyId={reply} sort={sort} />
             ) : (
               // if startingParent is null, we're viewing all top-level comments
-              <TopLevelReplies postId={data.id} />
+              <TopLevelReplies postId={data.id} sort={sort} />
             )}
           </div>
         </>

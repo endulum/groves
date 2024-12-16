@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 import {
   type Reply as TReply,
   type VisibleReply,
@@ -7,10 +9,20 @@ import { Reply } from "./Reply";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { useGet } from "../../hooks/useGet";
 
-export function TopLevelReplies({ postId }: { postId: string }) {
-  const { loading, error, data } = useGet<TReply & { viewingAsMod: boolean }>(
-    `/post/${postId}/replies?sort=best&takePerLevel=2`
-  );
+export function TopLevelReplies({
+  postId,
+  sort,
+}: {
+  postId: string;
+  sort: string;
+}) {
+  const { loading, error, data, get } = useGet<
+    TReply & { viewingAsMod: boolean }
+  >(`/post/${postId}/replies?sort=${sort}`);
+
+  useEffect(() => {
+    get(false);
+  }, [sort]);
 
   return (
     <>
@@ -21,18 +33,71 @@ export function TopLevelReplies({ postId }: { postId: string }) {
           customLoadingText="Getting replies..."
         />
       )}
-      {data &&
-        data.children?.map((child) => (
-          <Reply
-            data={child as VisibleReply | HiddenReply}
-            status={{
-              isShaded: false,
-              isMod: data.viewingAsMod,
-              isTopLevel: true,
-            }}
-            key={child.id}
-          />
-        ))}
+      {data && <NullParentReplies data={data} />}
+    </>
+  );
+}
+function NullParentReplies({ data }: { data: TReply }) {
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
+  const [children, setChildren] = useState<TReply[]>(data.children ?? []);
+
+  const {
+    loading,
+    data: moreData,
+    get,
+  } = useGet<{
+    loadChildren: string | null;
+    loadMoreChildren: string | null;
+    children: TReply[];
+  }>(nextUrl as string);
+
+  useEffect(() => {
+    if (nextUrl) {
+      get(false);
+    }
+  }, [nextUrl]);
+
+  useEffect(() => {
+    if (moreData && moreData.children && nextUrl) {
+      setChildren([...children, ...moreData.children]);
+      setNextUrl(null);
+    }
+  }, [moreData]);
+
+  return (
+    <>
+      {children.map((child) => (
+        <Reply
+          data={child as VisibleReply | HiddenReply}
+          status={{
+            isShaded: false,
+            isMod: data.viewingAsMod,
+            isTopLevel: true,
+          }}
+          key={child.id}
+        />
+      ))}
+
+      {(moreData ? moreData.loadMoreChildren : data.loadMoreChildren) && (
+        <small>
+          {loading ? (
+            <span>Loading more replies...</span>
+          ) : (
+            <a
+              className="reply-loadmore"
+              onClick={() => {
+                const loadMoreChildren = moreData
+                  ? moreData.loadMoreChildren
+                  : data.loadMoreChildren;
+                if (loadMoreChildren) setNextUrl(loadMoreChildren);
+              }}
+              title={nextUrl ?? undefined}
+            >
+              Load more replies
+            </a>
+          )}
+        </small>
+      )}
     </>
   );
 }

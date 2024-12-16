@@ -14,9 +14,11 @@ import { Alert } from "../Alert";
 export function IsolatedReply({
   postId,
   replyId,
+  sort,
 }: {
   postId: string;
   replyId: string;
+  sort: string;
 }) {
   const { loading, error, data, get } = useGet<
     TReply & { viewingAsMod: boolean }
@@ -24,7 +26,7 @@ export function IsolatedReply({
 
   useEffect(() => {
     get(false);
-  }, [replyId]);
+  }, [replyId, sort]);
 
   return (
     <>

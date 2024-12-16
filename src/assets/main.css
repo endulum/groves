@@ -398,12 +398,20 @@ nav {
   }
 }
 
-form {
-  input,
-  select,
-  textarea {
-    width: 100%;
-    padding: 0.5rem;
+/* form { */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+}
+/* } */
+
+label {
+  span {
+    font-weight: bold;
+    min-width: max-content;
+    flex-shrink: 0;
   }
 }
 
@@ -423,9 +431,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  span {
-    font-weight: bold;
-  }
+
   &:has(.form-error) {
     input,
     select,
@@ -548,6 +554,7 @@ form {
 
 .replies {
   margin-top: 1rem;
+  padding-left: 0.75rem;
 }
 
 .reply {
@@ -564,7 +571,7 @@ form {
   }
   &.first-level {
     border-left: 3px double #ddd;
-    margin-left: 0.75rem;
+    /* margin-left: 0.75rem; */
   }
 }
 
