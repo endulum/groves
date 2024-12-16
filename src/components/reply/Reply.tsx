@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DateTime } from "luxon";
+import { DateTime, DateTimeFormatOptions } from "luxon";
 import { ExpandLess } from "@mui/icons-material";
 
 import {
@@ -16,6 +16,15 @@ import { ReplyForm } from "./ReplyForm";
 import { CollapsedReply } from "./CollapsedReply";
 import { ReplyActionRow } from "./ReplyActionRow";
 import { Alert } from "../Alert";
+import { gatherChildrenIds } from "../../functions/gatherChildrenIds";
+
+const format: DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+};
 
 export function Reply({
   data,
@@ -88,6 +97,7 @@ export function Reply({
           data={data}
           hidden={hidden}
           setCollapsed={setCollapsed}
+          childCount={gatherChildrenIds(children).length}
         />
       ) : (
         <>
@@ -104,11 +114,10 @@ export function Reply({
 
           {/* content */}
           <div className="reply-content flex-row gap-1">
-            {/* {import.meta.env.MODE === "development" && <pre>{data.id}</pre>} */}
             {hidden || (!hidden && data.hidden) ? (
               <div className="reply-body flex-col align-start">
                 {hidden && (
-                  <Alert type="warning">
+                  <Alert type="blind">
                     <p>This reply's content is hidden.</p>
                   </Alert>
                 )}
@@ -119,6 +128,9 @@ export function Reply({
                       the next render.
                     </p>
                   </Alert>
+                )}
+                {import.meta.env.MODE === "development" && (
+                  <pre className="mt-1">{data.id}</pre>
                 )}
                 <ReplyActionRow
                   data={data}
@@ -140,12 +152,20 @@ export function Reply({
                         {data.author.username}
                       </Link>{" "}
                       replied{" "}
-                      <span title={data.datePosted}>
+                      <span
+                        title={DateTime.fromISO(data.datePosted).toLocaleString(
+                          format
+                        )}
+                      >
                         {DateTime.fromISO(data.datePosted).toRelative()}
                       </span>
                     </small>
 
-                    <MDWrapper content={data.content} />
+                    {import.meta.env.MODE === "development" ? (
+                      <pre className="mt-1">{data.id}</pre>
+                    ) : (
+                      <MDWrapper content={data.content} />
+                    )}
 
                     <ReplyActionRow
                       data={data}

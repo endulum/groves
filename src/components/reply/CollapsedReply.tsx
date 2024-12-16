@@ -8,10 +8,12 @@ export function CollapsedReply({
   data,
   hidden,
   setCollapsed,
+  childCount,
 }: {
   data: VisibleReply | HiddenReply;
   hidden: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+  childCount: number;
 }) {
   return (
     <>
@@ -29,24 +31,26 @@ export function CollapsedReply({
       {/* content */}
       <div className="reply-content mb-0 collapsed">
         <small>
-          {hidden
-            ? "hidden content, "
-            : !data.hidden && (
-                <>
-                  <Link to={`/user/${data.author.username}`}>
-                    {data.author.username}
-                  </Link>{" "}
-                  replied{" "}
-                  <span title={data.datePosted}>
-                    {DateTime.fromISO(data.datePosted).toRelative()}
-                  </span>{" "}
-                  with{" "}
-                  <span>
-                    {data._count.upvotes - data._count.downvotes} points,
-                  </span>
-                </>
-              )}{" "}
-          <span>{`${data._count.children} replies`}</span>
+          {hidden ? (
+            "hidden content, "
+          ) : data.hidden ? (
+            "unhidden content, "
+          ) : (
+            <>
+              <Link to={`/user/${data.author.username}`}>
+                {data.author.username}
+              </Link>{" "}
+              replied{" "}
+              <span title={data.datePosted}>
+                {DateTime.fromISO(data.datePosted).toRelative()}
+              </span>{" "}
+              with{" "}
+              <span>{data._count.upvotes - data._count.downvotes} points,</span>
+            </>
+          )}{" "}
+          <span>{`${childCount} ${
+            childCount === 1 ? "child" : "children"
+          }`}</span>
         </small>
       </div>
     </>

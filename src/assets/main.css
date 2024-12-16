@@ -386,6 +386,16 @@ nav {
       color: lightseagreen;
     }
   }
+  &.blind {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: rgba(0, 0, 0, 0.5);
+    a {
+      color: rgba(0, 0, 0, 0.5);
+    }
+    svg {
+      color: gray;
+    }
+  }
 }
 
 form {
@@ -543,7 +553,9 @@ form {
 .reply {
   position: relative;
   width: 100%;
-  padding: 1rem;
+  padding: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   padding-left: 1.5rem;
   border: 1px solid #ddd;
   background-color: #fff;
@@ -552,6 +564,7 @@ form {
   }
   &.first-level {
     border-left: 3px double #ddd;
+    margin-left: 0.75rem;
   }
 }
 
@@ -599,9 +612,9 @@ form {
   background-color: white;
   border-radius: 100%;
   padding: 0.25rem !important;
-  border: none;
+  border: 1px solid #ddd;
   position: absolute;
-  left: -1rem;
+  left: -1.125rem;
   top: 0.625rem;
   svg {
     color: var(--accent1);

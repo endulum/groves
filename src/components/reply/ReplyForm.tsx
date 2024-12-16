@@ -26,7 +26,11 @@ export function ReplyForm({
 
       <label htmlFor="parent" style={{ display: "none" }} aria-hidden>
         <span>Parent</span>
-        <input id="parent" autoComplete="off" value={parentId ?? undefined} />
+        <input
+          id="parent"
+          autoComplete="off"
+          defaultValue={parentId ?? undefined}
+        />
       </label>
       {/* i could use an input type="hidden" here but devtools issues makes a fuss */}
     </Form>
