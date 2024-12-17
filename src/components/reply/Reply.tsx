@@ -141,6 +141,22 @@ export function Reply({
                   replying={replying}
                   setReplying={setReplying}
                 />
+                {loadChildren && (
+                  <small className="reply-loadmore mt-0-5 mb-0-5">
+                    {loading ? (
+                      <span>Loading replies...</span>
+                    ) : (
+                      <a
+                        onClick={() => {
+                          setNextUrl(loadChildren);
+                        }}
+                        title={loadChildren}
+                      >
+                        Load replies
+                      </a>
+                    )}
+                  </small>
+                )}
               </div>
             ) : (
               !data.hidden && (
@@ -193,12 +209,11 @@ export function Reply({
                     )}
                     {/* "load children" link for revealing children */}
                     {loadChildren && (
-                      <small>
+                      <small className="reply-loadmore mt-0-5 mb-0-5">
                         {loading ? (
                           <span>Loading replies...</span>
                         ) : (
                           <a
-                            className="reply-loadmore mt-0-5 mb-0-5"
                             onClick={() => {
                               setNextUrl(loadChildren);
                             }}
@@ -213,40 +228,6 @@ export function Reply({
                 </>
               )
             )}
-            {/* {hidden ? (
-              <>
-               
-                
-              </>
-            ) : (
-              <>
-                
-                <ReplyActionRow
-                  data={data}
-                  status={status}
-                  hidden={hidden}
-                  setHidden={setHidden}
-                  replying={replying}
-                  setReplying={setReplying}
-                />
-              </>
-            )} */}
-            {/* {hidden && data.hidden && <p>will be hidden</p>}
-            {hidden && !data.hidden && <p>will be hidden</p>}
-            {!hidden && data.hidden && <p>info about not being hidden</p>}
-            {!hidden && !data.hidden && <p>will be present</p>} */}
-            {/* {
-              hidden
-                ? (<>
-                <Alert type="warning">
-                  <p>This reply's content is hidden.</p>
-                </Alert>
-                <
-                </>) // data is hidden
-                : data.hidden 
-                  ? (<p>owo</p>) // info message that it was unhidden
-                  : (<p>owo</p>) // data is visible
-            } */}
           </div>
           {children.length > 0 && (
             <>
@@ -265,12 +246,11 @@ export function Reply({
               </div>
               {/* "load more children" link for child overflow */}
               {loadMoreChildren && (
-                <small>
+                <small className="reply-loadmore mt-1 mb-0-5">
                   {loading ? (
                     <span>Loading more replies...</span>
                   ) : (
                     <a
-                      className="reply-loadmore mt-1 mb-0-5"
                       onClick={() => {
                         setNextUrl(loadMoreChildren);
                       }}

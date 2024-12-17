@@ -373,7 +373,7 @@ h2:first-child {
 
 .reply-loadmore {
   display: inline-block;
-  &:hover {
+  &:has(a):hover {
     cursor: pointer;
     text-decoration: underline;
   }

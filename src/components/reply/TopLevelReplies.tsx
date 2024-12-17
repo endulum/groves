@@ -79,12 +79,11 @@ function NullParentReplies({ data }: { data: TReply }) {
       ))}
 
       {(moreData ? moreData.loadMoreChildren : data.loadMoreChildren) && (
-        <small>
+        <small className="reply-loadmore mt-1 mb-0-5">
           {loading ? (
             <span>Loading more replies...</span>
           ) : (
             <a
-              className="reply-loadmore"
               onClick={() => {
                 const loadMoreChildren = moreData
                   ? moreData.loadMoreChildren
