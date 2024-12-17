@@ -4,19 +4,21 @@ import {
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
-  type User,
 } from "../../types";
 import { Reply } from "./Reply";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { useGet } from "../../hooks/useGet";
-import { useOutletContext } from "react-router-dom";
 
 export function TopLevelReplies({
   postId,
   sort,
+  isReadOnly,
+  isLoggedIn,
 }: {
   postId: string;
   sort: string;
+  isReadOnly: boolean;
+  isLoggedIn: boolean;
 }) {
   const { loading, error, data, get } = useGet<
     TReply & { viewingAsMod: boolean }
@@ -35,13 +37,25 @@ export function TopLevelReplies({
           customLoadingText="Getting replies..."
         />
       )}
-      {data && <NullParentReplies data={data} />}
+      {data && (
+        <NullParentReplies
+          data={data}
+          isReadOnly={isReadOnly}
+          isLoggedIn={isLoggedIn}
+        />
+      )}
     </>
   );
 }
-function NullParentReplies({ data }: { data: TReply }) {
-  const { user } = useOutletContext<{ user: User }>();
-
+function NullParentReplies({
+  data,
+  isReadOnly,
+  isLoggedIn,
+}: {
+  data: TReply;
+  isReadOnly: boolean;
+  isLoggedIn: boolean;
+}) {
   const [nextUrl, setNextUrl] = useState<string | null>(null);
   const [children, setChildren] = useState<TReply[]>(data.children ?? []);
 
@@ -77,7 +91,8 @@ function NullParentReplies({ data }: { data: TReply }) {
             isShaded: false,
             isMod: data.viewingAsMod,
             isTopLevel: true,
-            isLoggedIn: !!user,
+            isLoggedIn,
+            isReadOnly,
           }}
           key={child.id}
         />

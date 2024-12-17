@@ -10,7 +10,7 @@ Groves is an arboreal semiclone of Reddit.
 
 ## Todo
 
-- [ ] Voting and actions on posts
+- [x] Voting and actions on posts
 - [ ] Add bio field to account settings
 - [ ] Local settings for automatic reply sorting and levels/take
 - [ ] Have white page span all device width on mobile
@@ -19,3 +19,4 @@ Groves is an arboreal semiclone of Reddit.
 - - "No posts, make a post!"
 - [ ] info tooltips for comm creation fields
 - [ ] page titles
+- [ ] have single-button form errors show up as toasts

@@ -34,6 +34,8 @@ export type Post = {
   content: string;
   datePosted: string;
   lastEdited: null | string;
+  readonly: boolean;
+  viewingAsMod: boolean;
 };
 
 export type Reply = {
@@ -83,4 +85,5 @@ export type ReplyStatus = {
   isMod: boolean;
   isTopLevel: boolean;
   isLoggedIn: boolean;
+  isReadOnly: boolean;
 };

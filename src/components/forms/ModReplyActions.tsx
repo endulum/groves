@@ -33,3 +33,35 @@ export function HideReply({
     </form>
   );
 }
+
+export function FreezePost({
+  postId,
+  readonly,
+  setReadonly,
+}: {
+  postId: string;
+  readonly: boolean;
+  setReadonly: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const { loading, handleSubmit } = useForm(
+    { endpoint: `/post/${postId}/status`, method: "PUT" },
+    (submissionData, _submissionResult) => {
+      setReadonly(submissionData.readonly === "true");
+    }
+  );
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <button
+        type="submit"
+        className="button plain secondary"
+        id="readonly"
+        value={readonly ? "false" : "true"}
+      >
+        {loading ? <Loop className="spin" /> : <ShieldOutlined />}
+
+        <small>{readonly ? "unfreeze" : "freeze"}</small>
+      </button>
+    </form>
+  );
+}

@@ -57,6 +57,7 @@ export function ReplyActionRow({
       {/* reply */}
       {!hidden &&
         status.isLoggedIn &&
+        !status.isReadOnly &&
         (replying ? (
           <button
             type="button"
