@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 import {
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
+  User,
 } from "../../types";
 import { Reply } from "./Reply";
 import { LoadingSpacer } from "../LoadingSpacer";
@@ -20,6 +21,8 @@ export function IsolatedReply({
   replyId: string;
   sort: string;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
+
   const { loading, error, data, get } = useGet<
     TReply & { viewingAsMod: boolean }
   >(`/reply/${replyId}/replies`);
@@ -51,6 +54,7 @@ export function IsolatedReply({
             isShaded: false,
             isMod: data.viewingAsMod,
             isTopLevel: true,
+            isLoggedIn: !!user,
           }}
           key={data.id}
         />

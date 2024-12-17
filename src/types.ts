@@ -71,4 +71,5 @@ export type ReplyStatus = {
   isShaded: boolean;
   isMod: boolean;
   isTopLevel: boolean;
+  isLoggedIn: boolean;
 };

@@ -4,10 +4,12 @@ import {
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
+  type User,
 } from "../../types";
 import { Reply } from "./Reply";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { useGet } from "../../hooks/useGet";
+import { useOutletContext } from "react-router-dom";
 
 export function TopLevelReplies({
   postId,
@@ -38,6 +40,8 @@ export function TopLevelReplies({
   );
 }
 function NullParentReplies({ data }: { data: TReply }) {
+  const { user } = useOutletContext<{ user: User }>();
+
   const [nextUrl, setNextUrl] = useState<string | null>(null);
   const [children, setChildren] = useState<TReply[]>(data.children ?? []);
 
@@ -73,6 +77,7 @@ function NullParentReplies({ data }: { data: TReply }) {
             isShaded: false,
             isMod: data.viewingAsMod,
             isTopLevel: true,
+            isLoggedIn: !!user,
           }}
           key={child.id}
         />
