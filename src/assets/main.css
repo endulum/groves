@@ -113,6 +113,10 @@ footer .body {
 
 /* basics */
 
+small {
+  line-height: 0.75rem;
+}
+
 a {
   font-weight: bold;
   color: var(--accent2);

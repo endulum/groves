@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { DateTime } from "luxon";
+import { useState } from "react";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
@@ -7,7 +8,7 @@ import { MDWrapper } from "../MDWrapper";
 import { type Post } from "../../types";
 import { TopLevelReplies } from "../reply/TopLevelReplies";
 import { IsolatedReply } from "../reply/IsolatedReply";
-import { useState } from "react";
+import { VoteWidget } from "../VoteWidget";
 
 export function PostRoute() {
   const { post, reply } = useParams();
@@ -26,23 +27,29 @@ export function PostRoute() {
   if (data)
     return (
       <>
-        {/* context subtext */}
-        <small>
-          Posted under{" "}
-          <Link to={`/community/${data.community.urlName}`}>
-            {data.community.canonicalName}
-          </Link>{" "}
-          by{" "}
-          <Link to={`/user/${data.author.username}`}>
-            {data.author.username}
-          </Link>{" "}
-          {DateTime.fromISO(data.datePosted).toRelative()}
-          {data.lastEdited &&
-            `, last edited ${DateTime.fromISO(data.lastEdited).toRelative()}`}
-        </small>
-
         {/* title and content */}
-        <h2 className="mb-1">{data.title}</h2>
+        <div className="flex-row jc-spb gap-0-5 mb-1">
+          <div>
+            <small>
+              Posted under{" "}
+              <Link to={`/community/${data.community.urlName}`}>
+                {data.community.canonicalName}
+              </Link>{" "}
+              by{" "}
+              <Link to={`/user/${data.author.username}`}>
+                {data.author.username}
+              </Link>{" "}
+              {DateTime.fromISO(data.datePosted).toRelative()}
+              {data.lastEdited &&
+                `, last edited ${DateTime.fromISO(
+                  data.lastEdited
+                ).toRelative()}`}
+            </small>
+            <h2>{data.title}</h2>
+          </div>
+          <VoteWidget data={data} type="post" orientation="horizontal" />
+        </div>
+
         <div className="mb-1">
           <MDWrapper content={data.content} />
         </div>

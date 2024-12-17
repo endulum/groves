@@ -8,11 +8,19 @@ import {
 } from "@mui/icons-material";
 
 import { useVote } from "../hooks/useVote";
-import { type VisibleReply } from "../types";
+import { type VisibleReply, type Post } from "../types";
 
-export function VoteWidget({ data }: { data: VisibleReply }) {
+export function VoteWidget({
+  data,
+  type,
+  orientation = "horizontal",
+}: {
+  data: VisibleReply | Post;
+  type: "post" | "reply";
+  orientation: "vertical" | "horizontal";
+}) {
   const { loading, vote, voted, score } = useVote({
-    endpoint: `/reply/${data.id}`,
+    endpoint: type === "post" ? `/post/${data.id}` : `/reply/${data.id}`,
     voted: data.voted,
     score: data._count.upvotes - data._count.downvotes,
   });
@@ -68,7 +76,11 @@ export function VoteWidget({ data }: { data: VisibleReply }) {
   const { upvotes, downvotes } = data._count;
 
   return (
-    <div className="vote-widget flex-col gap-0-25">
+    <div
+      className={`vote-widget ${
+        orientation === "vertical" ? "flex-col" : "flex-row"
+      } gap-0-25`}
+    >
       <button
         className="button plain"
         disabled={getDisabled("upvote")}
@@ -83,7 +95,9 @@ export function VoteWidget({ data }: { data: VisibleReply }) {
         {voted?.upvoted ? <AddCircle /> : <AddCircleOutline />}
       </button>
       <div
-        className="flex-row gap-0-5"
+        className={`${
+          orientation === "vertical" ? "flex-row gap-0-5" : "flex-col gap-0-25"
+        }`}
         title={
           loading
             ? "Casting vote..."

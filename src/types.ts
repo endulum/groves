@@ -19,6 +19,17 @@ export type Post = {
     username: string;
   };
 
+  _count: {
+    upvotes: number;
+    downvotes: number;
+    replies: number;
+  };
+  voted: {
+    upvoted: boolean;
+    downvoted: boolean;
+  };
+  canVote: boolean;
+
   title: string;
   content: string;
   datePosted: string;
