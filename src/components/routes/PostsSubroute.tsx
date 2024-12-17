@@ -49,7 +49,7 @@ export function PostsSubroute({ communityUrl }: { communityUrl: string }) {
         const { upvotes, downvotes } = post._count;
         const score = upvotes - downvotes;
         return (
-          <div className="search-result post" key={post.id}>
+          <div className="search-result" key={post.id}>
             <div className="flex-row jc-spb gap-1">
               <div className="flex-row gap-0-75 align-start">
                 <Park style={{ width: "2rem", height: "2rem" }} />
@@ -85,7 +85,7 @@ export function PostsSubroute({ communityUrl }: { communityUrl: string }) {
                 </div>
                 <Link
                   type="button"
-                  className="button plain-accent-2"
+                  className="button plain secondary"
                   to={`/post/${post.id}`}
                   title="View post"
                 >

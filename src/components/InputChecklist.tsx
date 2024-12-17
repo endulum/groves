@@ -31,7 +31,9 @@ export function InputChecklist({
           {requirements.map((req) => (
             <li
               key={req.description}
-              className={req.function(inputValue) === true ? "good" : "missing"}
+              className={`flex-row  gap-0-5 ${
+                req.function(inputValue) === true ? " good" : " missing"
+              }`}
             >
               {req.function(inputValue) === true ? (
                 <CheckCircle aria-label="This requirement is fulfilled." />

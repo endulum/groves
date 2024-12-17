@@ -113,7 +113,7 @@ export function Reply({
           </button>
 
           {/* content */}
-          <div className="reply-content flex-row gap-1">
+          <div className="reply-content flex-row gap-1 align-start">
             {hidden || (!hidden && data.hidden) ? (
               <div className="reply-body flex-col align-start">
                 {hidden && (
@@ -129,9 +129,10 @@ export function Reply({
                     </p>
                   </Alert>
                 )}
-                {import.meta.env.MODE === "development" && (
-                  <pre className="mt-1">{data.id}</pre>
-                )}
+                {import.meta.env.MODE === "development" &&
+                  import.meta.env.HIDE_TEXT === "true" && (
+                    <pre className="mt-1">{data.id}</pre>
+                  )}
                 <ReplyActionRow
                   data={data}
                   status={status}
@@ -161,7 +162,8 @@ export function Reply({
                       </span>
                     </small>
 
-                    {import.meta.env.MODE === "development" ? (
+                    {import.meta.env.MODE === "development" &&
+                    import.meta.env.HIDE_TEXT === "true" ? (
                       <pre className="mt-1">{data.id}</pre>
                     ) : (
                       <MDWrapper content={data.content} />
@@ -178,7 +180,7 @@ export function Reply({
 
                     {replying && (
                       <>
-                        <hr className="mb-1" />
+                        <hr className="mb-1 mt-1" />
                         <ReplyForm
                           postId={data.postId}
                           parentId={data.id}
@@ -191,12 +193,12 @@ export function Reply({
                     )}
                     {/* "load children" link for revealing children */}
                     {loadChildren && (
-                      <small className="mt-1">
+                      <small>
                         {loading ? (
                           <span>Loading replies...</span>
                         ) : (
                           <a
-                            className="reply-loadmore"
+                            className="reply-loadmore mt-0-5 mb-0-5"
                             onClick={() => {
                               setNextUrl(loadChildren);
                             }}
@@ -248,7 +250,7 @@ export function Reply({
           </div>
           {children.length > 0 && (
             <>
-              <div className="reply-children flex-col align-start gap-0-5">
+              <div className="reply-children flex-col align-start gap-0-5 mt-1">
                 {children.map((child) => (
                   <Reply
                     data={child as VisibleReply | HiddenReply}
@@ -268,7 +270,7 @@ export function Reply({
                     <span>Loading more replies...</span>
                   ) : (
                     <a
-                      className="reply-loadmore"
+                      className="reply-loadmore mt-1 mb-0-5"
                       onClick={() => {
                         setNextUrl(loadMoreChildren);
                       }}

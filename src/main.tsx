@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
 import "./assets/reset.css";
 import "./assets/main.css";
+import "./assets/buttons.css";
+import "./assets/utility.css";
 
 const root = document.getElementById("root");
 

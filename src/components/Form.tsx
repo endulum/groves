@@ -26,7 +26,7 @@ export function Form<T>({
   );
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form flex-col align-start gap-1" onSubmit={handleSubmit}>
       {error ? (
         <Alert type="warning">
           <p>{error}</p>
@@ -44,14 +44,14 @@ export function Form<T>({
               <label
                 {...child.props}
                 key={child.props.htmlFor}
-                className="form-label"
+                className="form-label flex-col gap-0-5 align-start"
               >
                 {child.props.children.filter(
                   (child: JSX.Element) => child.type === "span"
                 )}
                 {inputErrors && child.props.htmlFor in inputErrors ? (
-                  <small className="form-error">
-                    <Warning />
+                  <small className=" form-error flex-row gap-0-5">
+                    <Warning style={{ color: "var(--warning)" }} />
                     {inputErrors[child.props.htmlFor]}
                   </small>
                 ) : (
@@ -61,8 +61,6 @@ export function Form<T>({
                   (child: JSX.Element) => child.type !== "span"
                 )}
               </label>
-              // would love to find an alternate solution to copying children and attributes
-              // as quick and convenient as this, because i hear prop spreading is not very savory
             );
           }
 
@@ -70,7 +68,7 @@ export function Form<T>({
         })}
 
       <button
-        className="button accent-1"
+        className="button primary"
         type="submit"
         disabled={loading}
         onClick={() => {

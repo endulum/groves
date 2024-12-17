@@ -30,12 +30,12 @@ export function SiteWrapper({
     <>
       <header>
         <div className="body">
-          <div className="header-top">
-            <Link to="/" className="logo">
+          <div className="flex-row jc-spb">
+            <Link to="/" className="logo flex-row gap-1">
               <Forest />
               <h1>{import.meta.env.VITE_APP_NAME}</h1>
             </Link>
-            <nav>
+            <nav className="flex-row gap-0-75">
               {context.user ? (
                 <>
                   <p>
@@ -47,15 +47,11 @@ export function SiteWrapper({
                 </>
               ) : (
                 <>
-                  <Link
-                    type="button"
-                    className="button over-accent-2"
-                    to="/login"
-                  >
+                  <Link type="button" className="button primary" to="/login">
                     <Login />
                     <span>Log In</span>
                   </Link>
-                  <Link type="button" className="button accent-2" to="/signup">
+                  <Link type="button" className="button secondary" to="/signup">
                     <Star />
                     <span>Sign Up</span>
                   </Link>
@@ -63,7 +59,7 @@ export function SiteWrapper({
               )}
               <button
                 type="button"
-                className="button over-accent-2"
+                className="button primary"
                 aria-controls="menu"
                 aria-expanded={expanded ? "true" : "false"}
                 onClick={() => {
@@ -83,43 +79,70 @@ export function SiteWrapper({
                 : "0px",
             }}
           >
-            <hr />
-            <ul>
-              <Link to="/communities" onClick={onLinkClick}>
-                <li>
+            <hr className="mt-1 mb-1" />
+            {/* these can still be accessed in spacebar when hidden, disable that */}
+            <ul className="flex-col align-start gap-0-25">
+              <li>
+                <Link
+                  type="button"
+                  className="button plain"
+                  to="/communities"
+                  onClick={onLinkClick}
+                >
                   <Explore />
                   <span>Explore Communities</span>
-                </li>
-              </Link>
+                </Link>
+              </li>
+
               {context.user ? (
                 <>
-                  <Link to="/account" onClick={onLinkClick}>
-                    <li>
+                  <li>
+                    <Link
+                      type="button"
+                      className="button plain"
+                      to="/account"
+                      onClick={onLinkClick}
+                    >
                       <AccountCircle />
                       <span>Account</span>
-                    </li>
-                  </Link>
-                  <a href="/" onClick={clearStoredToken}>
-                    <li>
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      type="button"
+                      className="button plain"
+                      href="/"
+                      onClick={clearStoredToken}
+                    >
                       <Logout />
                       <span>Log out</span>
-                    </li>
-                  </a>
+                    </a>
+                  </li>
                 </>
               ) : (
                 <>
-                  <Link to="/login" onClick={onLinkClick}>
-                    <li>
+                  <li>
+                    <Link
+                      to="/login"
+                      type="button"
+                      className="button plain"
+                      onClick={onLinkClick}
+                    >
                       <Login />
                       <span>Log in</span>
-                    </li>
-                  </Link>
-                  <Link to="/signup" onClick={onLinkClick}>
-                    <li>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/signup"
+                      type="button"
+                      className="button plain"
+                      onClick={onLinkClick}
+                    >
                       <Star />
                       <span>Sign up</span>
-                    </li>
-                  </Link>
+                    </Link>
+                  </li>
                 </>
               )}
             </ul>

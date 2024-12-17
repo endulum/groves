@@ -65,8 +65,7 @@ input,
 select,
 textarea {
   appearance: none;
-  background-color: transparent;
-  border: 1px solid;
+  border: none;
 }
 
 button {

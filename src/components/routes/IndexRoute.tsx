@@ -1,18 +1,35 @@
+import { Alert } from "../Alert";
+
 export function IndexRoute() {
   return (
     <>
       <h2>Home</h2>
 
-      <button className="button accent-1">
-        <span>Button</span>
-      </button>
+      {/* <LoadingSpacer loading={true} error={null} /> */}
 
-      <button className="button accent-2">
-        <span>Button</span>
+      {["warning", "success", "info", "blind"].map((type) => (
+        <Alert
+          type={type as "warning" | "success" | "info" | "blind"}
+          className="mt-1 mb-1"
+        >
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus
+            voluptatibus optio inventore molestiae similique provident impedit
+            at quis nesciunt consectetur. <a href="#">Learn more.</a>
+          </p>
+        </Alert>
+      ))}
+
+      <button className="button primary">
+        <span>owo</span>
       </button>
 
       <button className="button plain">
-        <span>Button</span>
+        <span>owo</span>
+      </button>
+
+      <button className="button primary" disabled>
+        <span>owo</span>
       </button>
     </>
   );

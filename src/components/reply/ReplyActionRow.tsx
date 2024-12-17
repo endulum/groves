@@ -19,13 +19,13 @@ export function ReplyActionRow({
   setHidden: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <div className="link-row mt-0-5 flex-row gap-0-5">
+    <div className="reply-linkrow mt-0-5 flex-row gap-0-5">
       {/* parent */}
       {data.parentId &&
         (status.isTopLevel ? (
           <Link
             type="button"
-            className="button plain-accent-2"
+            className="button plain secondary"
             to={`/post/${data.postId}/reply/${data.parentId}`}
             title="Go to the parent of this post"
           >
@@ -34,7 +34,7 @@ export function ReplyActionRow({
         ) : (
           <a
             type="button"
-            className="button plain-accent-2"
+            className="button plain secondary"
             href={`#${data.parentId}`}
             title="Jump to the parent of this post"
           >
@@ -46,7 +46,7 @@ export function ReplyActionRow({
       {!(status.replyParam && status.replyParam === data.id) && (
         <Link
           type="button"
-          className="button plain-accent-2"
+          className="button plain secondary"
           to={`/post/${data.postId}/reply/${data.id}`}
           title="View this post on its own"
         >
@@ -59,7 +59,7 @@ export function ReplyActionRow({
         (replying ? (
           <button
             type="button"
-            className="button plain-accent-2"
+            className="button plain secondary"
             onClick={() => setReplying(false)}
           >
             <small style={{ color: "crimson" }}>cancel replying</small>
@@ -67,7 +67,7 @@ export function ReplyActionRow({
         ) : (
           <button
             type="button"
-            className="button plain-accent-2"
+            className="button plain secondary"
             onClick={() => setReplying(true)}
           >
             <small>reply</small>

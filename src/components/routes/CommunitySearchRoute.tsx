@@ -11,7 +11,7 @@ export function CommunitySearchRoute() {
         <Link
           to="/communities/new"
           type="button"
-          className="button plain-accent-2"
+          className="button plain primary"
         >
           <AddCircle />
           <span>Create</span>

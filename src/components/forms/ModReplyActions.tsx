@@ -22,7 +22,7 @@ export function HideReply({
     <form onSubmit={handleSubmit}>
       <button
         type="submit"
-        className="button plain-accent-2"
+        className="button plain secondary"
         id="hidden"
         value={hidden ? "false" : "true"}
       >

@@ -62,7 +62,7 @@ export function Search<T>({
 
   return (
     <>
-      <h3>Search</h3>
+      <h3 className="mb-1">Search</h3>
       <form
         className="search"
         onSubmit={(e) => e.preventDefault}
@@ -70,8 +70,8 @@ export function Search<T>({
       >
         {formContent}
       </form>
-      <hr />
-      <div className="search-results">
+      <hr className="mt-1" />
+      <div className="mt-0-5">
         {data ? (
           data[resultsPropertyName].length > 0 ? (
             data[resultsPropertyName].map((result) => mapResults(result))
@@ -89,6 +89,7 @@ export function Search<T>({
           />
         )}
       </div>
+      <hr className="mb-1" />
       <div className="flex-row jc-spb">
         <button
           className="button accent-1"

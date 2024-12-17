@@ -43,7 +43,7 @@ export function CommunitySearch() {
       }
       resultsPropertyName="communities"
       mapResults={(comm: CommunityResult) => (
-        <div className="search-result community" key={comm.id}>
+        <div className="search-result" key={comm.id}>
           <div className="flex-row jc-spb gap-1">
             <div className="flex-col gap-0-25 align-start">
               <div className="flex-row gap-0-75 align-start">
@@ -80,7 +80,7 @@ export function CommunitySearch() {
               </div>
               <Link
                 type="button"
-                className="button plain-accent-2"
+                className="button plain secondary"
                 to={`/community/${comm.urlName}`}
                 title="View community"
               >

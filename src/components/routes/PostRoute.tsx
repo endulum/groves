@@ -44,16 +44,16 @@ export function PostRoute() {
         </small>
 
         {/* title and content */}
-        <h2>{data.title}</h2>
-        <div className="post-content">
+        <h2 className="mb-1">{data.title}</h2>
+        <div className="mb-1">
           <MDWrapper content={data.content} />
         </div>
 
         {/* replies */}
-        <hr />
+        <hr className="mt-1 mb-1" />
         <>
           <div className="flex-row jc-spb">
-            <h3 className="mt-1">Replies</h3>
+            <h3>Replies</h3>
             <label htmlFor="sort" className="flex-row gap-1">
               <span>Sort by:</span>
               <select
@@ -72,7 +72,7 @@ export function PostRoute() {
             </label>
           </div>
 
-          <div className="replies flex-col align-start gap-0-5">
+          <div className="replies flex-col align-start gap-0-5 mt-1">
             {reply ? (
               // if startingParent is not null, we're viewing one comment and its children
               <IsolatedReply postId={data.id} replyId={reply} sort={sort} />
