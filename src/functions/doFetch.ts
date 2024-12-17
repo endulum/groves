@@ -1,16 +1,5 @@
 import { ofetch, FetchError } from "ofetch";
 
-// function handleError(err: unknown): string {
-//   if (err instanceof TypeError) {
-//     return "A network error occurred. Try again later.";
-//   }
-//   if (err instanceof Error && err.message !== "") {
-//     return err.message;
-//   }
-//   console.error(err);
-//   return "Sorry, something went wrong when handling your request.";
-// }
-
 export async function doFetch<T>(
   endpoint: string,
   payload: object

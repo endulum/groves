@@ -8,9 +8,9 @@ import {
 } from "@mui/icons-material";
 
 import { useVote } from "../hooks/useVote";
-import { type Reply } from "../types";
+import { type VisibleReply } from "../types";
 
-export function VoteWidget({ data }: { data: Reply }) {
+export function VoteWidget({ data }: { data: VisibleReply }) {
   const { loading, vote, voted, score } = useVote({
     endpoint: `/reply/${data.id}`,
     voted: data.voted,

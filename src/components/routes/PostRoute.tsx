@@ -8,14 +8,12 @@ import { type Post } from "../../types";
 import { TopLevelReplies } from "../reply/TopLevelReplies";
 import { IsolatedReply } from "../reply/IsolatedReply";
 import { useState } from "react";
-import { useLogger } from "../../hooks/useLogger";
 
 export function PostRoute() {
   const { post, reply } = useParams();
   const { loading, error, data } = useGet<Post>(`/post/${post}`);
 
   const [sort, setSort] = useState<string>("top");
-  useLogger({ sort });
 
   if (loading || error)
     return (

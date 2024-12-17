@@ -18,3 +18,4 @@ Groves is an arboreal semiclone of Reddit.
 - - "No replies, write a reply!"
 - - "No posts, make a post!"
 - [ ] info tooltips for comm creation fields
+- [ ] page titles
