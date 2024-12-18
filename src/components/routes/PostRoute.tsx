@@ -63,7 +63,6 @@ export function PostRoute() {
             </small>
             <h2>{data.title}</h2>
           </div>
-          <VoteWidget data={data} type="post" orientation="horizontal" />
         </div>
 
         {readonly && (
@@ -95,33 +94,41 @@ export function PostRoute() {
         )}
 
         {/* actions */}
-        <div className="linkrow mt-0-5 flex-row gap-0-5">
-          {!readonly &&
-            user &&
-            (replying ? (
-              <button
-                type="button"
-                className="button plain secondary"
-                onClick={() => setReplying(false)}
-              >
-                <small style={{ color: "crimson" }}>cancel replying</small>
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="button plain secondary"
-                onClick={() => setReplying(true)}
-              >
-                <small>reply</small>
-              </button>
-            ))}
-          {data.viewingAsMod && (
-            <FreezePost
-              postId={data.id}
-              readonly={readonly}
-              setReadonly={setReadonly}
-            />
-          )}
+        <div className="flex-row gap-0-5">
+          <VoteWidget
+            data={data}
+            type="post"
+            canVote={data.canVote && !readonly}
+            orientation="horizontal"
+          />
+          <div className="linkrow flex-row gap-0-5">
+            {!readonly &&
+              user &&
+              (replying ? (
+                <button
+                  type="button"
+                  className="button plain secondary"
+                  onClick={() => setReplying(false)}
+                >
+                  <small style={{ color: "crimson" }}>cancel replying</small>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="button plain secondary"
+                  onClick={() => setReplying(true)}
+                >
+                  <small>reply</small>
+                </button>
+              ))}
+            {data.viewingAsMod && (
+              <FreezePost
+                postId={data.id}
+                readonly={readonly}
+                setReadonly={setReadonly}
+              />
+            )}
+          </div>
         </div>
 
         {/* replies */}

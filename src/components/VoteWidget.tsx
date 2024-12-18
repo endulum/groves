@@ -13,10 +13,12 @@ import { type VisibleReply, type Post } from "../types";
 export function VoteWidget({
   data,
   type,
+  canVote,
   orientation = "horizontal",
 }: {
   data: VisibleReply | Post;
   type: "post" | "reply";
+  canVote: boolean;
   orientation: "vertical" | "horizontal";
 }) {
   const { loading, vote, voted, score } = useVote({
@@ -25,11 +27,14 @@ export function VoteWidget({
     score: data._count.upvotes - data._count.downvotes,
   });
 
-  const getTitle = (type: "upvote" | "downvote", action: "add" | "remove") => {
-    if (data.canVote === false)
-      return "Voting is disabled on readonly or hidden content.";
+  const getTitle = (
+    voteType: "upvote" | "downvote",
+    action: "add" | "remove"
+  ) => {
+    // if (canVote === false)
+    //   return "Voting is disabled on readonly or hidden content.";
     if (voted === null) return "You must be logged in to vote on content.";
-    if (type === "upvote") {
+    if (voteType === "upvote") {
       if (action === "add") {
         return voted.upvoted === true ? "You gave an upvote." : "Add an upvote";
       }
@@ -39,7 +44,7 @@ export function VoteWidget({
           : "Remove your upvote";
       }
     }
-    if (type === "downvote") {
+    if (voteType === "downvote") {
       if (action === "add") {
         return voted.downvoted === true
           ? "You gave a downvote."
@@ -53,12 +58,12 @@ export function VoteWidget({
     }
   };
 
-  const getDisabled = (type: "upvote" | "downvote") => {
+  const getDisabled = (voteType: "upvote" | "downvote") => {
     if (
       voted === null ||
-      data.canVote === false ||
-      (type === "upvote" && voted.downvoted === true) ||
-      (type === "downvote" && voted.upvoted === true)
+      // data.canVote === false ||
+      (voteType === "upvote" && voted.downvoted === true) ||
+      (voteType === "downvote" && voted.upvoted === true)
     )
       return true;
     return false;
@@ -80,14 +85,21 @@ export function VoteWidget({
       className={`vote-widget ${
         orientation === "vertical" ? "flex-col" : "flex-row"
       } gap-0-25`}
+      style={
+        orientation === "horizontal" ? { flexDirection: "row-reverse" } : {}
+      }
     >
       <button
         className="button plain"
-        disabled={getDisabled("upvote")}
-        title={getTitle(
-          "upvote",
-          voted?.upvoted || voted?.downvoted ? "remove" : "add"
-        )}
+        disabled={canVote ? getDisabled("upvote") : true}
+        title={
+          canVote
+            ? getTitle(
+                "upvote",
+                voted?.upvoted || voted?.downvoted ? "remove" : "add"
+              )
+            : "Voting is disabled on readonly content."
+        }
         onClick={() => {
           handleVote("upvote", voted?.upvoted ? "remove" : "add");
         }}
@@ -113,11 +125,15 @@ export function VoteWidget({
       </div>
       <button
         className="button plain"
-        disabled={getDisabled("downvote")}
-        title={getTitle(
-          "downvote",
-          voted?.upvoted || voted?.downvoted ? "remove" : "add"
-        )}
+        disabled={canVote ? getDisabled("downvote") : true}
+        title={
+          canVote
+            ? getTitle(
+                "downvote",
+                voted?.upvoted || voted?.downvoted ? "remove" : "add"
+              )
+            : "Voting is disabled on readonly content."
+        }
         onClick={() => {
           handleVote("downvote", voted?.downvoted ? "remove" : "add");
         }}

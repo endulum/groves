@@ -161,7 +161,12 @@ export function Reply({
             ) : (
               !data.hidden && (
                 <>
-                  <VoteWidget data={data} type="reply" orientation="vertical" />
+                  <VoteWidget
+                    data={data}
+                    type="reply"
+                    canVote={data.canVote}
+                    orientation="vertical"
+                  />
                   <div className="reply-body flex-col align-start">
                     {/* author line */}
                     <small>
