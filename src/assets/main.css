@@ -235,7 +235,7 @@ label {
   }
 }
 
-h2:first-child {
+.body > h2 {
   margin-bottom: 1rem;
 }
 

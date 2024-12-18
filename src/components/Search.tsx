@@ -62,7 +62,6 @@ export function Search<T>({
 
   return (
     <>
-      <h3 className="mb-1">Search</h3>
       <form
         className="search"
         onSubmit={(e) => e.preventDefault}

@@ -56,17 +56,17 @@ export function CommunitySearch() {
               {comm.description && <p>{comm.description}</p>}
             </div>
             <div className="flex-row gap-1">
-              <div className="flex-col gap-0-25 align-end">
+              <div className="flex-col gap-1 align-end">
                 <div className="flex-row gap-0-5">
                   <div
-                    className="flex-col"
+                    className="flex-col gap-0-25"
                     title={`${comm._count.followers} followers`}
                   >
                     <PeopleAlt />
                     <small>{comm._count.followers}</small>
                   </div>
                   <div
-                    className="flex-col"
+                    className="flex-col gap-0-25"
                     title={`${comm._count.followers} posts`}
                   >
                     <Park />

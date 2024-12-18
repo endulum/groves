@@ -35,6 +35,10 @@ export function App() {
           path="/communities/new"
           element={<routes.CommunityCreateRoute />}
         />
+        <Route
+          path="/community/:community/newPost"
+          element={<routes.PostCreateRoute />}
+        />
         {user ? (
           <>
             <Route path="/account" element={<routes.AccountRoute />} />

@@ -34,7 +34,10 @@ export function CommunityRoute() {
             day: "numeric",
           })}
         </p>
-        <PostsSubroute communityUrl={data.urlName} />
+        <PostsSubroute
+          communityUrl={data.urlName}
+          communityName={data.canonicalName}
+        />
       </>
     );
 }

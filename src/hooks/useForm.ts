@@ -33,9 +33,10 @@ export function useForm<T>(
     const formData: Record<string, string> = {};
     Object.values(event.target).forEach((inputElement) => {
       if (
-        inputElement instanceof HTMLInputElement ||
-        inputElement instanceof HTMLTextAreaElement ||
-        inputElement instanceof HTMLButtonElement
+        (inputElement instanceof HTMLInputElement ||
+          inputElement instanceof HTMLTextAreaElement ||
+          inputElement instanceof HTMLButtonElement) &&
+        inputElement.id !== ""
       ) {
         formData[inputElement.id] = inputElement.value;
       }

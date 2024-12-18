@@ -16,6 +16,9 @@ export function MDWrapper({ content }: { content: string }) {
         "ol",
         "li",
         "img",
+        "h1",
+        "h2",
+        "h3",
       ]}
       unwrapDisallowed
       skipHtml

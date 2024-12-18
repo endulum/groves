@@ -8,3 +8,4 @@ export { CommunitySearchRoute } from "./CommunitySearchRoute";
 export { CommunityCreateRoute } from "./CommunityCreateRoute";
 export { CommunityRoute } from "./CommunityRoute";
 export { PostRoute } from "./PostRoute";
+export { PostCreateRoute } from "./PostCreateRoute";
