@@ -12,6 +12,9 @@ export function CommunityRoute() {
     urlName: string;
     canonicalName: string;
     created: string;
+    _count: {
+      posts: number;
+    };
   }>(`/community/${community}`);
 
   if (loading || error)
@@ -37,6 +40,7 @@ export function CommunityRoute() {
         <PostsSubroute
           communityUrl={data.urlName}
           communityName={data.canonicalName}
+          postCount={data._count.posts}
         />
       </>
     );

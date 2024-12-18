@@ -13,9 +13,6 @@ Groves is an arboreal semiclone of Reddit.
 - [ ] Add bio field to account settings
 - [ ] Local settings for automatic reply sorting and levels/take
 - [ ] Have white page span all device width on mobile
-- [ ] CTAs
-- - "No replies, write a reply!"
-- - "No posts, make a post!"
 - [ ] info tooltips for comm creation fields
 - [ ] page titles
 - [ ] have single-button form errors show up as toasts

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Air } from "@mui/icons-material";
 
 import {
   type Reply as TReply,
@@ -37,13 +38,22 @@ export function TopLevelReplies({
           customLoadingText="Getting replies..."
         />
       )}
-      {data && (
-        <NullParentReplies
-          data={data}
-          isReadOnly={isReadOnly}
-          isLoggedIn={isLoggedIn}
-        />
-      )}
+      {data &&
+        (data.children && data.children.length > 0 ? (
+          <NullParentReplies
+            data={data}
+            isReadOnly={isReadOnly}
+            isLoggedIn={isLoggedIn}
+          />
+        ) : (
+          <div className="spacer">
+            <Air />
+            <p>
+              This post doesn't have any replies yet. <br />
+              Be the first to reply!
+            </p>
+          </div>
+        ))}
     </>
   );
 }
