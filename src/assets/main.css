@@ -413,3 +413,7 @@ button.reply-collapse:not(:has(span)) {
     line-height: 1.5rem;
   }
 }
+
+.body .linkrow {
+  justify-content: end;
+}

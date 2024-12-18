@@ -5,7 +5,7 @@ import {
   useOutletContext,
 } from "react-router-dom";
 import { DateTime } from "luxon";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
@@ -17,6 +17,7 @@ import { VoteWidget } from "../VoteWidget";
 import { FreezePost } from "../forms/ModReplyActions";
 import { Alert } from "../Alert";
 import { ReplyForm } from "../reply/ReplyForm";
+import { PostEditForm } from "../forms/PostEditForm";
 
 export function PostRoute() {
   const navigate = useNavigate();
@@ -27,9 +28,24 @@ export function PostRoute() {
   const [sort, setSort] = useState<string>("top");
   const [readonly, setReadonly] = useState<boolean>(false);
   const [replying, setReplying] = useState<boolean>(false);
+  const [editing, setEditing] = useState<boolean>(false);
+  const [postContent, setPostContent] = useState<{
+    title: string;
+    content: string;
+    lastEdited: string | null;
+  } | null>(null);
+  const isPrefilled = useRef<boolean>(false);
 
   useEffect(() => {
-    if (data) setReadonly(data.readonly);
+    if (data && !isPrefilled.current) {
+      setReadonly(data.readonly);
+      setPostContent({
+        title: data.title,
+        content: data.content,
+        lastEdited: data.lastEdited,
+      });
+      isPrefilled.current = true;
+    }
   }, [data]);
 
   if (loading || error)
@@ -40,7 +56,7 @@ export function PostRoute() {
         customLoadingText="Getting post..."
       />
     );
-  if (data)
+  if (data && postContent)
     return (
       <>
         {/* title and content */}
@@ -56,26 +72,39 @@ export function PostRoute() {
                 {data.author.username}
               </Link>{" "}
               {DateTime.fromISO(data.datePosted).toRelative()}
-              {data.lastEdited &&
+              {postContent.lastEdited &&
                 `, last edited ${DateTime.fromISO(
-                  data.lastEdited
+                  postContent.lastEdited
                 ).toRelative()}`}
             </small>
-            <h2>{data.title}</h2>
+            {!editing && <h2>{postContent.title}</h2>}
           </div>
+          <VoteWidget
+            data={data}
+            type="post"
+            canVote={data.canVote && !readonly}
+            orientation="horizontal"
+          />
         </div>
 
         {readonly && (
           <Alert type="info" className="mt-1">
             <p>
-              This post is frozen. It will not be found in community post
-              search. Voting and replying is blocked.
+              This post is frozen. Voting, replying, and editing are blocked.
             </p>
           </Alert>
         )}
 
         <div className="mb-1 mt-1">
-          <MDWrapper content={data.content} />
+          {editing ? (
+            <PostEditForm
+              data={data}
+              setPostContent={setPostContent}
+              setEditing={setEditing}
+            />
+          ) : (
+            <MDWrapper content={postContent.content} />
+          )}
         </div>
 
         {replying && user && (
@@ -94,41 +123,57 @@ export function PostRoute() {
         )}
 
         {/* actions */}
-        <div className="flex-row gap-0-5">
-          <VoteWidget
-            data={data}
-            type="post"
-            canVote={data.canVote && !readonly}
-            orientation="horizontal"
-          />
-          <div className="linkrow flex-row gap-0-5">
-            {!readonly &&
-              user &&
-              (replying ? (
-                <button
-                  type="button"
-                  className="button plain secondary"
-                  onClick={() => setReplying(false)}
-                >
-                  <small style={{ color: "crimson" }}>cancel replying</small>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="button plain secondary"
-                  onClick={() => setReplying(true)}
-                >
-                  <small>reply</small>
-                </button>
-              ))}
-            {data.viewingAsMod && (
-              <FreezePost
-                postId={data.id}
-                readonly={readonly}
-                setReadonly={setReadonly}
-              />
-            )}
-          </div>
+        <div className="linkrow flex-row gap-0-5">
+          {!readonly &&
+            user &&
+            data.author.id === user.id &&
+            (editing ? (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={() => {
+                  setEditing(false);
+                }}
+              >
+                <small style={{ color: "crimson" }}>cancel editing</small>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={() => {
+                  setEditing(true);
+                }}
+              >
+                <small>edit</small>
+              </button>
+            ))}
+          {!readonly &&
+            user &&
+            (replying ? (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={() => setReplying(false)}
+              >
+                <small style={{ color: "crimson" }}>cancel replying</small>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={() => setReplying(true)}
+              >
+                <small>reply</small>
+              </button>
+            ))}
+          {data.viewingAsMod && (
+            <FreezePost
+              postId={data.id}
+              readonly={readonly}
+              setReadonly={setReadonly}
+            />
+          )}
         </div>
 
         {/* replies */}

@@ -10,7 +10,6 @@ Groves is an arboreal semiclone of Reddit.
 
 ## Todo
 
-- [ ] Edit own posts
 - [ ] Add bio field to account settings
 - [ ] Local settings for automatic reply sorting and levels/take
 - [ ] Have white page span all device width on mobile
