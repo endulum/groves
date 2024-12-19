@@ -32,6 +32,7 @@ export function PostsSubroute({
         <PostSearch communityUrl={communityUrl} />
       ) : (
         <div>
+          <hr className="mb-1" />
           <div className="spacer">
             <Air />
             <p>

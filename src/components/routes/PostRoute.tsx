@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { DateTime } from "luxon";
 import { useState, useEffect, useRef } from "react";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
@@ -47,6 +48,14 @@ export function PostRoute() {
       isPrefilled.current = true;
     }
   }, [data]);
+
+  useDocumentTitle(
+    `${
+      data?.title
+        ? `${data.title} :: ${import.meta.env.VITE_APP_NAME}`
+        : "Viewing post..."
+    }`
+  );
 
   if (loading || error)
     return (
