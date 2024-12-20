@@ -10,9 +10,7 @@ Groves is an arboreal semiclone of Reddit.
 
 ## Todo
 
+- [ ] reply view is very squished on mobile, remedy this
+- - [ ] have `main` span all device width on mobile
+- [ ] community view can be an outlet, with post search, community stats, moderation/admin tools, and wiki as routes
 - [ ] Add bio field to account settings
-- [ ] Local settings for automatic reply sorting and levels/take
-- [ ] Have white page span all device width on mobile
-- [ ] info tooltips for comm creation fields
-- [ ] have single-button form errors show up as toasts
-- [ ] why have "new post" / "new comm" buttons if not logged in?
