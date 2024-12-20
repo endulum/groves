@@ -420,3 +420,31 @@ button.reply-collapse:not(:has(span)) {
 .body .linkrow {
   justify-content: end;
 }
+
+.custom-toast {
+  --toastify-color-info: var(--info);
+  --toastify-color-success: var(--success);
+  --toastify-color-warning: var(--warning);
+  --toastify-color-progress-info: var(--toastify-color-info);
+  --toastify-color-progress-success: var(--toastify-color-success);
+  --toastify-color-progress-warning: var(--toastify-color-warning);
+  box-shadow: var(--cardshadow);
+  border-radius: var(--radius);
+  align-items: start;
+  font-family: "Roboto Condensed", var(--fontstack);
+  line-height: 1.25rem;
+
+  .Toastify__toast-icon {
+    width: auto;
+    svg {
+      flex-shrink: 0;
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+
+  p {
+    margin-top: 0.25rem;
+    font-family: unset;
+  }
+}

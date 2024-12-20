@@ -59,7 +59,9 @@ export function useForm<T>(
     );
     setLoading(false);
 
-    if (fetchResult.error) setError(fetchResult.error);
+    if (fetchResult.error) {
+      setError(fetchResult.error);
+    }
     if (
       fetchResult.status === 400 &&
       typeof fetchResult.data === "object" &&

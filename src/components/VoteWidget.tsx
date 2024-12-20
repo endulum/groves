@@ -6,6 +6,7 @@ import {
   WbSunny,
   Loop,
 } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 import { useVote } from "../hooks/useVote";
 import { type VisibleReply, type Post } from "../types";
@@ -25,6 +26,12 @@ export function VoteWidget({
     endpoint: type === "post" ? `/post/${data.id}` : `/reply/${data.id}`,
     voted: data.voted,
     score: data._count.upvotes - data._count.downvotes,
+    onError: (error: string) => {
+      toast(<p>{error}</p>, {
+        className: "custom-toast",
+        type: "warning",
+      });
+    },
   });
 
   const getTitle = (

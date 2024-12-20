@@ -15,7 +15,7 @@ import { type Post, type User } from "../../types";
 import { TopLevelReplies } from "../reply/TopLevelReplies";
 import { IsolatedReply } from "../reply/IsolatedReply";
 import { VoteWidget } from "../VoteWidget";
-import { FreezePost } from "../forms/ModReplyActions";
+import { FreezePost } from "../forms/ModActionForms";
 import { Alert } from "../Alert";
 import { ReplyForm } from "../reply/ReplyForm";
 import { PostEditForm } from "../forms/PostEditForm";

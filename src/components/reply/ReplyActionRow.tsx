@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { type Reply, type ReplyStatus } from "../../types";
-import { HideReply } from "../forms/ModReplyActions";
+import { HideReply } from "../forms/ModActionForms";
 
 export function ReplyActionRow({
   data,
@@ -77,7 +77,7 @@ export function ReplyActionRow({
         ))}
 
       {/* mod actions */}
-      {status.isMod && (
+      {!status.isReadOnly && status.isMod && (
         <>
           <HideReply replyId={data.id} hidden={hidden} setHidden={setHidden} />
         </>

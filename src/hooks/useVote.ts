@@ -7,6 +7,7 @@ export function useVote(opts: {
   endpoint: string;
   voted: { upvoted: boolean; downvoted: boolean } | null;
   score: number;
+  onError: (error: string) => void;
 }) {
   const [voted, setVoted] = useState<{
     upvoted: boolean;
@@ -37,7 +38,7 @@ export function useVote(opts: {
     });
     setLoading(false);
     if (postResult.error) {
-      console.error(postResult.error);
+      opts.onError(postResult.error);
     }
     if (postResult.status === 200) {
       if (action === "add") {
