@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import {
   type Reply as TReply,
@@ -9,24 +8,17 @@ import {
 import { Reply } from "./Reply";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { useGet } from "../../hooks/useGet";
-import { Alert } from "../Alert";
 
 export function IsolatedReply({
-  postId,
   replyId,
   sort,
-  isReadOnly,
-  isLoggedIn,
 }: {
-  postId: string;
   replyId: string;
   sort: string;
-  isReadOnly: boolean;
-  isLoggedIn: boolean;
 }) {
-  const { loading, error, data, get } = useGet<
-    TReply & { viewingAsMod: boolean }
-  >(`/reply/${replyId}/replies`);
+  const { loading, error, data, get } = useGet<TReply>(
+    `/reply/${replyId}/replies`
+  );
 
   useEffect(() => {
     get(false);
@@ -34,12 +26,6 @@ export function IsolatedReply({
 
   return (
     <>
-      <Alert type="info">
-        <p>
-          Viewing an isolated reply.{" "}
-          <Link to={`/post/${postId}`}>View all replies</Link>
-        </p>
-      </Alert>
       {(loading || error) && (
         <LoadingSpacer
           loading={loading}
@@ -51,12 +37,9 @@ export function IsolatedReply({
         <Reply
           data={data as VisibleReply | HiddenReply}
           status={{
-            replyParam: replyId,
-            isShaded: false,
-            isMod: data.viewingAsMod,
+            ...data.state,
             isTopLevel: true,
-            isLoggedIn,
-            isReadOnly,
+            currentIsolatedReply: replyId,
           }}
           key={data.id}
         />

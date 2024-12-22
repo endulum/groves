@@ -69,7 +69,7 @@ export function PostRoute() {
     return (
       <>
         {/* title and content */}
-        <div className="flex-row jc-spb gap-0-5">
+        <div className="flex-row jc-spb gap-0-5 align-start">
           <div>
             <small>
               Posted under{" "}
@@ -208,24 +208,22 @@ export function PostRoute() {
             </label>
           </div>
 
+          {reply && (
+            <Alert type="info" className="mt-1">
+              <p>
+                Viewing an isolated reply.{" "}
+                <Link to={`/post/${post}`}>View all replies</Link>
+              </p>
+            </Alert>
+          )}
+
           <div className="replies flex-col align-start gap-0-5 mt-1">
             {reply ? (
               // if startingParent is not null, we're viewing one comment and its children
-              <IsolatedReply
-                postId={data.id}
-                replyId={reply}
-                sort={sort}
-                isReadOnly={readonly}
-                isLoggedIn={!!user}
-              />
+              <IsolatedReply replyId={reply} sort={sort} />
             ) : (
               // if startingParent is null, we're viewing all top-level comments
-              <TopLevelReplies
-                postId={data.id}
-                sort={sort}
-                isReadOnly={readonly}
-                isLoggedIn={!!user}
-              />
+              <TopLevelReplies postId={data.id} sort={sort} />
             )}
           </div>
         </>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Air } from "@mui/icons-material";
 
 import {
@@ -9,21 +9,18 @@ import {
 import { Reply } from "./Reply";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { useGet } from "../../hooks/useGet";
+import { useReplyChildren } from "../../hooks/useReplyChildren";
 
 export function TopLevelReplies({
   postId,
   sort,
-  isReadOnly,
-  isLoggedIn,
 }: {
   postId: string;
   sort: string;
-  isReadOnly: boolean;
-  isLoggedIn: boolean;
 }) {
   const { loading, error, data, get } = useGet<
     TReply & { viewingAsMod: boolean }
-  >(`/post/${postId}/replies?sort=${sort}`);
+  >(`/post/${postId}/replies?sort=${sort}&levels=2&takePerLevel=2`);
 
   useEffect(() => {
     get(false);
@@ -40,11 +37,7 @@ export function TopLevelReplies({
       )}
       {data &&
         (data.children && data.children.length > 0 ? (
-          <NullParentReplies
-            data={data}
-            isReadOnly={isReadOnly}
-            isLoggedIn={isLoggedIn}
-          />
+          <NullParentReplies data={data} />
         ) : (
           <div className="spacer">
             <Air />
@@ -57,40 +50,9 @@ export function TopLevelReplies({
     </>
   );
 }
-function NullParentReplies({
-  data,
-  isReadOnly,
-  isLoggedIn,
-}: {
-  data: TReply;
-  isReadOnly: boolean;
-  isLoggedIn: boolean;
-}) {
-  const [nextUrl, setNextUrl] = useState<string | null>(null);
-  const [children, setChildren] = useState<TReply[]>(data.children ?? []);
-
-  const {
-    loading,
-    data: moreData,
-    get,
-  } = useGet<{
-    loadChildren: string | null;
-    loadMoreChildren: string | null;
-    children: TReply[];
-  }>(nextUrl as string);
-
-  useEffect(() => {
-    if (nextUrl) {
-      get(false);
-    }
-  }, [nextUrl]);
-
-  useEffect(() => {
-    if (moreData && moreData.children && nextUrl) {
-      setChildren([...children, ...moreData.children]);
-      setNextUrl(null);
-    }
-  }, [moreData]);
+function NullParentReplies({ data }: { data: TReply }) {
+  const { loading, children, loadMoreChildren, setNextUrl } =
+    useReplyChildren(data);
 
   return (
     <>
@@ -98,34 +60,24 @@ function NullParentReplies({
         <Reply
           data={child as VisibleReply | HiddenReply}
           status={{
-            isShaded: false,
-            isMod: data.viewingAsMod,
+            ...data.state,
             isTopLevel: true,
-            isLoggedIn,
-            isReadOnly,
+            currentIsolatedReply: null,
           }}
           key={child.id}
         />
       ))}
 
-      {(moreData ? moreData.loadMoreChildren : data.loadMoreChildren) && (
-        <small className="reply-loadmore mt-1 mb-0-5">
-          {loading ? (
-            <span>Loading more replies...</span>
-          ) : (
-            <a
-              onClick={() => {
-                const loadMoreChildren = moreData
-                  ? moreData.loadMoreChildren
-                  : data.loadMoreChildren;
-                if (loadMoreChildren) setNextUrl(loadMoreChildren);
-              }}
-              title={nextUrl ?? undefined}
-            >
-              Load more replies
-            </a>
-          )}
-        </small>
+      {loadMoreChildren && (
+        <button
+          onClick={() => {
+            setNextUrl(loadMoreChildren);
+          }}
+          className="button plain secondary reply-loadmore"
+          disabled={loading}
+        >
+          <small>{loading ? "Loading..." : "Load more replies"}</small>
+        </button>
       )}
     </>
   );

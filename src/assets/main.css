@@ -101,12 +101,6 @@ main .body {
   container: main / inline-size;
 }
 
-@container header (max-width: 650px) {
-  h1 {
-    display: none;
-  }
-}
-
 footer .body {
   width: max-content;
 }
@@ -329,18 +323,6 @@ label {
   }
 }
 
-@container main (max-width: 400px) {
-  .search-result > div {
-    flex-direction: column;
-    > div:first-child {
-      align-self: start;
-    }
-    > div:last-child {
-      align-self: end;
-    }
-  }
-}
-
 .post-content {
   p {
     margin-bottom: 0.5rem;
@@ -351,39 +333,43 @@ label {
 }
 
 .replies {
-  padding-left: 0.75rem;
+  padding-left: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 .reply {
   position: relative;
   width: 100%;
-  padding: 1rem 0.5rem 0.5rem 1.5rem;
-  border: 1px solid var(--border);
-  background-color: var(--bg);
-  &.shaded {
-    background-color: oklch(from var(--bg2) l c h / 0.25);
-  }
-  &.first-level {
-    border-left: 3px double var(--border);
-  }
 }
 
-.reply-content {
-  &.collapsed {
-    padding-bottom: 0.5rem;
-  }
+.reply + .reply {
+  margin-top: 0.5rem;
+}
+
+.reply-top {
+  height: calc(1.5rem - 2px);
+  margin-left: 1.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .reply-body {
-  flex-grow: 1;
+  border-left: 1px solid var(--border);
+  padding-left: 1.25rem;
+  padding-top: 0.5rem;
+  p {
+    margin-bottom: 0.25rem;
+    line-height: 1.375rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .reply-loadmore {
-  display: inline-block;
-  &:has(a):hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
+  display: block;
+  margin-left: -0.5rem;
 }
 
 .vote-widget {
@@ -398,15 +384,51 @@ label {
   }
 }
 
-button.reply-collapse:not(:has(span)) {
+.flyout {
+  width: max-content;
+  height: max-content;
+  position: relative;
+  > button {
+    padding: 0.125rem;
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0.125rem;
+    }
+  }
+  .menu {
+    z-index: 1;
+    box-shadow: var(--cardshadow);
+    border-radius: var(--radius);
+    background-color: var(--bg);
+    position: absolute;
+    padding: 0.25rem;
+    /* top: 2rem;
+    right: 0;
+    width: 150px; */
+    button,
+    a[type="button"] {
+      width: 100%;
+      text-align: left;
+      min-width: max-content;
+    }
+  }
+}
+
+button.reply-collapse:not(:has(span)).plain {
   /* to get past specificity... */
   background-color: var(--bg);
   border-radius: 100%;
-  padding: 0.25rem;
+  padding: 0.125rem;
   border: 1px solid var(--border);
   position: absolute;
-  left: -1rem;
-  top: 0.75rem;
+  /* left: -0.875rem; */
+  left: calc(-0.75rem + 2px);
+  /* top: 0.75rem; */
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
 }
 
 .reply-linkrow {
@@ -446,5 +468,39 @@ button.reply-collapse:not(:has(span)) {
   p {
     margin-top: 0.25rem;
     font-family: unset;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .body {
+    padding: 0.75rem;
+  }
+  main {
+    padding: 0;
+    .body {
+      border-radius: 0;
+    }
+  }
+}
+
+@container header (max-width: 650px) {
+  h1 {
+    display: none;
+  }
+}
+
+@container main (max-width: 400px) {
+  .search-result > div {
+    flex-direction: column;
+    > div:first-child {
+      align-self: start;
+    }
+    > div:last-child {
+      align-self: end;
+    }
+  }
+  .reply {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
   }
 }

@@ -1,5 +1,6 @@
 import { useDocumentTitle } from "usehooks-ts";
-import { toast } from "react-toastify";
+
+import { FlyoutMenu } from "../FlyoutMenu";
 
 export function IndexRoute() {
   useDocumentTitle(`${import.meta.env.VITE_APP_NAME}`);
@@ -7,24 +8,17 @@ export function IndexRoute() {
     <>
       <h2>Home</h2>
 
-      <button
-        type="button"
-        className="button primary"
-        onClick={() => {
-          toast(
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Doloremque dicta hic.
-            </p>,
-            {
-              className: "custom-toast",
-              type: "warning",
-            }
-          );
-        }}
-      >
-        Toast
-      </button>
+      <FlyoutMenu x="left" y="bottom">
+        <button className="button plain">
+          <small>link one</small>
+        </button>
+        <button className="button plain">
+          <small>link two</small>
+        </button>
+        <button className="button plain">
+          <small>link three</small>
+        </button>
+      </FlyoutMenu>
     </>
   );
 }

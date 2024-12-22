@@ -38,8 +38,6 @@ export function VoteWidget({
     voteType: "upvote" | "downvote",
     action: "add" | "remove"
   ) => {
-    // if (canVote === false)
-    //   return "Voting is disabled on readonly or hidden content.";
     if (voted === null) return "You must be logged in to vote on content.";
     if (voteType === "upvote") {
       if (action === "add") {

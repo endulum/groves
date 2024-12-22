@@ -6,12 +6,14 @@ import { useEffect } from "react";
 
 export function HideReply({
   replyId,
-  hidden,
-  setHidden,
+  hideActions,
 }: {
   replyId: string;
-  hidden: boolean;
-  setHidden: React.Dispatch<React.SetStateAction<boolean>>;
+  hideActions: {
+    hidden: boolean;
+    hide: () => void;
+    unhide: () => void;
+  };
 }) {
   const { loading, error, handleSubmit } = useForm(
     { endpoint: `/reply/${replyId}/status`, method: "PUT" },
@@ -27,13 +29,15 @@ export function HideReply({
           type: "success",
         }
       );
-      setHidden(submissionData.hidden === "true");
+      if (submissionData.hidden === "true") hideActions.hide();
+      if (submissionData.hidden === "false") hideActions.unhide();
+      // setHidden(submissionData.hidden === "true");
     }
   );
 
   useEffect(() => {
     if (error)
-      toast(<p>{error}</p>, {
+      toast(<p>Couldn't hide this reply: {error}</p>, {
         className: "custom-toast",
         type: "warning",
       });
@@ -45,11 +49,10 @@ export function HideReply({
         type="submit"
         className="button plain secondary"
         id="hidden"
-        value={hidden ? "false" : "true"}
+        value={hideActions.hidden ? "false" : "true"}
       >
+        <small>{hideActions.hidden ? "unhide" : "hide"}</small>
         {loading ? <Loop className="spin" /> : <ShieldOutlined />}
-
-        <small>{hidden ? "unhide" : "hide"}</small>
       </button>
     </form>
   );
@@ -84,7 +87,7 @@ export function FreezePost({
 
   useEffect(() => {
     if (error)
-      toast(<p>{error}</p>, {
+      toast(<p>Couldn't freeze this post: {error}</p>, {
         className: "custom-toast",
         type: "error",
       });
