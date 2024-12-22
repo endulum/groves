@@ -474,6 +474,25 @@ button.reply-collapse:not(:has(span)).plain {
   }
 }
 
+.navtabs {
+  border-bottom: 1px solid oklch(from var(--border) calc(l + 0.05) c h);
+  button {
+    color: oklch(from var(--fg) l c h / 0.75);
+    background-color: transparent;
+    padding: 1.25rem 0.5rem;
+    margin-bottom: -1px;
+    border-bottom: 3px solid transparent;
+    &[aria-selected="true"] {
+      color: var(--accent2);
+      border-bottom: 3px solid var(--accent2);
+    }
+    &:hover:not([aria-selected="true"]) {
+      cursor: pointer;
+      border-bottom: 3px solid oklch(from var(--border) calc(l + 0.05) c h);
+    }
+  }
+}
+
 @media screen and (max-width: 500px) {
   .body {
     padding: 0.75rem;

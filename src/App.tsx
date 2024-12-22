@@ -26,9 +26,18 @@ export function App() {
         <Route path="/user/:user" element={<routes.UserRoute />} />
         <Route path="/communities" element={<routes.CommunitySearchRoute />} />
         <Route
-          path="/community/:community"
-          element={<routes.CommunityRoute />}
-        />
+          path="/community/:community/"
+          element={<routes.CommunityWrapper />}
+        >
+          <Route
+            path="/community/:community/"
+            element={<routes.CommunityPosts />}
+          />
+          <Route
+            path="/community/:community/wiki"
+            element={<routes.CommunityWiki />}
+          />
+        </Route>
         <Route path="/post/:post" element={<routes.PostRoute />} />
         <Route path="/post/:post/reply/:reply" element={<routes.PostRoute />} />
         <Route

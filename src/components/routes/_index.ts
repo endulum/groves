@@ -6,6 +6,10 @@ export { UserRoute } from "./UserRoute";
 export { AccountRoute } from "./AccountRoute";
 export { CommunitySearchRoute } from "./CommunitySearchRoute";
 export { CommunityCreateRoute } from "./CommunityCreateRoute";
-export { CommunityRoute } from "./CommunityRoute";
 export { PostRoute } from "./PostRoute";
 export { PostCreateRoute } from "./PostCreateRoute";
+
+export { CommunityWrapper } from "../community/CommunityWrapper";
+export { CommunityPosts } from "../community/CommunityPosts";
+export { CommunityWiki } from "../community/CommunityWiki";
+export { CommunityErrorRoute } from "../community/CommunityErrorRoute";

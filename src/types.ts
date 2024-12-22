@@ -3,6 +3,37 @@ export type User = {
   id: number;
 };
 
+export type Community = {
+  id: number;
+  urlName: string;
+  canonicalName: string;
+  description: string;
+  created: string;
+  lastActivity: string;
+  readonly: boolean;
+  admin: User;
+  moderators: User[];
+  _count: {
+    followers: number;
+    posts: number;
+  };
+};
+
+/*
+{
+  id: 2,
+  urlName: 'askgroves',
+  canonicalName: 'Ask Groves',
+  description: 'This is the place to ask and answer thought-provoking questions.',
+  created: '2024-12-22T03:08:40.105Z',
+  lastActivity: '2024-12-22T03:08:40.105Z',
+  readonly: false,
+  admin: { id: 1, username: 'admin' },
+  moderators: [],
+  _count: { followers: 0, posts: 0 }
+}
+*/
+
 export type Post = {
   id: string;
 
