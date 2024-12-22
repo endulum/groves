@@ -8,10 +8,11 @@ import {
   Forest,
   Explore,
 } from "@mui/icons-material";
+import { useBoolean } from "usehooks-ts";
 
 import { type User } from "../types";
 import { clearStoredToken } from "../functions/tokenUtils";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 export function SiteWrapper({
   context,
@@ -22,10 +23,10 @@ export function SiteWrapper({
     changeUsername: (username: string) => void;
   };
 }) {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  // const [expanded, setExpanded] = useState<boolean>(false);
+  const { value: expanded, setFalse: collapse, toggle } = useBoolean(false);
   const headerList = useRef<HTMLDivElement>(null);
 
-  const onLinkClick = () => setExpanded(false);
   return (
     <>
       <header>
@@ -62,9 +63,7 @@ export function SiteWrapper({
                 className="button primary"
                 aria-controls="menu"
                 aria-expanded={expanded ? "true" : "false"}
-                onClick={() => {
-                  setExpanded(!expanded);
-                }}
+                onClick={toggle}
               >
                 <Menu />
               </button>
@@ -80,14 +79,14 @@ export function SiteWrapper({
             }}
           >
             <hr className="mt-1 mb-1" />
-            {/* these can still be accessed in spacebar when hidden, disable that */}
-            <ul className="flex-col align-start gap-0-25">
+            <ul className="flex-col align-start gap-0-25 ">
               <li>
                 <Link
                   type="button"
                   className="button plain"
                   to="/communities"
-                  onClick={onLinkClick}
+                  tabIndex={expanded ? 0 : -1}
+                  onClick={collapse}
                 >
                   <Explore />
                   <span>Explore Communities</span>
@@ -101,7 +100,8 @@ export function SiteWrapper({
                       type="button"
                       className="button plain"
                       to="/account"
-                      onClick={onLinkClick}
+                      tabIndex={expanded ? 0 : -1}
+                      onClick={collapse}
                     >
                       <AccountCircle />
                       <span>Account</span>
@@ -112,6 +112,7 @@ export function SiteWrapper({
                       type="button"
                       className="button plain"
                       href="/"
+                      tabIndex={expanded ? 0 : -1}
                       onClick={clearStoredToken}
                     >
                       <Logout />
@@ -126,7 +127,8 @@ export function SiteWrapper({
                       to="/login"
                       type="button"
                       className="button plain"
-                      onClick={onLinkClick}
+                      tabIndex={expanded ? 0 : -1}
+                      onClick={collapse}
                     >
                       <Login />
                       <span>Log in</span>
@@ -137,7 +139,8 @@ export function SiteWrapper({
                       to="/signup"
                       type="button"
                       className="button plain"
-                      onClick={onLinkClick}
+                      tabIndex={expanded ? 0 : -1}
+                      onClick={collapse}
                     >
                       <Star />
                       <span>Sign up</span>

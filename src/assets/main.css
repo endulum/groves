@@ -150,6 +150,9 @@ main hr {
   button {
     width: 100%;
   }
+  ul {
+    padding: 3px;
+  }
 }
 
 .logo {
