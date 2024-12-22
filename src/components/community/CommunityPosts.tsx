@@ -4,14 +4,12 @@ import { Park, Air } from "@mui/icons-material";
 
 import { type Community } from "../../types";
 import { PostSearch } from "../forms/PostSearch";
-import { useLogger } from "../../hooks/useLogger";
 
 export function CommunityPosts() {
   const { community } = useOutletContext<{ community: Community }>();
   useDocumentTitle(
     `${community.canonicalName} :: ${import.meta.env.VITE_APP_NAME}`
   );
-  // useLogger({ community });
 
   return (
     <>

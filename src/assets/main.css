@@ -116,6 +116,10 @@ a {
   color: var(--accent2);
 }
 
+textarea {
+  font-family: monospace;
+}
+
 input,
 textarea,
 select {

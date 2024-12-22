@@ -1,13 +1,14 @@
-import { useParams, Outlet } from "react-router-dom";
+import { useParams, Outlet, useOutletContext } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
-import { type Community } from "../../types";
+import { type User, type Community } from "../../types";
 import { NavTabs } from "../NavTabs";
 
 export function CommunityWrapper() {
   const { community } = useParams();
+  const { user } = useOutletContext<{ user: User }>();
   const { loading, error, data } = useGet<Community>(`/community/${community}`);
 
   useDocumentTitle(
@@ -36,7 +37,7 @@ export function CommunityWrapper() {
             { to: `/community/${community}/wiki`, title: "Wiki" },
           ]}
         />
-        <Outlet context={{ community: data }} />
+        <Outlet context={{ user, community: data }} />
       </>
     );
 }

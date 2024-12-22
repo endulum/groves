@@ -48,7 +48,8 @@
       background-color: oklch(from var(--fg) l c h / 0.05);
     }
     &.primary,
-    &.secondary {
+    &.secondary,
+    &.warning {
       color: var(--color);
     }
   }
