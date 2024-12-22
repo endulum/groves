@@ -7,6 +7,7 @@ import {
 import { DateTime } from "luxon";
 import { useState, useEffect, useRef } from "react";
 import { useDocumentTitle } from "usehooks-ts";
+import { toast } from "react-toastify";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
@@ -121,6 +122,10 @@ export function PostRoute() {
             postId={data.id}
             parentId={null}
             onSuccess={(_submissionData, submissionResult) => {
+              toast(<p>New reply successfully created.</p>, {
+                type: "success",
+                className: "custom-toast",
+              });
               setReplying(false);
               navigate(
                 `/post/${data.id}/reply/${

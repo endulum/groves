@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 import { Form } from "../Form";
 import { Post } from "../../types";
 
@@ -23,6 +25,10 @@ export function PostEditForm({
         method: "PUT",
       }}
       onSuccess={(submissionData) => {
+        toast(<p>Post changes successfully saved.</p>, {
+          type: "success",
+          className: "custom-toast",
+        });
         setPostContent({
           title: submissionData.title,
           content: submissionData.content,

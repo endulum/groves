@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Form } from "../Form";
 
@@ -11,6 +12,10 @@ export function PostCreateForm({ communityUrl }: { communityUrl: string }) {
         method: "POST",
       }}
       onSuccess={(_submissionData, submissionResult) => {
+        toast(<p>New post successfully created.</p>, {
+          type: "success",
+          className: "custom-toast",
+        });
         navigate(`/post/${submissionResult.id}`);
       }}
       buttonText="Post"

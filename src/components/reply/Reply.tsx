@@ -2,6 +2,7 @@ import { useBoolean } from "usehooks-ts";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { DateTime, type DateTimeFormatOptions } from "luxon";
+import { toast } from "react-toastify";
 
 import {
   type ReplyStatus,
@@ -150,6 +151,10 @@ export function Reply({
                 postId={data.postId}
                 parentId={data.id}
                 onSuccess={(_submissionData, submissionResult) => {
+                  toast(<p>New reply successfully created.</p>, {
+                    type: "success",
+                    className: "custom-toast",
+                  });
                   cancelReplying();
                   addNewChild(submissionResult as Reply);
                 }}

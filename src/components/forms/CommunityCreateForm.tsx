@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Form } from "../Form";
 import { InputChecklist } from "../InputChecklist";
@@ -9,6 +10,10 @@ export function CommunityCreateForm() {
     <Form
       destination={{ method: "POST", endpoint: "/communities" }}
       onSuccess={(formData) => {
+        toast(<p>New community successfully created.</p>, {
+          type: "success",
+          className: "custom-toast",
+        });
         navigate(`/community/${formData.urlName}`);
       }}
       buttonText="Create"

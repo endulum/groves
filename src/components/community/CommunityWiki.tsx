@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import { useBoolean } from "usehooks-ts";
 import { Edit, EditOff } from "@mui/icons-material";
+import { toast } from "react-toastify";
 
 import { User, type Community } from "../../types";
 import { useGet } from "../../hooks/useGet";
@@ -66,6 +67,10 @@ export function CommunityWiki() {
           <CommunityWikiForm
             content={data.wiki}
             onSuccess={() => {
+              toast(<p>Wiki changes successfully saved.</p>, {
+                type: "success",
+                className: "custom-toast",
+              });
               cancelEditing();
               get(false);
             }}

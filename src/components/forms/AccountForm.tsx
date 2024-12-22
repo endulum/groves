@@ -1,13 +1,11 @@
-import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { type User } from "../../types";
 import { Form } from "../Form";
 import { InputChecklist } from "../InputChecklist";
-import { Alert } from "../Alert";
 
 export function AccountForm() {
-  const [success, setSuccess] = useState<boolean>(false);
   const { user, changeUsername } = useOutletContext<{
     user: User;
     changeUsername: (username: string) => void;
@@ -15,20 +13,15 @@ export function AccountForm() {
   return (
     <Form
       destination={{ endpoint: "/me", method: "PUT" }}
-      onClickSubmit={() => {
-        setSuccess(false);
-      }}
       onSuccess={(submissionData) => {
-        setSuccess(true);
+        toast(<p>Account changes successfully saved.</p>, {
+          type: "success",
+          className: "custom-toast",
+        });
         changeUsername(submissionData.username);
       }}
       buttonText="Submit"
     >
-      {success && (
-        <Alert type="success">
-          <p>Your changes have been saved.</p>
-        </Alert>
-      )}
       <label htmlFor="username">
         <span>Username</span>
         <InputChecklist
