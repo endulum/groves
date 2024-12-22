@@ -5,11 +5,15 @@ import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { type User, type Community } from "../../types";
 import { NavTabs } from "../NavTabs";
+import { CommunityInfo } from "./CommunityInfo";
+import { useEffect } from "react";
 
 export function CommunityWrapper() {
   const { community } = useParams();
   const { user } = useOutletContext<{ user: User }>();
-  const { loading, error, data } = useGet<Community>(`/community/${community}`);
+  const { loading, error, data, get } = useGet<Community>(
+    `/community/${community}`
+  );
 
   useDocumentTitle(
     `${
@@ -18,6 +22,10 @@ export function CommunityWrapper() {
         : "Viewing community..."
     }`
   );
+
+  useEffect(() => {
+    get(false);
+  }, [community]);
 
   if (loading || error)
     return (
@@ -31,6 +39,7 @@ export function CommunityWrapper() {
     return (
       <>
         <h2>{data.canonicalName}</h2>
+        <CommunityInfo data={data} get={get} />
         <NavTabs
           tabs={[
             { to: `/community/${community}/`, title: "Posts" },
