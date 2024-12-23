@@ -1,0 +1,69 @@
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { Loop, PersonAdd, PersonRemove } from "@mui/icons-material";
+
+import { Community } from "../../types";
+import { useForm } from "../../hooks/useForm";
+import { useBoolean } from "usehooks-ts";
+
+export function FollowButton({
+  data,
+  followers,
+  setFollowers,
+}: {
+  data: Community & { following: boolean };
+  followers: number;
+  setFollowers: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const {
+    value: isFollowing,
+    setFalse: unfollow,
+    setTrue: follow,
+  } = useBoolean(data.following);
+
+  const { loading, error, handleSubmit } = useForm(
+    { endpoint: `/community/${data.id}/followers`, method: "PUT" },
+    (submissionData, _submissionResult) => {
+      toast(<p>owo</p>, {
+        className: "custom-toast",
+        type: "success",
+      });
+      if (submissionData.follow === "true") {
+        follow();
+        setFollowers(followers + 1);
+      }
+      if (submissionData.follow === "false") {
+        unfollow();
+        setFollowers(followers - 1);
+      }
+    }
+  );
+
+  useEffect(() => {
+    if (error)
+      toast(<p>{error}</p>, {
+        className: "custom-toast",
+        type: "warning",
+      });
+  }, [error]);
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <button
+        type="submit"
+        className="button primary"
+        id="follow"
+        value={isFollowing ? "false" : "true"}
+      >
+        {loading ? (
+          <Loop className="spin" />
+        ) : isFollowing ? (
+          <PersonRemove />
+        ) : (
+          <PersonAdd />
+        )}
+        <span>{isFollowing ? "Unfollow" : "Follow"}</span>
+      </button>
+    </form>
+  );
+}

@@ -17,6 +17,7 @@ export type Community = {
     followers: number;
     posts: number;
   };
+  following: boolean | null;
 };
 
 /*

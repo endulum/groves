@@ -13,20 +13,6 @@ export function CommunityPosts() {
 
   return (
     <>
-      <div className="flex-row jc-spb mb-1 mt-1">
-        <h3>Posts</h3>
-        <Link
-          type="button"
-          to={{
-            pathname: `/community/${community.urlName}/newPost`,
-          }}
-          state={{ communityName: community.urlName }}
-          className="button primary"
-        >
-          <Park />
-          <span>New Post</span>
-        </Link>
-      </div>
       {community._count.posts > 0 ? (
         <PostSearch communityUrl={community.urlName} />
       ) : (

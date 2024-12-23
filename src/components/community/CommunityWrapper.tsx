@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams, Outlet, useOutletContext } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 
@@ -6,7 +7,7 @@ import { LoadingSpacer } from "../LoadingSpacer";
 import { type User, type Community } from "../../types";
 import { NavTabs } from "../NavTabs";
 import { CommunityInfo } from "./CommunityInfo";
-import { useEffect } from "react";
+import { CommunityStats } from "./CommunityStats";
 
 export function CommunityWrapper() {
   const { community } = useParams();
@@ -39,10 +40,11 @@ export function CommunityWrapper() {
     return (
       <>
         <h2>{data.canonicalName}</h2>
+        <CommunityStats data={data} />
         <CommunityInfo data={data} get={get} />
         <NavTabs
           tabs={[
-            { to: `/community/${community}/`, title: "Posts" },
+            { to: `/community/${community}`, title: "Posts" },
             { to: `/community/${community}/wiki`, title: "Wiki" },
           ]}
         />
