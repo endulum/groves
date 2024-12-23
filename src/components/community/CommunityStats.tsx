@@ -9,7 +9,7 @@ export function CommunityStats({ data }: { data: Community }) {
   const { user } = useOutletContext<{ user: User }>();
   const [followers, setFollowers] = useState<number>(data._count.followers);
   return (
-    <div className="flex-row gap-0-5">
+    <div className="flex-row gap-0-5 mt-1 mb-1">
       <div className="community-stat flex-col gap-0-5">
         <Diversity3 />
         <p>

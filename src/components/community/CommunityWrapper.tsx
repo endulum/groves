@@ -39,9 +39,9 @@ export function CommunityWrapper() {
   if (data)
     return (
       <>
-        <h2>{data.canonicalName}</h2>
-        <CommunityStats data={data} />
         <CommunityInfo data={data} get={get} />
+        <CommunityStats data={data} />
+        {/* <CommunityInfo data={data} get={get} /> */}
         <NavTabs
           tabs={[
             { to: `/community/${community}`, title: "Posts" },

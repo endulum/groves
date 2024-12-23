@@ -24,17 +24,21 @@ export function FollowButton({
   const { loading, error, handleSubmit } = useForm(
     { endpoint: `/community/${data.id}/followers`, method: "PUT" },
     (submissionData, _submissionResult) => {
-      toast(<p>owo</p>, {
-        className: "custom-toast",
-        type: "success",
-      });
       if (submissionData.follow === "true") {
         follow();
         setFollowers(followers + 1);
+        toast(<p>You are now following {data.canonicalName}.</p>, {
+          className: "custom-toast",
+          type: "success",
+        });
       }
       if (submissionData.follow === "false") {
         unfollow();
         setFollowers(followers - 1);
+        toast(<p>You are no longer following {data.canonicalName}.</p>, {
+          className: "custom-toast",
+          type: "success",
+        });
       }
     }
   );

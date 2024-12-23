@@ -1,7 +1,8 @@
 import { useBoolean } from "usehooks-ts";
 import { Edit, EditOff } from "@mui/icons-material";
+import { useOutletContext } from "react-router-dom";
 
-import { Community } from "../../types";
+import { Community, User } from "../../types";
 import { CommunityEditForm } from "../forms/CommunityEditForm";
 
 export function CommunityInfo({
@@ -11,6 +12,7 @@ export function CommunityInfo({
   data: Community;
   get: (keepCurrentData: boolean) => Promise<void>;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
   const {
     value: editing,
     setFalse: cancelEditing,
@@ -19,34 +21,35 @@ export function CommunityInfo({
 
   return (
     <>
-      <div className="flex-row jc-spb align-start">
-        <div>
-          {editing ? (
-            <CommunityEditForm data={data} get={get} />
+      <div className="flex-row jc-spb mb-1">
+        <h2>{data.canonicalName}</h2>
+        {user &&
+          user.id === data.admin.id &&
+          (editing ? (
+            <button
+              type="button"
+              className="button plain warning"
+              onClick={cancelEditing}
+            >
+              <EditOff />
+              <span>Cancel editing</span>
+            </button>
           ) : (
-            <p>{data.description}</p>
-          )}
-        </div>
-        {editing ? (
-          <button
-            type="button"
-            className="button plain warning"
-            onClick={cancelEditing}
-          >
-            <EditOff />
-            <span>Cancel editing</span>
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="button plain primary"
-            onClick={startEditing}
-          >
-            <Edit />
-            <span>Edit</span>
-          </button>
-        )}
+            <button
+              type="button"
+              className="button plain primary"
+              onClick={startEditing}
+            >
+              <Edit />
+              <span>Edit</span>
+            </button>
+          ))}
       </div>
+      {editing ? (
+        <CommunityEditForm data={data} get={get} />
+      ) : (
+        <p>{data.description}</p>
+      )}
     </>
   );
 }

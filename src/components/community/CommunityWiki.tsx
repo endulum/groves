@@ -8,6 +8,7 @@ import { useGet } from "../../hooks/useGet";
 import { MDWrapper } from "../MDWrapper";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { CommunityWikiForm } from "../forms/CommunityWikiForm";
+import { Alert } from "../Alert";
 
 export function CommunityWiki() {
   const { community, user } = useOutletContext<{
@@ -78,7 +79,9 @@ export function CommunityWiki() {
         ) : data.wiki ? (
           <MDWrapper content={data.wiki} />
         ) : (
-          <i>No content was provided for this wiki just yet.</i>
+          <Alert type="blind">
+            <p>No content was provided for this community's wiki.</p>
+          </Alert>
         )}
       </>
     );
