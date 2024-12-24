@@ -6,7 +6,7 @@ import { Post } from "../../types";
 export function PostEditForm({
   data,
   setPostContent,
-  setEditing,
+  cancelEditing,
 }: {
   data: Post;
   setPostContent: React.Dispatch<
@@ -14,9 +14,9 @@ export function PostEditForm({
       title: string;
       content: string;
       lastEdited: string | null;
-    } | null>
+    }>
   >;
-  setEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  cancelEditing: () => void;
 }) {
   return (
     <Form<{ id: string }>
@@ -34,7 +34,7 @@ export function PostEditForm({
           content: submissionData.content,
           lastEdited: new Date().toISOString(),
         });
-        setEditing(false);
+        cancelEditing();
       }}
       buttonText="Save"
     >

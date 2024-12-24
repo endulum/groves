@@ -14,12 +14,12 @@ import { type VisibleReply, type Post } from "../types";
 export function VoteWidget({
   data,
   type,
-  canVote,
+  isContentReadonly,
   orientation = "horizontal",
 }: {
   data: VisibleReply | Post;
   type: "post" | "reply";
-  canVote: boolean;
+  isContentReadonly: boolean;
   orientation: "vertical" | "horizontal";
 }) {
   const { loading, vote, voted, score } = useVote({
@@ -66,7 +66,7 @@ export function VoteWidget({
   const getDisabled = (voteType: "upvote" | "downvote") => {
     if (
       voted === null ||
-      // data.canVote === false ||
+      isContentReadonly === true ||
       (voteType === "upvote" && voted.downvoted === true) ||
       (voteType === "downvote" && voted.upvoted === true)
     )
@@ -79,7 +79,7 @@ export function VoteWidget({
     action: "add" | "remove"
   ) => {
     if (voted === null) return;
-    if (data.canVote === false) return;
+    if (isContentReadonly) return;
     vote(type, action);
   };
 
@@ -96,9 +96,9 @@ export function VoteWidget({
     >
       <button
         className="button plain"
-        disabled={canVote ? getDisabled("upvote") : true}
+        disabled={!isContentReadonly ? getDisabled("upvote") : true}
         title={
-          canVote
+          !isContentReadonly
             ? getTitle(
                 "upvote",
                 voted?.upvoted || voted?.downvoted ? "remove" : "add"
@@ -130,9 +130,9 @@ export function VoteWidget({
       </div>
       <button
         className="button plain"
-        disabled={canVote ? getDisabled("downvote") : true}
+        disabled={!isContentReadonly ? getDisabled("downvote") : true}
         title={
-          canVote
+          !isContentReadonly
             ? getTitle(
                 "downvote",
                 voted?.upvoted || voted?.downvoted ? "remove" : "add"

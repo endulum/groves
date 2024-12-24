@@ -20,30 +20,17 @@ export type Community = {
   following: boolean | null;
 };
 
-/*
-{
-  id: 2,
-  urlName: 'askgroves',
-  canonicalName: 'Ask Groves',
-  description: 'This is the place to ask and answer thought-provoking questions.',
-  created: '2024-12-22T03:08:40.105Z',
-  lastActivity: '2024-12-22T03:08:40.105Z',
-  readonly: false,
-  admin: { id: 1, username: 'admin' },
-  moderators: [],
-  _count: { followers: 0, posts: 0 }
-}
-*/
+type WithContext = {
+  context: Record<string, boolean>;
+};
 
-export type Post = {
+export type Post = WithContext & {
   id: string;
 
   community: {
     id: number;
     urlName: string;
     canonicalName: string;
-    moderators: number[];
-    adminId: number;
   };
 
   author: {
@@ -56,18 +43,18 @@ export type Post = {
     downvotes: number;
     replies: number;
   };
+
   voted: {
     upvoted: boolean;
     downvoted: boolean;
   };
-  canVote: boolean;
 
   title: string;
   content: string;
   datePosted: string;
   lastEdited: null | string;
+  pinned: boolean;
   readonly: boolean;
-  viewingAsMod: boolean;
 };
 
 // convenient object at base of json for
