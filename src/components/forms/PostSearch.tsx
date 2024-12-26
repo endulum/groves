@@ -71,7 +71,9 @@ export function PostSearch({ communityUrl }: { communityUrl: string }) {
                     title={`${upvotes} upvotes, ${downvotes} downvotes`}
                   >
                     <WbSunny
-                      style={{ color: score > 0 ? "var(--accent2" : "#ddd" }}
+                      style={{
+                        color: score > 0 ? "var(--accent2" : "var(--border)",
+                      }}
                     />
                     <small>{score}</small>
                   </div>

@@ -121,7 +121,15 @@ export function VoteWidget({
         {loading ? (
           <Loop className="spin" style={{ width: "1.25rem" }} />
         ) : (
-          <WbSunny style={{ width: "1.25rem", color: "var(--accent2)" }} />
+          <WbSunny
+            style={{
+              width: "1.25rem",
+              color:
+                score.upvotes - score.downvotes > 0
+                  ? "var(--accent2)"
+                  : "var(--border)",
+            }}
+          />
         )}
         <small>{score.upvotes - score.downvotes}</small>
       </div>
