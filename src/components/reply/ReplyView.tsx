@@ -1,11 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { Air } from "@mui/icons-material";
 
 import { type Post, type PostComponentContext } from "../../types";
 import { Alert } from "../Alert";
 import { AllReplies } from "./AllReplies";
 import { IsolatedReply } from "./IsolatedReply";
+import { useLogger } from "../../hooks/useLogger";
 
 export function ReplyView({
   data,
@@ -16,6 +16,8 @@ export function ReplyView({
 }) {
   const { reply } = useParams();
   const [sort, setSort] = useState<string>("hot");
+
+  useLogger({ reply });
 
   return (
     <>
@@ -50,16 +52,7 @@ export function ReplyView({
       )}
 
       <div className="replies">
-        {data._count.replies === 0 ? (
-          <div className="spacer">
-            <Air />
-            <p>
-              This post doesn't have any replies yet.
-              <br />
-              Be the first to reply!
-            </p>
-          </div>
-        ) : reply ? (
+        {reply ? (
           <IsolatedReply
             postContext={{
               ...postContext,

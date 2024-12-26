@@ -1,3 +1,5 @@
+import { Air } from "@mui/icons-material";
+
 import {
   type Reply as TReply,
   type VisibleReply,
@@ -19,17 +21,28 @@ export function TopLevelReplies({
 
   return (
     <>
-      {children.map((child) => (
-        <Reply
-          data={child as VisibleReply | HiddenReply}
-          context={{
-            ...postContext,
-            ...child.context,
-            isTopLevel: true,
-          }}
-          key={child.id}
-        />
-      ))}
+      {children.length > 0 ? (
+        children.map((child) => (
+          <Reply
+            data={child as VisibleReply | HiddenReply}
+            context={{
+              ...postContext,
+              ...child.context,
+              isTopLevel: true,
+            }}
+            key={child.id}
+          />
+        ))
+      ) : (
+        <div className="spacer">
+          <Air />
+          <p>
+            This post doesn't have any replies yet.
+            <br />
+            Be the first to reply!
+          </p>
+        </div>
+      )}
       {loadMoreChildren && (
         <button
           onClick={() => {
