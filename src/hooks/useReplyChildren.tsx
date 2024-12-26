@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Reply } from "../types";
 
+import { Reply } from "../types";
 import { useGet } from "./useGet";
+import { gatherChildrenIds } from "../functions/gatherChildrenIds";
 
 export function useReplyChildren(data: Reply) {
   const [children, setChildren] = useState<Reply[]>(data.children ?? []);
@@ -26,9 +27,12 @@ export function useReplyChildren(data: Reply) {
     children: Reply[];
   }>(nextUrl as string);
 
+  // pushes one new child to front of children - useful for new replies
   const addNewChild = (newChild: Reply) => {
     setChildren([newChild, ...children]);
   };
+
+  const countChildren = () => gatherChildrenIds(children).length;
 
   // will fetch more children when nextUrl is set
   useEffect(() => {
@@ -48,6 +52,7 @@ export function useReplyChildren(data: Reply) {
   return {
     loading,
     children,
+    countChildren,
     addNewChild,
     loadChildren,
     loadMoreChildren,

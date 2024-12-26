@@ -39,8 +39,7 @@ export function App() {
           />
         </Route>
         <Route path="/post/:post" element={<routes.PostRoute />} />
-        {/* 
-        <Route path="/post/:post/reply/:reply" element={<routes.PostRoute />} /> */}
+        <Route path="/post/:post/reply/:reply" element={<routes.PostRoute />} />
         <Route
           path="/communities/new"
           element={<routes.CommunityCreateRoute />}

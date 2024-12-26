@@ -4,6 +4,7 @@ export type User = {
 };
 
 export type Community = {
+  // top-level primitives
   id: number;
   urlName: string;
   canonicalName: string;
@@ -11,101 +12,85 @@ export type Community = {
   created: string;
   lastActivity: string;
   readonly: boolean;
+  // relational
   admin: User;
   moderators: User[];
-  _count: {
-    followers: number;
-    posts: number;
+  _count: { followers: number; posts: number };
+  // context
+  context: {
+    isFollowing: boolean;
   };
-  following: boolean | null;
 };
 
-type WithContext = {
-  context: Record<string, boolean>;
+type PostContext = {
+  isVoted: { upvoted: boolean; downvoted: boolean };
+  isMod: boolean;
+  isPostAuthorMod: boolean;
+  isPostAuthorAdmin: boolean;
+  isCommReadonly: boolean;
 };
 
-export type Post = WithContext & {
+export type Post = {
+  // top-level primitives
   id: string;
-
-  community: {
-    id: number;
-    urlName: string;
-    canonicalName: string;
-  };
-
-  author: {
-    id: number;
-    username: string;
-  };
-
-  _count: {
-    upvotes: number;
-    downvotes: number;
-    replies: number;
-  };
-
-  voted: {
-    upvoted: boolean;
-    downvoted: boolean;
-  };
-
   title: string;
   content: string;
   datePosted: string;
-  lastEdited: null | string;
+  lastEdited: string;
   pinned: boolean;
   readonly: boolean;
+  // relational
+  author: User;
+  community: Pick<Community, "id" | "urlName" | "canonicalName">;
+  _count: { upvotes: number; downvotes: number; replies: number };
+  // context
+  context: PostContext;
 };
 
-// convenient object at base of json for
-// `/post/___/replies`, `/reply/___`, and `/reply/___/replies`
-// that lets us know what we can do to this reply
-export type ReplyState = {
-  isLoggedIn: boolean;
-  isMod: boolean;
-  isReadOnly: boolean;
+export type PostComponentContext = PostContext & {
+  isPostReadonly: boolean;
+  authUserID: number | null;
+  postAuthorID: number;
+  isolateReplyID: string | null;
 };
 
-// more convenient properties, but calculated clientside
-export type ReplyStatus = ReplyState & {
-  currentIsolatedReply: string | null; // is a reply being isolated?
-  isTopLevel: boolean; // is current reply the top level?
+type ReplyContext = {
+  isVoted: { upvoted: boolean; downvoted: boolean };
+  isReplyAuthorMod: boolean;
+  isReplyAuthorAdmin: boolean;
 };
 
 export type Reply = {
-  viewingAsMod: boolean;
+  // top-level primitives
   id: string;
-  postId: string;
   parentId: string | null;
-  canVote: boolean;
-  children?: Reply[];
+  postId: string;
+  hidden: boolean;
+  // children
   loadChildren?: string;
   loadMoreChildren?: string;
-  state: ReplyState;
+  children?: Reply[];
+  // context
+  context: ReplyContext;
 };
+
+export type ReplyComponentContext = PostComponentContext &
+  ReplyContext & {
+    isTopLevel: boolean;
+  };
 
 export type VisibleReply = Reply & {
   hidden: false;
-  author: {
-    id: number;
-    username: string;
-  };
-  _count: {
-    upvotes: number;
-    downvotes: number;
-    children: number;
-  };
   content: string;
   datePosted: string;
-  voted: {
-    upvoted: boolean;
-    downvoted: boolean;
-  } | null;
+  _count: { upvotes: number; downvotes: number; children: number };
+  author: User;
 };
 
 export type HiddenReply = Reply & {
   hidden: true;
-  _count: {
-    children: number;
-  };
+  content: null;
+  datePosted: null;
+  _count: { upvotes: null; downvotes: null; children: number };
+  author: null;
 };

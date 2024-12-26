@@ -1,143 +1,137 @@
-/* import { Link } from "react-router-dom";
-
-import { type Reply, type ReplyStatus } from "../../types";
-import { HideReply } from "../forms/ModActionForms";
-*/
-
+import { useBoolean } from "usehooks-ts";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-import { type ReplyStatus, type Reply, VisibleReply } from "../../types";
-import { HideReply } from "../forms/ModActionForms";
-import { VoteWidget } from "../VoteWidget";
+import {
+  VisibleReply,
+  type Reply,
+  type ReplyComponentContext,
+} from "../../types";
+import { ReplyForm } from "./ReplyForm";
 import { FlyoutMenu } from "../FlyoutMenu";
+import { VoteWidget } from "../VoteWidget";
+import { HideReply } from "../forms/ModActionForms";
 
 export function ReplyActionRow({
   data,
-  status,
-  replyActions,
-  hideActions,
+  context,
+  hiding,
+  addNewChild,
 }: {
   data: Reply;
-  status: ReplyStatus;
-  replyActions: {
-    replying: boolean;
-    cancelReplying: () => void;
-    openReplying: () => void;
-  };
-  hideActions: {
+  context: ReplyComponentContext;
+  hiding: {
     hidden: boolean;
     hide: () => void;
     unhide: () => void;
   };
+  addNewChild: (reply: Reply) => void;
 }) {
+  const {
+    value: replying,
+    setTrue: openReplying,
+    setFalse: cancelReplying,
+  } = useBoolean(false);
+
   return (
-    <div className="flex-row gap-0-5 mt-0-5">
-      {/* vote */}
-      {!hideActions.hidden && !status.isReadOnly && (
-        <VoteWidget
-          data={data as VisibleReply}
-          type="reply"
-          canVote={data.canVote}
-          orientation="horizontal"
-        />
+    <>
+      {/* replying */}
+      {replying && (
+        <>
+          <hr className="mb-1 mt-1" />
+          <ReplyForm
+            postId={data.postId}
+            parentId={data.id}
+            onSuccess={(_submissionData, submissionResult) => {
+              toast(<p>New reply successfully created.</p>, {
+                type: "success",
+                className: "custom-toast",
+              });
+              cancelReplying();
+              addNewChild(submissionResult as Reply);
+            }}
+          />
+        </>
       )}
-      {status.isLoggedIn &&
-        !status.isReadOnly &&
-        !hideActions.hidden &&
-        (replyActions.replying ? (
-          <button
-            type="button"
-            className="button plain secondary"
-            onClick={replyActions.cancelReplying}
-          >
-            <small style={{ color: "crimson" }}>cancel replying</small>
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="button plain secondary"
-            onClick={replyActions.openReplying}
-          >
-            <small>reply</small>
-          </button>
-        ))}
-      <FlyoutMenu x="left" y="top">
-        {data.parentId &&
-          (status.isTopLevel ? (
+
+      {/* everything else */}
+      <div className="flex-row gap-0-5 mt-0-5">
+        {!hiding.hidden &&
+          !data.hidden &&
+          !context.isPostReadonly &&
+          !context.isCommReadonly && (
+            <VoteWidget
+              data={data as VisibleReply}
+              type="reply"
+              isReadonly={context.isPostReadonly || context.isCommReadonly}
+              context={context}
+            />
+          )}
+        {context.authUserID !== null &&
+          !context.isPostReadonly &&
+          !context.isCommReadonly &&
+          !hiding.hidden &&
+          (replying ? (
+            <button
+              type="button"
+              className="button plain secondary"
+              onClick={cancelReplying}
+            >
+              <small style={{ color: "crimson" }}>cancel replying</small>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="button plain secondary"
+              onClick={openReplying}
+            >
+              <small>reply</small>
+            </button>
+          ))}
+        <FlyoutMenu x="left" y="top">
+          {data.parentId &&
+            (context.isTopLevel ? (
+              <Link
+                type="button"
+                className="button plain secondary"
+                to={`/post/${data.postId}/reply/${data.parentId}`}
+                title="Go to the parent of this post"
+              >
+                <small>parent</small>
+              </Link>
+            ) : (
+              <a
+                type="button"
+                className="button plain secondary"
+                href={`#${data.parentId}`}
+                title="Jump to the parent of this post"
+              >
+                <small>parent</small>
+              </a>
+            ))}
+
+          {!(
+            context.currentIsolatedReply &&
+            context.currentIsolatedReply === data.id
+          ) && (
+            // don't show the isolate link if we're already isolating this reply
             <Link
               type="button"
               className="button plain secondary"
-              to={`/post/${data.postId}/reply/${data.parentId}`}
-              title="Go to the parent of this post"
+              to={`/post/${data.postId}/reply/${data.id}`}
+              title="View this post on its own"
             >
-              <small>parent</small>
+              <small>isolate</small>
             </Link>
-          ) : (
-            <a
-              type="button"
-              className="button plain secondary"
-              href={`#${data.parentId}`}
-              title="Jump to the parent of this post"
-            >
-              <small>parent</small>
-            </a>
-          ))}
+          )}
 
-        {!(
-          status.currentIsolatedReply && status.currentIsolatedReply === data.id
-        ) && (
-          // don't show the isolate link if we're already isolating this reply
-          <Link
-            type="button"
-            className="button plain secondary"
-            to={`/post/${data.postId}/reply/${data.id}`}
-            title="View this post on its own"
-          >
-            <small>isolate</small>
-          </Link>
-        )}
-
-        {!status.isReadOnly && status.isMod && (
-          <HideReply replyId={data.id} hideActions={hideActions} />
-        )}
-      </FlyoutMenu>
-    </div>
+          {!context.isPostReadonly &&
+            !context.isCommReadonly &&
+            context.isMod && (
+              <HideReply replyId={data.id} hideActions={hiding} />
+            )}
+        </FlyoutMenu>
+      </div>
+    </>
   );
 }
-
-/*
-export function ReplyActionRow({
-  data,
-  status,
-  replying,
-  setReplying,
-  hidden,
-  setHidden,
-}: {
-  data: Reply;
-  status: ReplyStatus;
-  replying: boolean;
-  setReplying: React.Dispatch<React.SetStateAction<boolean>>;
-  hidden: boolean;
-  setHidden: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-  return (
-    <div className="reply-linkrow mt-0-5 flex-row gap-0-5">
-      
-
-      
-
-      {!hidden &&
-        status.isLoggedIn &&
-        !status.isReadOnly &&
-        }
-
-      {!status.isReadOnly && status.isMod && (
-        <>
-          <HideReply replyId={data.id} hidden={hidden} setHidden={setHidden} />
-        </>
-      )}
-    </div>
-  );
-}
- */

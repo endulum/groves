@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DateTime } from "luxon";
 import { useBoolean } from "usehooks-ts";
 import { toast } from "react-toastify";
 
-import { type Post, type User } from "../../types";
+import { type PostComponentContext, type Post } from "../../types";
 import { VoteWidget } from "../VoteWidget";
 import { Alert } from "../Alert";
 import { PostEditForm } from "../forms/PostEditForm";
@@ -12,10 +12,18 @@ import { ReplyForm } from "../reply/ReplyForm";
 import { FreezePost } from "../forms/ModActionForms";
 import { MDWrapper } from "../MDWrapper";
 
-export function PostContent({ data }: { data: Post }) {
+export function PostContent({
+  data,
+  context,
+  readonly,
+  setReadonly,
+}: {
+  data: Post;
+  context: PostComponentContext;
+  readonly: boolean;
+  setReadonly: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const navigate = useNavigate();
-  const { user } = useOutletContext<{ user: User }>();
-  const { value: readonly, setValue: setReadonly } = useBoolean(data.readonly);
   const {
     value: replying,
     setTrue: openReplying,
@@ -27,7 +35,6 @@ export function PostContent({ data }: { data: Post }) {
     setFalse: cancelEditing,
   } = useBoolean(false);
 
-  // because we can edit posts on the fly, set post content as state
   const [postContent, setPostContent] = useState<{
     title: string;
     content: string;
@@ -61,9 +68,9 @@ export function PostContent({ data }: { data: Post }) {
         </div>
         <VoteWidget
           data={data}
+          context={context}
           type="post"
-          isContentReadonly={data.readonly || data.context.isCommReadonly}
-          orientation="horizontal"
+          isReadonly={readonly || context.isCommReadonly}
         />
       </div>
 
@@ -94,29 +101,31 @@ export function PostContent({ data }: { data: Post }) {
         )}
       </div>
 
-      {replying && user && (
-        <ReplyForm
-          postId={data.id}
-          parentId={null}
-          onSuccess={(_submissionData, submissionResult) => {
-            toast(<p>New reply successfully created.</p>, {
-              type: "success",
-              className: "custom-toast",
-            });
-            cancelReplying();
-            navigate(
-              `/post/${data.id}/reply/${
-                (submissionResult as { id: string }).id
-              }`
-            );
-          }}
-        />
+      {replying && context.authUserID && (
+        <>
+          <ReplyForm
+            postId={data.id}
+            parentId={null}
+            onSuccess={(_submissionData, submissionResult) => {
+              toast(<p>New reply successfully created.</p>, {
+                type: "success",
+                className: "custom-toast",
+              });
+              cancelReplying();
+              navigate(
+                `/post/${data.id}/reply/${
+                  (submissionResult as { id: string }).id
+                }`
+              );
+            }}
+          />
+        </>
       )}
 
-      <div className="linkrow flex-row gap-0-5">
+      <div className="linkrow flex-row gap-0-5 mt-1">
         {!readonly &&
-          user &&
-          data.author.id === user.id &&
+          context.authUserID &&
+          data.author.id === context.authUserID &&
           (editing ? (
             <button
               type="button"
@@ -135,7 +144,7 @@ export function PostContent({ data }: { data: Post }) {
             </button>
           ))}
         {!readonly &&
-          user &&
+          context.authUserID &&
           (replying ? (
             <button
               type="button"

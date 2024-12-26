@@ -1,56 +1,19 @@
-import { useEffect } from "react";
-import { Air } from "@mui/icons-material";
-
 import {
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
+  PostComponentContext,
 } from "../../types";
-import { Reply } from "./Reply";
-import { LoadingSpacer } from "../LoadingSpacer";
-import { useGet } from "../../hooks/useGet";
 import { useReplyChildren } from "../../hooks/useReplyChildren";
+import { Reply } from "./Reply";
 
 export function TopLevelReplies({
-  postId,
-  sort,
+  data,
+  postContext,
 }: {
-  postId: string;
-  sort: string;
+  data: TReply;
+  postContext: PostComponentContext;
 }) {
-  const { loading, error, data, get } = useGet<
-    TReply & { viewingAsMod: boolean }
-  >(`/post/${postId}/replies?sort=${sort}&levels=2&takePerLevel=2`);
-
-  useEffect(() => {
-    get(false);
-  }, [sort]);
-
-  return (
-    <>
-      {(loading || error) && (
-        <LoadingSpacer
-          loading={loading}
-          error={error}
-          customLoadingText="Getting replies..."
-        />
-      )}
-      {data &&
-        (data.children && data.children.length > 0 ? (
-          <NullParentReplies data={data} />
-        ) : (
-          <div className="spacer">
-            <Air />
-            <p>
-              This post doesn't have any replies yet. <br />
-              Be the first to reply!
-            </p>
-          </div>
-        ))}
-    </>
-  );
-}
-function NullParentReplies({ data }: { data: TReply }) {
   const { loading, children, loadMoreChildren, setNextUrl } =
     useReplyChildren(data);
 
@@ -59,21 +22,20 @@ function NullParentReplies({ data }: { data: TReply }) {
       {children.map((child) => (
         <Reply
           data={child as VisibleReply | HiddenReply}
-          status={{
-            ...data.state,
+          context={{
+            ...postContext,
+            ...child.context,
             isTopLevel: true,
-            currentIsolatedReply: null,
           }}
           key={child.id}
         />
       ))}
-
       {loadMoreChildren && (
         <button
           onClick={() => {
             setNextUrl(loadMoreChildren);
           }}
-          className="button plain secondary reply-loadmore"
+          className="button plain secondary reply-loadmore mt-1"
           disabled={loading}
         >
           <small>{loading ? "Loading..." : "Load more replies"}</small>

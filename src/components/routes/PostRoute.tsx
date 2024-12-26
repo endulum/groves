@@ -1,20 +1,15 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
-import { useState } from "react";
 
-import { type Post } from "../../types";
+import { type Post, type User } from "../../types";
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../LoadingSpacer";
-import { PostContent } from "../post/PostContent";
-import { Alert } from "../Alert";
-import { IsolatedReply } from "../reply/IsolatedReply";
-import { TopLevelReplies } from "../reply/TopLevelReplies";
+import { PostView } from "../post/PostView";
 
 export function PostRoute() {
-  const { post, reply } = useParams();
-  // const { user } = useOutletContext<{ user: User }>();
-  const [sort, setSort] = useState<string>("top");
+  const { post } = useParams();
   const { loading, error, data } = useGet<Post>(`/post/${post}`);
+  const { user } = useOutletContext<{ user: User }>();
 
   useDocumentTitle(
     `${
@@ -32,50 +27,20 @@ export function PostRoute() {
         customLoadingText="Getting post..."
       />
     );
+
   if (data)
     return (
       <>
-        <PostContent data={data} />
-
-        <hr className="mt-1 mb-1" />
-        <div className="flex-row jc-spb">
-          <h3>Replies</h3>
-          <label htmlFor="sort" className="flex-row gap-1">
-            <span>Sort by:</span>
-            <select
-              id="sort"
-              value={sort}
-              onChange={(e) => {
-                setSort(e.target.value);
-              }}
-            >
-              <option value="top">Top</option>
-              <option value="hot">Hot</option>
-              <option value="best">Best</option>
-              <option value="controversial">Controversial</option>
-              <option value="latest">Newest</option>
-            </select>
-          </label>
-        </div>
-
-        {reply && (
-          <Alert type="info" className="mt-1">
-            <p>
-              Viewing an isolated reply.{" "}
-              <Link to={`/post/${post}`}>View all replies</Link>
-            </p>
-          </Alert>
-        )}
-
-        <div className="replies flex-col align-start gap-0-5 mt-1">
-          {reply ? (
-            // if startingParent is not null, we're viewing one comment and its children
-            <IsolatedReply replyId={reply} sort={sort} />
-          ) : (
-            // if startingParent is null, we're viewing all top-level comments
-            <TopLevelReplies postId={data.id} sort={sort} />
-          )}
-        </div>
+        <PostView
+          data={data}
+          context={{
+            ...data.context,
+            isPostReadonly: data.readonly,
+            authUserID: user ? user.id : null,
+            postAuthorID: data.author.id,
+            isolateReplyID: null,
+          }}
+        />
       </>
     );
 }

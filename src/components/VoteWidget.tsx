@@ -1,31 +1,36 @@
+import { toast } from "react-toastify";
 import {
+  Loop,
+  WbSunny,
   AddCircle,
   AddCircleOutline,
   RemoveCircle,
   RemoveCircleOutline,
-  WbSunny,
-  Loop,
 } from "@mui/icons-material";
-import { toast } from "react-toastify";
 
+import {
+  type VisibleReply,
+  type Post,
+  type PostComponentContext,
+  type ReplyComponentContext,
+} from "../types";
 import { useVote } from "../hooks/useVote";
-import { type VisibleReply, type Post } from "../types";
 
 export function VoteWidget({
   data,
+  context,
   type,
-  isContentReadonly,
-  orientation = "horizontal",
+  isReadonly,
 }: {
-  data: VisibleReply | Post;
+  data: Post | VisibleReply;
+  context: PostComponentContext | ReplyComponentContext;
   type: "post" | "reply";
-  isContentReadonly: boolean;
-  orientation: "vertical" | "horizontal";
+  isReadonly: boolean;
 }) {
-  const { loading, vote, voted, score } = useVote({
-    endpoint: type === "post" ? `/post/${data.id}` : `/reply/${data.id}`,
-    voted: data.voted,
-    score: data._count.upvotes - data._count.downvotes,
+  const { loading, vote, isVoted, score } = useVote({
+    endpoint: type === "reply" ? `/reply/${data.id}` : `/post/${data.id}`,
+    isVoted: context.isVoted,
+    score: { upvotes: data._count.upvotes, downvotes: data._count.downvotes },
     onError: (error: string) => {
       toast(<p>{error}</p>, {
         className: "custom-toast",
@@ -38,25 +43,30 @@ export function VoteWidget({
     voteType: "upvote" | "downvote",
     action: "add" | "remove"
   ) => {
-    if (voted === null) return "You must be logged in to vote on content.";
+    if (!context.authUserID) return "You must be logged in to vote on content.";
+    if (context.authUserID === data.author.id)
+      return "You cannot vote on your own content.";
+    if (isReadonly) return "Voting is disabled on readonly content.";
     if (voteType === "upvote") {
       if (action === "add") {
-        return voted.upvoted === true ? "You gave an upvote." : "Add an upvote";
+        return isVoted.upvoted === true
+          ? "You gave an upvote."
+          : "Add an upvote";
       }
       if (action === "remove") {
-        return voted.upvoted === false
+        return isVoted.upvoted === false
           ? "You already voted."
           : "Remove your upvote";
       }
     }
     if (voteType === "downvote") {
       if (action === "add") {
-        return voted.downvoted === true
+        return isVoted.downvoted === true
           ? "You gave a downvote."
           : "Add a downvote";
       }
       if (action === "remove") {
-        return voted.downvoted === false
+        return isVoted.downvoted === false
           ? "You already voted."
           : "Remove your downvote";
       }
@@ -65,10 +75,11 @@ export function VoteWidget({
 
   const getDisabled = (voteType: "upvote" | "downvote") => {
     if (
-      voted === null ||
-      isContentReadonly === true ||
-      (voteType === "upvote" && voted.downvoted === true) ||
-      (voteType === "downvote" && voted.upvoted === true)
+      !context.authUserID ||
+      context.authUserID === data.author.id ||
+      isReadonly ||
+      (voteType === "upvote" && isVoted.downvoted === true) ||
+      (voteType === "downvote" && isVoted.upvoted === true)
     )
       return true;
     return false;
@@ -78,47 +89,33 @@ export function VoteWidget({
     type: "upvote" | "downvote",
     action: "add" | "remove"
   ) => {
-    if (voted === null) return;
-    if (isContentReadonly) return;
     vote(type, action);
   };
 
-  const { upvotes, downvotes } = data._count;
-
   return (
-    <div
-      className={`vote-widget ${
-        orientation === "vertical" ? "flex-col" : "flex-row"
-      } gap-0-25`}
-      style={
-        orientation === "horizontal" ? { flexDirection: "row-reverse" } : {}
-      }
-    >
+    <div className="vote-widget flex-row gap-0-25">
+      {/* upvote */}
       <button
         className="button plain"
-        disabled={!isContentReadonly ? getDisabled("upvote") : true}
-        title={
-          !isContentReadonly
-            ? getTitle(
-                "upvote",
-                voted?.upvoted || voted?.downvoted ? "remove" : "add"
-              )
-            : "Voting is disabled on readonly content."
-        }
+        disabled={getDisabled("upvote")}
+        title={getTitle(
+          "upvote",
+          isVoted.upvoted || isVoted.downvoted ? "remove" : "add"
+        )}
         onClick={() => {
-          handleVote("upvote", voted?.upvoted ? "remove" : "add");
+          handleVote("upvote", isVoted.upvoted ? "remove" : "add");
         }}
       >
-        {voted?.upvoted ? <AddCircle /> : <AddCircleOutline />}
+        {isVoted.upvoted ? <AddCircle /> : <AddCircleOutline />}
       </button>
+
+      {/* score */}
       <div
-        className={`${
-          orientation === "vertical" ? "flex-row gap-0-5" : "flex-col gap-0-25"
-        }`}
+        className="flex-col gap-0-25"
         title={
           loading
             ? "Casting vote..."
-            : `${upvotes} upvotes, ${downvotes} downvotes`
+            : `${score.upvotes} upvotes, ${score.downvotes} downvotes`
         }
       >
         {loading ? (
@@ -126,24 +123,22 @@ export function VoteWidget({
         ) : (
           <WbSunny style={{ width: "1.25rem", color: "var(--accent2)" }} />
         )}
-        <small>{score}</small>
+        <small>{score.upvotes - score.downvotes}</small>
       </div>
+
+      {/* downvote */}
       <button
         className="button plain"
-        disabled={!isContentReadonly ? getDisabled("downvote") : true}
-        title={
-          !isContentReadonly
-            ? getTitle(
-                "downvote",
-                voted?.upvoted || voted?.downvoted ? "remove" : "add"
-              )
-            : "Voting is disabled on readonly content."
-        }
+        disabled={getDisabled("downvote")}
+        title={getTitle(
+          "downvote",
+          isVoted.upvoted || isVoted.downvoted ? "remove" : "add"
+        )}
         onClick={() => {
-          handleVote("downvote", voted?.downvoted ? "remove" : "add");
+          handleVote("downvote", isVoted.downvoted ? "remove" : "add");
         }}
       >
-        {voted?.downvoted ? <RemoveCircle /> : <RemoveCircleOutline />}
+        {isVoted.downvoted ? <RemoveCircle /> : <RemoveCircleOutline />}
       </button>
     </div>
   );
