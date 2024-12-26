@@ -11,6 +11,7 @@ import { PostEditForm } from "../forms/PostEditForm";
 import { ReplyForm } from "../reply/ReplyForm";
 import { FreezePost } from "../forms/ModActionForms";
 import { MDWrapper } from "../MDWrapper";
+import { Username } from "../Username";
 
 export function PostContent({
   data,
@@ -55,9 +56,16 @@ export function PostContent({
               {data.community.canonicalName}
             </Link>{" "}
             by{" "}
-            <Link to={`/user/${data.author.username}`}>
-              {data.author.username}
-            </Link>{" "}
+            <Username
+              user={data.author}
+              role={
+                context.isPostAuthorMod
+                  ? "mod"
+                  : context.isPostAuthorAdmin
+                  ? "admin"
+                  : null
+              }
+            />{" "}
             {DateTime.fromISO(data.datePosted).toRelative()}
             {postContent.lastEdited &&
               `, last edited ${DateTime.fromISO(

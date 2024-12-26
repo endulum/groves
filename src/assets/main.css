@@ -30,6 +30,8 @@
   --warning: crimson;
   --success: yellowgreen;
   --info: lightseagreen;
+  --user-admin: goldenrod;
+  --user-mod: var(--info);
   --cardshadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
@@ -411,9 +413,6 @@ label {
     background-color: var(--bg);
     position: absolute;
     padding: 0.25rem;
-    /* top: 2rem;
-    right: 0;
-    width: 150px; */
     button,
     a[type="button"] {
       width: 100%;
@@ -430,9 +429,7 @@ button.reply-collapse:not(:has(span)).plain {
   padding: 0.125rem;
   border: 1px solid var(--border);
   position: absolute;
-  /* left: -0.875rem; */
   left: calc(-0.75rem + 2px);
-  /* top: 0.75rem; */
   svg {
     width: 1rem;
     height: 1rem;
@@ -502,36 +499,6 @@ button.reply-collapse:not(:has(span)).plain {
   > div {
     width: 100%;
   }
-  /* height: min-content;
-  .left .community-stat {
-    width: 100%;
-  }
-  .right {
-    flex-grow: 1;
-    height: 100%;
-  } */
-  /* display: grid;
-  grid-template-columns: min-content 1fr;
-  max-height: min-content;
-  max-width: 100%;
-  .followers,
-  .posts,
-  .details 
-  }
-  .followers {
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    min-width: max-content;
-  }
-  .posts {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    min-width: max-content;
-  }
-  .details {
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
-  } */
 }
 
 .community-stat {
@@ -542,6 +509,25 @@ button.reply-collapse:not(:has(span)).plain {
   > svg {
     width: 1.75rem;
     height: 1.75rem;
+  }
+}
+
+.username {
+  display: inline-block;
+  text-decoration: none;
+  svg {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+  }
+  span {
+    text-decoration: underline;
+  }
+  &.mod {
+    color: var(--user-mod);
+  }
+  &.admin {
+    color: var(--user-admin);
   }
 }
 

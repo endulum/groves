@@ -1,9 +1,13 @@
 import { useBoolean } from "usehooks-ts";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 import { DateTime, type DateTimeFormatOptions } from "luxon";
 
-import { type VisibleReply, type HiddenReply } from "../../types";
+import {
+  type VisibleReply,
+  type HiddenReply,
+  type ReplyComponentContext,
+} from "../../types";
+import { Username } from "../Username";
 
 const format: DateTimeFormatOptions = {
   year: "numeric",
@@ -15,11 +19,13 @@ const format: DateTimeFormatOptions = {
 
 export function CollapsibleReplyWrapper({
   data,
+  context,
   hidden,
   childrenCount,
   children,
 }: {
   data: VisibleReply | HiddenReply;
+  context: ReplyComponentContext;
   hidden: boolean;
   childrenCount: number;
   children: React.ReactNode;
@@ -57,9 +63,21 @@ export function CollapsibleReplyWrapper({
               {!hidden && data.hidden && <i>unhidden content,</i>}
               {!hidden && !data.hidden && (
                 <>
-                  <Link to={`/user/${data.author.username}`}>
+                  <Username
+                    user={data.author}
+                    role={
+                      context.isReplyAuthorAdmin
+                        ? "admin"
+                        : context.isReplyAuthorMod
+                        ? "mod"
+                        : data.author.id === context.postAuthorID
+                        ? "op"
+                        : null
+                    }
+                  />{" "}
+                  {/* <Link to={`/user/${data.author.username}`}>
                     {data.author.username}
-                  </Link>{" "}
+                  </Link>{" "} */}
                   replied{" "}
                   <span
                     title={DateTime.fromISO(data.datePosted).toLocaleString(
@@ -84,9 +102,21 @@ export function CollapsibleReplyWrapper({
               {!hidden && data.hidden && <i>unhidden content</i>}
               {!hidden && !data.hidden && (
                 <>
-                  <Link to={`/user/${data.author.username}`}>
+                  {/* <Link to={`/user/${data.author.username}`}>
                     {data.author.username}
-                  </Link>{" "}
+                  </Link>{" "} */}
+                  <Username
+                    user={data.author}
+                    role={
+                      context.isReplyAuthorAdmin
+                        ? "admin"
+                        : context.isReplyAuthorMod
+                        ? "mod"
+                        : data.author.id === context.postAuthorID
+                        ? "op"
+                        : null
+                    }
+                  />{" "}
                   replied{" "}
                   <span
                     title={DateTime.fromISO(data.datePosted).toLocaleString(

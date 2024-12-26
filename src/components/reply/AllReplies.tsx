@@ -14,7 +14,7 @@ export function AllReplies({
   sort: string;
 }) {
   const { loading, error, data, get } = useGet<Reply>(
-    `/post/${postData.id}/replies?sort=${sort}&takeAtRoot=1`
+    `/post/${postData.id}/replies?sort=${sort}`
   );
 
   useEffect(() => {

@@ -39,6 +39,7 @@ export function Reply({
     <div className="reply" id={data.id}>
       <CollapsibleReplyWrapper
         data={data}
+        context={context}
         hidden={hidden}
         childrenCount={countChildren()}
       >
