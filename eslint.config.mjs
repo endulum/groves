@@ -39,7 +39,7 @@ export default tseslint.config(
       ],
       'max-len': [
         'warn',
-        { code: 80, ignoreComments: true, ignoreStrings: true },
+        { code: 80, ignoreComments: true, ignoreStrings: true, ignoreTemplateLiterals: true },
       ],
     },
   },

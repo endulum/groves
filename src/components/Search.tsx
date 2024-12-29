@@ -17,17 +17,19 @@ export function Search<T>({
   formContent,
   resultsPropertyName,
   mapResults,
+  emptyElement,
 }: {
-  startingParams: Record<string, string>;
+  startingParams?: Record<string, string>;
   endpoint: string;
-  formContent: JSX.Element;
+  formContent?: JSX.Element;
   resultsPropertyName: string;
-  mapResults: (item: T) => JSX.Element;
+  mapResults: (item: T) => JSX.Element | undefined;
+  emptyElement?: JSX.Element;
 }) {
   // delay between form changes
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   // keep params as an record outside of component flow
-  const params = useRef<Record<string, string>>(startingParams);
+  const params = useRef<Record<string, string>>(startingParams ?? {});
   // turn params into query string
   const paramsToString = () => {
     const trimmedParams = Object.fromEntries(
@@ -74,6 +76,8 @@ export function Search<T>({
         {data ? (
           data[resultsPropertyName].length > 0 ? (
             data[resultsPropertyName].map((result) => mapResults(result))
+          ) : emptyElement ? (
+            emptyElement
           ) : (
             <div className="spacer">
               <VisibilityOff />
