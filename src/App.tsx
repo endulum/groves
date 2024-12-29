@@ -37,6 +37,10 @@ export function App() {
             path="/community/:community/wiki"
             element={<routes.CommunityWiki />}
           />
+          <Route
+            path="/community/:community/activity"
+            element={<routes.CommunityActivity />}
+          />
         </Route>
         <Route path="/post/:post" element={<routes.PostRoute />} />
         <Route path="/post/:post/reply/:reply" element={<routes.PostRoute />} />

@@ -46,6 +46,7 @@ export function CommunityWrapper() {
           tabs={[
             { to: `/community/${community}`, title: "Posts" },
             { to: `/community/${community}/wiki`, title: "Wiki" },
+            { to: `/community/${community}/activity`, title: "Activity" },
           ]}
         />
         <Outlet context={{ user, community: data }} />
