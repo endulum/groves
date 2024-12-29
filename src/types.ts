@@ -3,6 +3,11 @@ export type User = {
   id: number;
 };
 
+export type UserData = User & {
+  joined: string;
+  bio: string;
+};
+
 export type Community = {
   // top-level primitives
   id: number;

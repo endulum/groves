@@ -1,17 +1,13 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { DateTime } from "luxon";
+
 import { useDocumentTitle } from "usehooks-ts";
 
 import { useGet } from "../../hooks/useGet";
-import { User } from "../../types";
+import { type UserData } from "../../types";
 import { LoadingSpacer } from "../LoadingSpacer";
 import { UserActivity } from "../user/UserActivity";
-import { useEffect } from "react";
-
-interface UserData extends User {
-  joined: string;
-  bio: string;
-}
+import { UserInfo } from "../user/UserInfo";
 
 export function UserRoute() {
   const { user } = useParams();
@@ -40,23 +36,7 @@ export function UserRoute() {
   if (data)
     return (
       <>
-        <h2>{data.username}</h2>
-        <p>
-          {data.bio && (
-            <>
-              {data.bio}
-              <br />
-            </>
-          )}
-          <small>
-            Joined{" "}
-            {DateTime.fromISO(data.joined).toLocaleString({
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </small>
-        </p>
+        <UserInfo data={data} get={get} />
         <h3 className="mt-1">Latest content</h3>
         <UserActivity userId={data.id} />
       </>
