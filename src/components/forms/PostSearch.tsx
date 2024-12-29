@@ -1,8 +1,10 @@
 import { DateTime } from "luxon";
 import { Park, Spa, WbSunny, ArrowForwardIos } from "@mui/icons-material";
+import { Link, useOutletContext } from "react-router-dom";
 
 import { Search } from "../Search";
-import { Link } from "react-router-dom";
+import { Username } from "../Username";
+import { Community } from "../../types";
 
 type PostResult = {
   id: string;
@@ -20,6 +22,7 @@ type PostResult = {
 };
 
 export function PostSearch({ communityUrl }: { communityUrl: string }) {
+  const { community } = useOutletContext<{ community: Community }>();
   return (
     <Search<PostResult>
       startingParams={{ sort: "hot", take: "10" }}
@@ -57,9 +60,18 @@ export function PostSearch({ communityUrl }: { communityUrl: string }) {
                   <h3>{post.title}</h3>
                   <small>
                     by{" "}
-                    <Link to={`/user/${post.author.username}`}>
-                      {post.author.username}
-                    </Link>{" "}
+                    <Username
+                      user={post.author}
+                      role={
+                        community.moderators.find(
+                          (mod) => mod.id === post.author.id
+                        ) !== undefined
+                          ? "mod"
+                          : community.admin.id === post.author.id
+                          ? "admin"
+                          : null
+                      }
+                    />{" "}
                     {DateTime.fromISO(post.datePosted).toRelative()}
                   </small>
                 </div>
