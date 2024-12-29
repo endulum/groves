@@ -168,20 +168,28 @@ export function ActionSearch({ communityUrl }: { communityUrl: string }) {
           </label>
           <select id="type">
             <option value="">All</option>
-            <option value="Community_Create">Community creation</option>
-            <option value="Community_Edit">Community detail edit</option>
-            <option value="Community_EditWiki">Community wiki edit</option>
-            <option value="Community_Freeze">Community freeze</option>
-            <option value="Community_Unfreeze">Community unfreeze</option>
-            <option value="User_PromoteMod">Mod promotion</option>
-            <option value="User_DemoteMod">Mod demotion</option>
-            <option value="Post_Create">Post creation</option>
-            <option value="Post_Edit">Post edit</option>
-            <option value="Post_Freeze">Post freeze</option>
-            <option value="Post_Unfreeze">Post unfreeze</option>
-            <option value="Reply_Create">Reply creation</option>
-            <option value="Reply_Hide">Reply hide</option>
-            <option value="Reply_Unhide">Reply unhide</option>
+            <optgroup label="Activity Types">
+              <option value="Community">Community</option>
+              <option value="Post">Posts</option>
+              <option value="Reply">Replies</option>
+              <option value="User">Users</option>
+            </optgroup>
+            <optgroup label="Specific Activity">
+              <option value="Community_Create">Community creation</option>
+              <option value="Community_Edit">Community detail edit</option>
+              <option value="Community_EditWiki">Community wiki edit</option>
+              <option value="Community_Freeze">Community freeze</option>
+              <option value="Community_Unfreeze">Community unfreeze</option>
+              <option value="User_PromoteMod">Mod promotion</option>
+              <option value="User_DemoteMod">Mod demotion</option>
+              <option value="Post_Create">Post creation</option>
+              <option value="Post_Edit">Post edit</option>
+              <option value="Post_Freeze">Post freeze</option>
+              <option value="Post_Unfreeze">Post unfreeze</option>
+              <option value="Reply_Create">Reply creation</option>
+              <option value="Reply_Hide">Reply hide</option>
+              <option value="Reply_Unhide">Reply unhide</option>
+            </optgroup>
           </select>
         </>
       }
