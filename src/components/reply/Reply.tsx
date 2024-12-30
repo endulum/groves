@@ -43,6 +43,7 @@ export function Reply({
         hidden={hidden}
         childrenCount={countChildren()}
       >
+        {import.meta.env.MODE === "development" && <pre>{data.id}</pre>}
         {/* determine if content should be shown or not */}
         {hidden && (
           <Alert type="blind">

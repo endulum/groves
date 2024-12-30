@@ -5,7 +5,6 @@ import { type Post, type PostComponentContext } from "../../types";
 import { Alert } from "../Alert";
 import { AllReplies } from "./AllReplies";
 import { IsolatedReply } from "./IsolatedReply";
-import { useLogger } from "../../hooks/useLogger";
 
 export function ReplyView({
   data,
@@ -16,8 +15,6 @@ export function ReplyView({
 }) {
   const { reply } = useParams();
   const [sort, setSort] = useState<string>("hot");
-
-  useLogger({ reply });
 
   return (
     <>

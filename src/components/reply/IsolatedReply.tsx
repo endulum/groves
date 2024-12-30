@@ -22,7 +22,7 @@ export function IsolatedReply({
 
   useEffect(() => {
     get(false);
-  }, [sort]);
+  }, [sort, postContext.isolateReplyID]);
 
   return (
     <>

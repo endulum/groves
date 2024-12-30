@@ -110,10 +110,7 @@ export function ReplyActionRow({
               </a>
             ))}
 
-          {!(
-            context.currentIsolatedReply &&
-            context.currentIsolatedReply === data.id
-          ) && (
+          {!(context.isolateReplyID && context.isolateReplyID === data.id) && (
             // don't show the isolate link if we're already isolating this reply
             <Link
               type="button"
