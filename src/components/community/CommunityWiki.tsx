@@ -11,9 +11,10 @@ import { CommunityWikiForm } from "../forms/CommunityWikiForm";
 import { Alert } from "../Alert";
 
 export function CommunityWiki() {
-  const { community, user } = useOutletContext<{
+  const { community, user, moderators } = useOutletContext<{
     community: Community;
     user: User;
+    moderators: User[];
   }>();
 
   const {
@@ -43,7 +44,7 @@ export function CommunityWiki() {
           <h2>Wiki</h2>
           {user &&
             (community.admin.id === user.id ||
-              community.moderators.find((mod) => mod.id === user.id)) &&
+              moderators.find((mod) => mod.id === user.id)) &&
             (editing ? (
               <button
                 type="button"
@@ -85,5 +86,4 @@ export function CommunityWiki() {
         )}
       </>
     );
-  // return
 }

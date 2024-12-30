@@ -50,10 +50,13 @@ type ReplyAction = Action & {
 };
 
 export function ActionSearch({ communityUrl }: { communityUrl: string }) {
-  const { community } = useOutletContext<{ community: Community }>();
+  const { community, moderators } = useOutletContext<{
+    community: Community;
+    moderators: User[];
+  }>();
 
   const getRole = (user: User) => {
-    return community.moderators.find((mod) => mod.id === user.id) !== undefined
+    return moderators.find((mod) => mod.id === user.id) !== undefined
       ? "mod"
       : community.admin.id === user.id
       ? "admin"
@@ -206,9 +209,8 @@ export function ActionSearch({ communityUrl }: { communityUrl: string }) {
                 <Username
                   user={action.actor}
                   role={
-                    community.moderators.find(
-                      (mod) => mod.id === action.actor.id
-                    ) !== undefined
+                    moderators.find((mod) => mod.id === action.actor.id) !==
+                    undefined
                       ? "mod"
                       : community.admin.id === action.actor.id
                       ? "admin"

@@ -8,6 +8,7 @@ import { type User, type Community } from "../../types";
 import { NavTabs } from "../NavTabs";
 import { CommunityInfo } from "./CommunityInfo";
 import { CommunityStats } from "./CommunityStats";
+import { useCommunityMods } from "../../hooks/useCommunityMods";
 
 export function CommunityWrapper() {
   const { community } = useParams();
@@ -15,6 +16,8 @@ export function CommunityWrapper() {
   const { loading, error, data, get } = useGet<Community>(
     `/community/${community}`
   );
+
+  const { moderators, promoteMod, demoteMod } = useCommunityMods(data);
 
   useDocumentTitle(
     `${
@@ -49,7 +52,15 @@ export function CommunityWrapper() {
             { to: `/community/${community}/activity`, title: "Activity" },
           ]}
         />
-        <Outlet context={{ user, community: data }} />
+        <Outlet
+          context={{
+            user,
+            community: data,
+            moderators,
+            promoteMod,
+            demoteMod,
+          }}
+        />
       </>
     );
 }

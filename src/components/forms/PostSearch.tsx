@@ -4,7 +4,7 @@ import { Link, useOutletContext } from "react-router-dom";
 
 import { Search } from "../Search";
 import { Username } from "../Username";
-import { Community } from "../../types";
+import { Community, User } from "../../types";
 
 type PostResult = {
   id: string;
@@ -22,7 +22,10 @@ type PostResult = {
 };
 
 export function PostSearch({ communityUrl }: { communityUrl: string }) {
-  const { community } = useOutletContext<{ community: Community }>();
+  const { community, moderators } = useOutletContext<{
+    community: Community;
+    moderators: User[];
+  }>();
   return (
     <Search<PostResult>
       startingParams={{ sort: "hot", take: "10" }}
@@ -63,9 +66,8 @@ export function PostSearch({ communityUrl }: { communityUrl: string }) {
                     <Username
                       user={post.author}
                       role={
-                        community.moderators.find(
-                          (mod) => mod.id === post.author.id
-                        ) !== undefined
+                        moderators.find((mod) => mod.id === post.author.id) !==
+                        undefined
                           ? "mod"
                           : community.admin.id === post.author.id
                           ? "admin"
