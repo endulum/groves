@@ -50,6 +50,7 @@ export function CommunityWrapper() {
             { to: `/community/${community}`, title: "Posts" },
             { to: `/community/${community}/wiki`, title: "Wiki" },
             { to: `/community/${community}/activity`, title: "Activity" },
+            { to: `/community/${community}/moderation`, title: "Moderation" },
           ]}
         />
         <Outlet

@@ -71,3 +71,7 @@
 .mw-mxc {
   min-width: max-content;
 }
+
+.w100 {
+  width: 100%;
+}

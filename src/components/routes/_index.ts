@@ -13,4 +13,5 @@ export { CommunityWrapper } from "../community/CommunityWrapper";
 export { CommunityPosts } from "../community/CommunityPosts";
 export { CommunityWiki } from "../community/CommunityWiki";
 export { CommunityActivity } from "../community/CommunityActivity";
+export { CommunityModeration } from "../community/CommunityModeration";
 export { CommunityErrorRoute } from "../community/CommunityErrorRoute";
