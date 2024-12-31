@@ -1,6 +1,6 @@
 import { useDocumentTitle } from "usehooks-ts";
-import { useOutletContext, Link } from "react-router-dom";
-import { Park, Air } from "@mui/icons-material";
+import { useOutletContext } from "react-router-dom";
+import { Air } from "@mui/icons-material";
 
 import { type Community } from "../../types";
 import { PostSearch } from "../forms/PostSearch";
@@ -17,7 +17,6 @@ export function CommunityPosts() {
         <PostSearch communityUrl={community.urlName} />
       ) : (
         <div>
-          <hr className="mb-1" />
           <div className="spacer">
             <Air />
             <p>
