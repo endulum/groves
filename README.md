@@ -15,4 +15,4 @@ Groves is an arboreal semiclone of Reddit.
 - - freeze and unfreeze the community
 - - promote someone to admin
 - [ ] wrap textareas in word count indicators
-- [ ] wrap content in content lists in readmores
+- [x] wrap content in content lists in readmores

@@ -4,6 +4,7 @@ import { DateTime, type DateTimeFormatOptions } from "luxon";
 
 import { Search } from "../Search";
 import { MDWrapper } from "../MDWrapper";
+import { ReadMore } from "../ReadMore";
 
 const format: DateTimeFormatOptions = {
   year: "numeric",
@@ -51,6 +52,9 @@ export function UserActivity({ userId }: { userId: number }) {
       endpoint={`/user/${userId}/actions`}
       resultsPropertyName="actions"
       mapResults={(action: UserPost | UserReply) => {
+        const link = action.post
+          ? `/post/${action.post.id}`
+          : `/post/${action.reply.post.id}/reply/${action.reply.id}`;
         return (
           <div className="search-result" key={action.id}>
             <p>
@@ -65,21 +69,17 @@ export function UserActivity({ userId }: { userId: number }) {
                   {action.community.canonicalName}
                 </Link>
                 , wrote a{" "}
-                {action.post ? (
-                  <Link to={`/post/${action.post.id}`}>post</Link>
-                ) : (
-                  <Link
-                    to={`/post/${action.reply.post.id}/reply/${action.reply.id}`}
-                  >
-                    reply
-                  </Link>
-                )}
+                <Link to={link}>{action.post ? "post" : "reply"}</Link>
               </small>
             </p>
 
-            <MDWrapper
-              content={action.post ? action.post.content : action.reply.content}
-            />
+            <ReadMore link={link}>
+              <MDWrapper
+                content={
+                  action.post ? action.post.content : action.reply.content
+                }
+              />
+            </ReadMore>
           </div>
         );
       }}
