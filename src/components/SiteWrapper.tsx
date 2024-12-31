@@ -10,7 +10,7 @@ import {
 } from "@mui/icons-material";
 import { useBoolean } from "usehooks-ts";
 
-import { type User } from "../types";
+import { type UserWithBio } from "../types";
 import { clearStoredToken } from "../functions/tokenUtils";
 import { useRef } from "react";
 
@@ -18,7 +18,7 @@ export function SiteWrapper({
   context,
 }: {
   context: {
-    user: User | null;
+    user: UserWithBio | null;
     initUser: () => Promise<void>;
     changeUsername: (username: string) => void;
   };

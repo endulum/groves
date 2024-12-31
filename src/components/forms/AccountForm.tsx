@@ -1,13 +1,13 @@
 import { useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { type User } from "../../types";
+import { type UserWithBio } from "../../types";
 import { Form } from "../Form";
 import { InputChecklist } from "../InputChecklist";
 
 export function AccountForm() {
   const { user, changeUsername } = useOutletContext<{
-    user: User;
+    user: UserWithBio;
     changeUsername: (username: string) => void;
   }>();
   return (
@@ -46,6 +46,16 @@ export function AccountForm() {
           ]}
         />
       </label>
+
+      <label htmlFor="bio">
+        <span>Bio</span>
+        <textarea id="bio" defaultValue={user.bio} />
+      </label>
+
+      <h3 className="mt-1">Password</h3>
+      <p className="mb-1">
+        Leave these fields blank if you do not wish to alter your password.
+      </p>
 
       <label htmlFor="password">
         <span>New password</span>

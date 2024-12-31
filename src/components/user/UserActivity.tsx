@@ -52,7 +52,7 @@ export function UserActivity({ userId }: { userId: number }) {
       resultsPropertyName="actions"
       mapResults={(action: UserPost | UserReply) => {
         return (
-          <div className="search-result">
+          <div className="search-result" key={action.id}>
             <p>
               <small>
                 <span
@@ -82,54 +82,6 @@ export function UserActivity({ userId }: { userId: number }) {
             />
           </div>
         );
-        /* if (action.post) {
-          return (
-            <div className="search-result">
-              <small>
-                <span
-                  title={DateTime.fromISO(action.date).toLocaleString(format)}
-                >
-                  {DateTime.fromISO(action.date).toRelative()}
-                </span>
-                , wrote a post in{" "}
-                <Link to={`/community/${action.community.urlName}`}>
-                  {action.community.canonicalName}
-                </Link>
-              </small>
-
-              <p>
-                <div className="content-preview mt-1">
-                  <MDWrapper content={action.post.content} />
-                </div>
-              </p>
-            </div>
-          );
-        }
-        if (action.reply) {
-          return <div className="search-result">
-            <small>
-                <span
-                  title={DateTime.fromISO(action.date).toLocaleString(format)}
-                >
-                  {DateTime.fromISO(action.date).toRelative()}
-                </span>
-                , wrote a reply to{" "}
-                <Link to={`/post/${action.reply.post.id}`}>
-                  {action.community.canonicalName}
-                </Link>
-                {" "}in{" "}
-                <Link to={`/community/${action.community.urlName}`}>
-                  {action.community.canonicalName}
-                </Link>
-              </small>
-
-              <p>
-                <div className="content-preview mt-1">
-                  <MDWrapper content={action.reply.content} />
-                </div>
-              </p>
-          </div>;
-        } */
       }}
       emptyElement={
         <div className="spacer">
