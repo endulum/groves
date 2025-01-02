@@ -4,10 +4,12 @@ import {
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
-  PostComponentContext,
+  type PostComponentContext,
+  type User,
 } from "../../types";
 import { useReplyChildren } from "../../hooks/useReplyChildren";
 import { Reply } from "./Reply";
+import { useOutletContext } from "react-router-dom";
 
 export function TopLevelReplies({
   data,
@@ -16,6 +18,7 @@ export function TopLevelReplies({
   data: TReply;
   postContext: PostComponentContext;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
   const { loading, children, loadMoreChildren, setNextUrl } =
     useReplyChildren(data);
 
@@ -38,8 +41,12 @@ export function TopLevelReplies({
           <Air />
           <p>
             This post doesn't have any replies yet.
-            <br />
-            Be the first to reply!
+            {user && (
+              <>
+                <br />
+                Be the first to reply!
+              </>
+            )}
           </p>
         </div>
       )}

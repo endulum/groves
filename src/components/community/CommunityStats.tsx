@@ -15,7 +15,7 @@ export function CommunityStats({ data }: { data: Community }) {
         <p>
           {followers} Follower{followers !== 1 && "s"}
         </p>
-        {user && !data.readonly && data.following !== null && (
+        {user && !data.readonly && data.context.isFollowing !== null && (
           <FollowButton
             data={data as Community & { following: boolean }}
             followers={followers}

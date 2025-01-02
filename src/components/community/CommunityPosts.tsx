@@ -2,11 +2,14 @@ import { useDocumentTitle } from "usehooks-ts";
 import { useOutletContext } from "react-router-dom";
 import { Air } from "@mui/icons-material";
 
-import { type Community } from "../../types";
+import { User, type Community } from "../../types";
 import { PostSearch } from "../forms/PostSearch";
 
 export function CommunityPosts() {
-  const { community } = useOutletContext<{ community: Community }>();
+  const { community, user } = useOutletContext<{
+    community: Community;
+    user: User;
+  }>();
   useDocumentTitle(
     `${community.canonicalName} :: ${import.meta.env.VITE_APP_NAME}`
   );
@@ -21,8 +24,12 @@ export function CommunityPosts() {
             <Air />
             <p>
               This community doesn't have any posts yet.
-              <br />
-              Be the first to post!
+              {user && (
+                <>
+                  <br />
+                  Be the first to post!
+                </>
+              )}
             </p>
           </div>
         </div>

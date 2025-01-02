@@ -1,7 +1,8 @@
 import { Park, Air } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 import { PostSearch } from "../forms/PostSearch";
+import { type User } from "../../types";
 
 export function PostsSubroute({
   communityUrl,
@@ -12,6 +13,7 @@ export function PostsSubroute({
   communityName: string;
   postCount: number;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
   return (
     <>
       <div className="flex-row jc-spb mb-1">
@@ -37,8 +39,12 @@ export function PostsSubroute({
             <Air />
             <p>
               This community doesn't have any posts yet.
-              <br />
-              Be the first to post!
+              {user && (
+                <>
+                  <br />
+                  Be the first to post!
+                </>
+              )}
             </p>
           </div>
         </div>
