@@ -23,6 +23,14 @@ export function App() {
         element={<SiteWrapper context={{ user, initUser, changeUsername }} />}
       >
         <Route path="/" element={<routes.IndexRoute />} />
+        {/* 
+          if no user
+          - just a route, with globalFeed component
+          if user
+          - home wrapper
+            - globalFeed route with globalFeed component
+            - personalFeed route with personalFeed component
+        */}
         <Route path="/user/:user" element={<routes.UserRoute />} />
         <Route path="/communities" element={<routes.CommunitySearchRoute />} />
         <Route
