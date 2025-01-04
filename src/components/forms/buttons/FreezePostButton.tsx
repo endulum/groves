@@ -35,7 +35,7 @@ export function FreezePostButton({
     if (error)
       toast(<p>Couldn't freeze this post: {error}</p>, {
         className: "custom-toast",
-        type: "error",
+        type: "warning",
       });
   }, [error]);
 

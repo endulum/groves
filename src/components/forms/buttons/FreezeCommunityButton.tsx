@@ -34,7 +34,7 @@ export function FreezeCommunityButton({
     if (error)
       toast(<p>Couldn't freeze this community: {error}</p>, {
         className: "custom-toast",
-        type: "error",
+        type: "warning",
       });
   }, [error]);
 

@@ -34,7 +34,7 @@ export function PinPostButton({
     if (error)
       toast(<p>Couldn't pin this post: {error}</p>, {
         className: "custom-toast",
-        type: "error",
+        type: "warning",
       });
   }, [error]);
 

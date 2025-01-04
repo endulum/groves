@@ -35,7 +35,7 @@ export function DemoteModeratorButton({
     if (error)
       toast(<p>Couldn't demote this moderator: {error}</p>, {
         className: "custom-toast",
-        type: "error",
+        type: "warning",
       });
   }, [error]);
 
