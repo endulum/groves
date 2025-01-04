@@ -4,13 +4,14 @@ import { useOutletContext } from "react-router-dom";
 
 import { type Community, type User } from "../../../types";
 import { CommunityEditForm } from "../../forms/CommunityEditForm";
+import { Alert } from "../../reusable/Alert";
 
 export function CommunityInfo({
   data,
   get,
 }: {
   data: Community;
-  get: (keepCurrentData: boolean) => Promise<void>;
+  get: (keepCurrentData?: boolean) => Promise<void>;
 }) {
   const { user } = useOutletContext<{ user: User }>();
   const {
@@ -25,6 +26,7 @@ export function CommunityInfo({
         <h2>{data.canonicalName}</h2>
         {user &&
           user.id === data.admin.id &&
+          !data.readonly &&
           (editing ? (
             <button
               type="button"
@@ -49,6 +51,14 @@ export function CommunityInfo({
         <CommunityEditForm data={data} get={get} />
       ) : (
         <p>{data.description}</p>
+      )}
+      {data.readonly && (
+        <Alert type="info" className="mt-1">
+          <p>
+            This community is frozen. Content cannot be created, edited, or
+            voted on.
+          </p>
+        </Alert>
       )}
     </>
   );

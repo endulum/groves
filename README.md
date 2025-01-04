@@ -16,5 +16,4 @@ Groves is an arboreal semiclone of Reddit.
 
 ### Remaining issues
 
-- Some inconsistency with community frozen behavior
 - When changing pages of the `Paginator`, `ReadMore` does not render fade + link

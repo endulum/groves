@@ -16,7 +16,7 @@ export function CommunityStatus() {
       {community.readonly ? (
         <p>
           This community is <b>frozen</b>. Content cannot be created, edited, or
-          voted on.
+          voted on, and moderation activity or management cannot occur.
         </p>
       ) : (
         <p>

@@ -52,17 +52,14 @@ export function ReplyActionRow({
       {/* the action row */}
       <div className="flex-row gap-0-5 mt-0-5">
         {/* voting */}
-        {!hiding.hidden &&
-          !data.hidden &&
-          !context.isPostReadonly &&
-          !context.isCommReadonly && (
-            <VoteWidget
-              data={data as VisibleReply}
-              type="reply"
-              isReadonly={context.isPostReadonly || context.isCommReadonly}
-              context={context}
-            />
-          )}
+        {!hiding.hidden && !data.hidden && (
+          <VoteWidget
+            data={data as VisibleReply}
+            type="reply"
+            isReadonly={context.isPostReadonly || context.isCommReadonly}
+            context={context}
+          />
+        )}
 
         {/* replying or cancelling replying */}
         {context.authUserID !== null &&

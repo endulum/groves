@@ -48,7 +48,7 @@ export function FreezeCommunityButton({
       >
         {loading ? <Loop className="spin" /> : <AcUnit />}
 
-        <span>{community.readonly ? "Unfeeze" : "Freeze"}</span>
+        <span>{community.readonly ? "Unfreeze" : "Freeze"}</span>
       </button>
     </form>
   );

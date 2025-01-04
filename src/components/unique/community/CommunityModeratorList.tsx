@@ -24,13 +24,15 @@ export function CommunityModeratorList() {
           moderators.map((mod) => (
             <li className="flex-row gap-0-5" key={mod.id}>
               <Username user={mod} role="mod" />
-              {user && user.id === community.admin.id && (
-                <DemoteModeratorButton
-                  username={mod.username}
-                  communityUrl={community.urlName}
-                  demoteMod={demoteMod}
-                />
-              )}
+              {!community.readonly &&
+                user &&
+                user.id === community.admin.id && (
+                  <DemoteModeratorButton
+                    username={mod.username}
+                    communityUrl={community.urlName}
+                    demoteMod={demoteMod}
+                  />
+                )}
             </li>
           ))
         ) : (
@@ -39,7 +41,7 @@ export function CommunityModeratorList() {
       </ul>
 
       {/* form to add more */}
-      {user && user.id === community.admin.id && (
+      {!community.readonly && user && user.id === community.admin.id && (
         <>
           <h3 className="mt-1 mb-1">Promote a moderator</h3>
           <PromoteModeratorForm community={community} promoteMod={promoteMod} />

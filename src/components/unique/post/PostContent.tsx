@@ -146,54 +146,56 @@ export function PostContent({
         </>
       )}
 
-      <div className="linkrow flex-row gap-0-5 mt-1">
-        {!readonly &&
-          context.authUserID &&
-          data.author.id === context.authUserID &&
-          (editing ? (
-            <button
-              type="button"
-              className="button plain secondary"
-              onClick={cancelEditing}
-            >
-              <small style={{ color: "crimson" }}>cancel editing</small>
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="button plain secondary"
-              onClick={openEditing}
-            >
-              <small>edit</small>
-            </button>
-          ))}
-        {!readonly &&
-          context.authUserID &&
-          (replying ? (
-            <button
-              type="button"
-              className="button plain secondary"
-              onClick={cancelReplying}
-            >
-              <small style={{ color: "crimson" }}>cancel replying</small>
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="button plain secondary"
-              onClick={openReplying}
-            >
-              <small>reply</small>
-            </button>
-          ))}
-        {data.context.isMod && (
-          <FreezePostButton
-            postId={data.id}
-            readonly={readonly}
-            setReadonly={setReadonly}
-          />
-        )}
-      </div>
+      {!data.context.isCommReadonly && (
+        <div className="linkrow flex-row gap-0-5 mt-1">
+          {!readonly &&
+            context.authUserID &&
+            data.author.id === context.authUserID &&
+            (editing ? (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={cancelEditing}
+              >
+                <small style={{ color: "crimson" }}>cancel editing</small>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={openEditing}
+              >
+                <small>edit</small>
+              </button>
+            ))}
+          {!readonly &&
+            context.authUserID &&
+            (replying ? (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={cancelReplying}
+              >
+                <small style={{ color: "crimson" }}>cancel replying</small>
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="button plain secondary"
+                onClick={openReplying}
+              >
+                <small>reply</small>
+              </button>
+            ))}
+          {data.context.isMod && (
+            <FreezePostButton
+              postId={data.id}
+              readonly={readonly}
+              setReadonly={setReadonly}
+            />
+          )}
+        </div>
+      )}
     </>
   );
 }

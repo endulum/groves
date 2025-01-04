@@ -18,7 +18,7 @@ export function CommunityAdmin() {
       <Username user={community.admin} role="admin" />
 
       {/* form to change admin */}
-      {user && user.id === community.admin.id && (
+      {!community.readonly && user && user.id === community.admin.id && (
         <>
           <h3 className="mt-1 mb-1">Change admin</h3>
           <ChangeAdminForm community={community} get={get} />

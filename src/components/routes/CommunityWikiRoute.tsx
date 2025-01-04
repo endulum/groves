@@ -43,7 +43,8 @@ export function CommunityWikiRoute() {
         {/* heading */}
         <div className="flex-row jc-spb mb-1">
           <h2>Wiki</h2>
-          {user &&
+          {!community.readonly &&
+            user &&
             (community.admin.id === user.id ||
               moderators.find((mod) => mod.id === user.id)) &&
             (editing ? (
