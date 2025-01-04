@@ -30,7 +30,13 @@ type UserAction = Action & {
 };
 
 type PostAction = Action & {
-  type: "Post_Create" | "Post_Edit" | "Post_Freeze" | "Post_Unfreeze";
+  type:
+    | "Post_Create"
+    | "Post_Edit"
+    | "Post_Freeze"
+    | "Post_Unfreeze"
+    | "Post_Pin"
+    | "Post_Unpin";
   post: { id: string; title: string };
 };
 
@@ -133,6 +139,20 @@ export function CommunityActionSearch({
             <Link to={`/post/${action.post.id}`}>{action.post.title}</Link>
           </span>
         );
+      case "Post_Pin":
+        return (
+          <span>
+            pinned a post:{" "}
+            <Link to={`/post/${action.post.id}`}>{action.post.title}</Link>
+          </span>
+        );
+      case "Post_Unpin":
+        return (
+          <span>
+            unpinned a post:{" "}
+            <Link to={`/post/${action.post.id}`}>{action.post.title}</Link>
+          </span>
+        );
       case "Reply_Create":
         return (
           <span>
@@ -195,6 +215,8 @@ export function CommunityActionSearch({
               <option value="Post_Edit">Post edit</option>
               <option value="Post_Freeze">Post freeze</option>
               <option value="Post_Unfreeze">Post unfreeze</option>
+              <option value="Post_Pin">Post pin</option>
+              <option value="Post_Unpin">Post unpin</option>
               <option value="Reply_Create">Reply creation</option>
               <option value="Reply_Hide">Reply hide</option>
               <option value="Reply_Unhide">Reply unhide</option>
