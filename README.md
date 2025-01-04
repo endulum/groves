@@ -11,11 +11,10 @@ Groves is an arboreal semiclone of Reddit.
 ### Missing features
 
 - Wrap textareas with word counters
-- Pin posts and replies - keep a section of the Posts comm subroute to display full content of posts
+- Pin replies
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Allow frozen posts to be found (in comm and activity search), but also have a checkbox to exclude frozen
 
 ### Remaining issues
 
-- When changing pages of the `Paginator`, `ReadMore` does not render fade + link
-- admin profile not showing content despite having made content
+- profile content view duplicating posts - should get only content creation

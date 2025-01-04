@@ -40,7 +40,7 @@ type UserReply = Result & {
 };
 
 export function UserContent({ data }: { data: UserData }) {
-  return data._count.posts > 0 && data._count.replies > 0 ? (
+  return data._count.posts > 0 || data._count.replies > 0 ? (
     <>
       <h3 className="mt-1">Latest content</h3>
       <hr className="mt-1" />
