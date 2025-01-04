@@ -22,7 +22,7 @@ export function MDWrapper({ content }: { content: string }) {
       ]}
       unwrapDisallowed
       skipHtml
-      className="post-content"
+      className="md-content"
     >
       {content.split("\n").join("  \n  \n")}
     </Markdown>
