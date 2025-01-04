@@ -2,7 +2,7 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import { useDocumentTitle } from "usehooks-ts";
 
 import { useLoginRedirect } from "../../hooks/useLoginRedirect";
-import { Alert } from "../Alert";
+import { Alert } from "../reusable/Alert";
 import { PostCreateForm } from "../forms/PostCreateForm";
 
 export function PostCreateRoute() {

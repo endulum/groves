@@ -1,13 +1,13 @@
+import { Link, useParams, useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
-import { useParams, Link, useOutletContext } from "react-router-dom";
-import { AccountCircle } from "@mui/icons-material";
-import { DateTime } from "luxon";
 import { useDocumentTitle } from "usehooks-ts";
+import { ManageAccounts } from "@mui/icons-material";
+import { DateTime } from "luxon";
 
-import { useGet } from "../../hooks/useGet";
 import { type User, type UserData } from "../../types";
-import { LoadingSpacer } from "../LoadingSpacer";
-import { UserActivity } from "../user/UserActivity";
+import { useGet } from "../../hooks/useGet";
+import { LoadingSpacer } from "../reusable/LoadingSpacer";
+import { UserContent } from "../unique/user/UserContent";
 
 export function UserRoute() {
   const { user } = useParams();
@@ -15,7 +15,7 @@ export function UserRoute() {
   const { loading, error, data, get } = useGet<UserData>(`/user/${user}`);
 
   useEffect(() => {
-    get(false);
+    get();
   }, [user]);
 
   useDocumentTitle(
@@ -37,16 +37,18 @@ export function UserRoute() {
   if (data)
     return (
       <>
-        {/* <UserInfo data={data} get={get} /> */}
+        {/* heading */}
         <div className="flex-row jc-spb mb-1">
           <h2>{data.username}</h2>
           {authUser && authUser.id === data.id && (
             <Link to="/account" type="button" className="button primary">
-              <AccountCircle />
+              <ManageAccounts />
               <span>Account</span>
             </Link>
           )}
         </div>
+
+        {/* profile detail */}
         <p>
           {data.bio && (
             <>
@@ -63,8 +65,9 @@ export function UserRoute() {
             })}
           </small>
         </p>
-        <h3 className="mt-1">Latest content</h3>
-        <UserActivity userId={data.id} />
+
+        {/* latest content */}
+        <UserContent data={data} />
       </>
     );
 }

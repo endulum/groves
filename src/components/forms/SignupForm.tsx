@@ -1,28 +1,31 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Form } from "../Form";
-import { InputChecklist } from "../InputChecklist";
-import { Alert } from "../Alert";
+import { Form } from "../reusable/Form";
+import { InputChecklist } from "../reusable/InputChecklist";
+import { Alert } from "../reusable/Alert";
 
 export function SignupForm() {
-  const [createdUser, setCreatedUser] = useState<string | null>(null);
+  const [newAccountUsername, setNewAccountUsername] = useState<string | null>(
+    null
+  );
+
   return (
     <Form<null>
       destination={{ endpoint: "/signup", method: "POST" }}
       onSuccess={(submissionData, _submissionResult) => {
-        setCreatedUser(submissionData.username);
+        setNewAccountUsername(submissionData.username);
       }}
       buttonText="Sign Up"
     >
-      {createdUser !== null && (
+      {newAccountUsername !== null && (
         <Alert type="success">
           <p>
             Your account has been created. You may{" "}
             <Link
               to={"/login"}
               state={{
-                createdUser,
+                newAccountUsername,
               }}
             >
               log in

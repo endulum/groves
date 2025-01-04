@@ -12,6 +12,7 @@ export async function doFetch<T>(
   let status = 0;
   let error = null;
   try {
+    if (!endpoint) throw new Error("Undefined endpoint");
     const response = await ofetch(
       import.meta.env.VITE_API_URL + endpoint,
       payload
@@ -28,7 +29,6 @@ export async function doFetch<T>(
         else error = e.statusText ?? "Something went wrong when fetching data.";
       }
     } else {
-      console.error(e);
       error = "Something went wrong when fetching data.";
     }
   }

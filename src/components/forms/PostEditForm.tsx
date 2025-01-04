@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-import { Form } from "../Form";
+import { Form } from "../reusable/Form";
 import { Post } from "../../types";
 
 export function PostEditForm({

@@ -1,17 +1,26 @@
-export { IndexRoute } from "./IndexRoute";
-export { ErrorRoute } from "./ErrorRoute";
-export { LoginRoute } from "./LoginRoute";
-export { SignupRoute } from "./SignupRoute";
-export { UserRoute } from "./UserRoute";
-export { AccountRoute } from "./AccountRoute";
-export { CommunitySearchRoute } from "./CommunitySearchRoute";
-export { CommunityCreateRoute } from "./CommunityCreateRoute";
-export { PostRoute } from "./PostRoute";
-export { PostCreateRoute } from "./PostCreateRoute";
+// wrappers
 
-export { CommunityWrapper } from "../community/CommunityWrapper";
-export { CommunityPosts } from "../community/CommunityPosts";
-export { CommunityWiki } from "../community/CommunityWiki";
-export { CommunityActivity } from "../community/CommunityActivity";
-export { CommunityModeration } from "../community/CommunityModeration";
-export { CommunityErrorRoute } from "../community/CommunityErrorRoute";
+export { SiteRouteWrapper } from "./SiteRouteWrapper";
+export { CommunityRouteWrapper } from "./CommunityRouteWrapper";
+
+// routes
+
+export { IndexRoute } from "./IndexRoute"; // /
+export { ErrorRoute } from "./ErrorRoute"; // *
+
+export { LoginRoute } from "./LoginRoute"; // /login
+export { SignupRoute } from "./SignupRoute"; // /signup
+
+export { UserRoute } from "./UserRoute"; // /user/:user
+export { AccountRoute } from "./AccountRoute"; // /account
+export { ExploreRoute } from "./ExploreRoute"; // /explore
+export { CommunityCreateRoute } from "./CommunityCreateRoute"; // /new
+
+export { CommunityPostsRoute } from "./CommunityPostsRoute"; // /community/:community
+export { CommunityWikiRoute } from "./CommunityWikiRoute"; // /community/:community/wiki
+export { CommunityActivityRoute } from "./CommunityActivityRoute"; // /community/:community/activity
+export { CommunityModerationRoute } from "./CommunityModerationRoute"; // /community/:community/moderation
+export { PostCreateRoute } from "./PostCreateRoute"; // /community/:community/new
+export { CommunityErrorRoute } from "./CommunityErrorRoute"; // /community/:community/*
+
+export { PostRoute } from "./PostRoute"; // /post/:post

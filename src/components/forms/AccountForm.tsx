@@ -1,13 +1,13 @@
 import { useOutletContext } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { type UserWithBio } from "../../types";
-import { Form } from "../Form";
-import { InputChecklist } from "../InputChecklist";
+import { type UserData } from "../../types";
+import { Form } from "../reusable/Form";
+import { InputChecklist } from "../reusable/InputChecklist";
 
 export function AccountForm() {
   const { user, changeUsername } = useOutletContext<{
-    user: UserWithBio;
+    user: UserData;
     changeUsername: (username: string) => void;
   }>();
   return (

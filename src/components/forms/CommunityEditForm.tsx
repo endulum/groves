@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { Community } from "../../types";
-import { Form } from "../Form";
-import { InputChecklist } from "../InputChecklist";
+import { Form } from "../reusable/Form";
+import { InputChecklist } from "../reusable/InputChecklist";
 import { toast } from "react-toastify";
 
 export function CommunityEditForm({
@@ -10,7 +10,7 @@ export function CommunityEditForm({
   get,
 }: {
   data: Community;
-  get: (keepCurrentData: boolean) => Promise<void>;
+  get: (keepCurrentData?: boolean) => Promise<void>;
 }) {
   const navigate = useNavigate();
   return (
@@ -24,7 +24,7 @@ export function CommunityEditForm({
         if (data.urlName !== submissionData.urlName) {
           navigate(`/community/${submissionData.urlName}`);
         } else {
-          get(false);
+          get();
         }
       }}
       buttonText="Save"

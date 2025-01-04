@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Form } from "../Form";
-import { InputChecklist } from "../InputChecklist";
+import { Form } from "../reusable/Form";
+import { InputChecklist } from "../reusable/InputChecklist";
 
 export function CommunityCreateForm() {
   const navigate = useNavigate();

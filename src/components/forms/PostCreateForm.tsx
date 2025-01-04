@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Form } from "../Form";
+import { Form } from "../reusable/Form";
 
 export function PostCreateForm({ communityUrl }: { communityUrl: string }) {
   const navigate = useNavigate();

@@ -1,20 +1,22 @@
-import { useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
+import { useBoolean } from "usehooks-ts";
 
-import { Form } from "../Form";
+import { Form } from "../reusable/Form";
 import { setStoredToken } from "../../functions/tokenUtils";
-import { Alert } from "../Alert";
+import { Alert } from "../reusable/Alert";
 
 export function LoginForm() {
   const { initUser } = useOutletContext<{ initUser: () => Promise<void> }>();
   const { state } = useLocation();
-  const [redirectFlag, setRedirectFlag] = useState(state?.redirect);
+  const { value: redirectFlag, setFalse: turnOffRedirectFlag } = useBoolean(
+    state?.redirect
+  );
 
   return (
     <Form<{ token: string }>
       destination={{ endpoint: "/login", method: "POST" }}
-      onClickSubmit={() => {
-        if (redirectFlag) setRedirectFlag(false);
+      onSubmit={() => {
+        if (redirectFlag) turnOffRedirectFlag();
       }}
       onSuccess={(_submissionData, submissionResult: { token: string }) => {
         setStoredToken(submissionResult.token);
@@ -33,7 +35,7 @@ export function LoginForm() {
           type="text"
           id="username"
           autoComplete="on"
-          defaultValue={state ? state.createdUser : ""}
+          defaultValue={state ? state.newAccountUsername : ""}
         />
       </label>
       <label htmlFor="password">

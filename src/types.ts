@@ -3,13 +3,13 @@ export type User = {
   id: number;
 };
 
-export type UserWithBio = User & {
-  bio: string;
-};
-
 export type UserData = User & {
   joined: string;
   bio: string;
+  _count: {
+    posts: number;
+    replies: number;
+  };
 };
 
 export type Community = {

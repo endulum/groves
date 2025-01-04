@@ -18,6 +18,7 @@ if (root !== null) {
       <BrowserRouter>
         <App />
         <ToastContainer
+          position="bottom-left"
           icon={({ type }) => {
             // theme is not used in this example but you could
             switch (type) {

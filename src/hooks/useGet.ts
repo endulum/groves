@@ -7,14 +7,14 @@ export function useGet<T>(endpoint: string): {
   loading: boolean;
   error: string | null;
   data: T | null;
-  get: (keepCurrentData: boolean) => Promise<void>;
+  get: (keepCurrentData?: boolean) => Promise<void>;
 } {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<T | null>(null);
   const fetching = useRef<boolean>(false);
 
-  async function get(keepCurrentData: boolean) {
+  async function get(keepCurrentData?: boolean) {
     if (!keepCurrentData) {
       if (!loading) setLoading(true);
       if (error) setError(null);
@@ -35,7 +35,7 @@ export function useGet<T>(endpoint: string): {
   useEffect(() => {
     if (fetching.current === false) {
       fetching.current = true;
-      get(false);
+      get();
     }
   }, []);
 

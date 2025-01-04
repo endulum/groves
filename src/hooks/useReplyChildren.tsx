@@ -36,7 +36,7 @@ export function useReplyChildren(data: Reply) {
 
   // will fetch more children when nextUrl is set
   useEffect(() => {
-    if (nextUrl) get(false);
+    if (nextUrl) get();
   }, [nextUrl]);
 
   useEffect(() => {

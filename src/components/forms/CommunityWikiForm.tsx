@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 
-import { Community } from "../../types";
-import { Form } from "../Form";
+import { type Community } from "../../types";
+import { Form } from "../reusable/Form";
 
 export function CommunityWikiForm({
   content,

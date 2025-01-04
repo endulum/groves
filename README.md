@@ -8,11 +8,14 @@ Groves is an arboreal semiclone of Reddit.
 - Vite as the bundler
 - Style enforced with ESLint
 
-## Todo
+### Missing features
 
-- [x] fit a "moderation" subroute that allows you to:
-- - ~~see a list of mods, promote a mod, demote a mod~~
-- - freeze and unfreeze the community
-- - promote someone to admin
-- [ ] wrap textareas in word count indicators
-- [x] wrap content in content lists in readmores
+- Change admin
+- Freeze and unfreeze community
+- Wrap textareas with word counters
+- Pin posts and replies - keep a section of the Posts comm subroute to display full content of posts
+- "Bookmark" or "go to last unread" posts on global and personal feed
+
+### Remaining issues
+
+- When changing pages of the `Paginator`, `ReadMore` does not render fade + link
