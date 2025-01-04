@@ -59,6 +59,7 @@ export function CommunityRouteWrapper() {
             moderators,
             promoteMod,
             demoteMod,
+            get,
           }}
         />
       </>
