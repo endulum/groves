@@ -1,4 +1,4 @@
-import { useOutletContext, useLocation } from "react-router-dom";
+import { useOutletContext, useLocation, useNavigate } from "react-router-dom";
 import { useBoolean } from "usehooks-ts";
 
 import { Form } from "../reusable/Form";
@@ -6,6 +6,7 @@ import { setStoredToken } from "../../functions/tokenUtils";
 import { Alert } from "../reusable/Alert";
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const { initUser } = useOutletContext<{ initUser: () => Promise<void> }>();
   const { state } = useLocation();
   const { value: redirectFlag, setFalse: turnOffRedirectFlag } = useBoolean(
@@ -19,6 +20,7 @@ export function LoginForm() {
         if (redirectFlag) turnOffRedirectFlag();
       }}
       onSuccess={(_submissionData, submissionResult: { token: string }) => {
+        navigate(-1);
         setStoredToken(submissionResult.token);
         initUser();
       }}
