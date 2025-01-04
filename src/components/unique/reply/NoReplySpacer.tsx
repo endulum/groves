@@ -1,12 +1,18 @@
 import { Air } from "@mui/icons-material";
 
-export function NoReplySpacer({ isUser }: { isUser: boolean }) {
+export function NoReplySpacer({
+  isUser,
+  isReadonly,
+}: {
+  isUser: boolean;
+  isReadonly: boolean;
+}) {
   return (
     <div className="spacer">
       <Air />
       <p>
         This post doesn't have any replies yet.
-        {isUser && (
+        {isUser && !isReadonly && (
           <>
             <br />
             Be the first to reply!

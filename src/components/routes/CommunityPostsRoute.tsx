@@ -30,7 +30,7 @@ export function CommunityPostsRoute() {
             <Air />
             <p>
               This community doesn't have any posts yet.
-              {user && (
+              {user && !community.readonly && (
                 <>
                   <br />
                   Be the first to post!

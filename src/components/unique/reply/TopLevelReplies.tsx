@@ -37,7 +37,10 @@ export function TopLevelReplies({
           />
         ))
       ) : (
-        <NoReplySpacer isUser={!!user} />
+        <NoReplySpacer
+          isUser={!!user}
+          isReadonly={postContext.isCommReadonly || postContext.isPostReadonly}
+        />
       )}
       {loadMoreChildren && (
         <button
