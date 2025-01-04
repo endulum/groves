@@ -25,7 +25,7 @@ type CommunityAction = Action & {
 };
 
 type UserAction = Action & {
-  type: "User_PromoteMod" | "User_DemoteMod";
+  type: "User_PromoteMod" | "User_DemoteMod" | "User_ChangeAdmin";
   user: { username: string; id: number };
 };
 
@@ -95,6 +95,14 @@ export function CommunityActionSearch({
             demoted user{" "}
             <Username user={action.user} role={getRole(action.user)} /> from
             moderator.
+          </span>
+        );
+      case "User_ChangeAdmin":
+        return (
+          <span>
+            promoted user{" "}
+            <Username user={action.user} role={getRole(action.user)} /> to
+            admin.
           </span>
         );
       case "Post_Create":
@@ -182,6 +190,7 @@ export function CommunityActionSearch({
               <option value="Community_Unfreeze">Community unfreeze</option>
               <option value="User_PromoteMod">Mod promotion</option>
               <option value="User_DemoteMod">Mod demotion</option>
+              <option value="User_changeAdmin">Mod demotion</option>
               <option value="Post_Create">Post creation</option>
               <option value="Post_Edit">Post edit</option>
               <option value="Post_Freeze">Post freeze</option>
