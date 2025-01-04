@@ -18,6 +18,7 @@ import { Username } from "../Username";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useBoolean } from "usehooks-ts";
+import { PushPin } from "@mui/icons-material";
 
 import { type Post, type PostComponentContext } from "../../../types";
 import { Username } from "../../reusable/Username";
@@ -28,19 +29,26 @@ import { PostEditForm } from "../../forms/PostEditForm";
 import { MDWrapper } from "../../reusable/MDWrapper";
 import { ReplyForm } from "../../forms/ReplyForm";
 import { FreezePostButton } from "../../forms/buttons/FreezePostButton";
+import { PinPostButton } from "../../forms/buttons/PinPostButton";
 
 export function PostContent({
   data,
   context,
   readonly,
   setReadonly,
-}: {
+}: // pinned,
+// setPinned,
+{
   data: Post;
   context: PostComponentContext;
   readonly: boolean;
   setReadonly: React.Dispatch<React.SetStateAction<boolean>>;
+  // pinned: boolean;
+  // setPinned: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
+
+  const { value: pinned, setValue: setPinned } = useBoolean(data.pinned);
 
   const {
     value: replying,
@@ -92,7 +100,19 @@ export function PostContent({
               </>
             )}
           </small>
-          {!editing && <h2>{postContent.title}</h2>}
+          {!editing && (
+            <h2>
+              {postContent.title}
+              {pinned && (
+                <span title="This post is pinned.">
+                  {" "}
+                  <PushPin
+                    style={{ color: "var(--accent2)", verticalAlign: "middle" }}
+                  />
+                </span>
+              )}
+            </h2>
+          )}
         </div>
         <VoteWidget
           data={data}
@@ -188,11 +208,18 @@ export function PostContent({
               </button>
             ))}
           {data.context.isMod && (
-            <FreezePostButton
-              postId={data.id}
-              readonly={readonly}
-              setReadonly={setReadonly}
-            />
+            <>
+              <FreezePostButton
+                postId={data.id}
+                readonly={readonly}
+                setReadonly={setReadonly}
+              />
+              <PinPostButton
+                postId={data.id}
+                pinned={pinned}
+                setPinned={setPinned}
+              />
+            </>
           )}
         </div>
       )}
