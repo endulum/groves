@@ -13,7 +13,12 @@ Groves is an arboreal semiclone of Reddit.
 - Wrap textareas with word counters
 - Pin posts and replies - keep a section of the Posts comm subroute to display full content of posts
 - "Bookmark" or "go to last unread" posts on global and personal feed
+- Allow frozen posts to be found (in comm and activity search), but also have a checkbox to exclude frozen
 
 ### Remaining issues
 
 - When changing pages of the `Paginator`, `ReadMore` does not render fade + link
+- Don't render "Be the first to reply!" or "Be the first to post!" on readonly content
+- Some toasts are missing icons
+- Accomodate post pinning and unpinning in action search
+- MDWrapper bullet lists are missing margin

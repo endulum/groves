@@ -551,6 +551,18 @@ button.reply-collapse:not(:has(span)).plain {
   }
 }
 
+.pinned-posts {
+  align-items: stretch;
+}
+
+.pinned-post {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  p {
+    font-size: 0.875rem;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .body {
     padding: 0.75rem;
@@ -560,6 +572,12 @@ button.reply-collapse:not(:has(span)).plain {
     .body {
       border-radius: 0;
     }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .pinned-posts {
+    flex-direction: column;
   }
 }
 

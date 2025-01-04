@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 import { Air } from "@mui/icons-material";
 
 import { type User, type Community } from "../../types";
+import { CommunityPinnedPosts } from "../unique/community/CommunityPinnedPosts";
 import { CommunityPostSearch } from "../forms/search/CommunityPostSearch";
 
 export function CommunityPostsRoute() {
@@ -16,6 +17,10 @@ export function CommunityPostsRoute() {
 
   return (
     <>
+      <h3 className="mb-1">Pinned Posts</h3>
+      <div>
+        <CommunityPinnedPosts />
+      </div>
       <h3 className="mb-1">Search Posts</h3>
       {community._count.posts > 0 ? (
         <CommunityPostSearch communityUrl={community.urlName} />
