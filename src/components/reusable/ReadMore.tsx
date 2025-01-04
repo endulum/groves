@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export function ReadMore({
@@ -10,7 +10,13 @@ export function ReadMore({
   children: React.ReactNode;
   maxHeight?: number;
 }) {
+  const [height, setHeight] = useState<number>(0);
   const readmoreContent = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (readmoreContent.current)
+      setHeight(readmoreContent.current.scrollHeight);
+  }, []);
   return (
     <>
       <div className="readmore" style={{ maxHeight: `${maxHeight}px` }}>
@@ -18,20 +24,16 @@ export function ReadMore({
           {children}
         </div>
 
-        {readmoreContent.current &&
-          readmoreContent.current.scrollHeight > maxHeight && (
-            <div className="readmore-fade" />
-          )}
+        {height > maxHeight && <div className="readmore-fade" />}
       </div>
 
-      {readmoreContent.current &&
-        readmoreContent.current.scrollHeight > maxHeight && (
-          <div className="readmore-link mt-0-5">
-            <Link to={link}>
-              <small>Read more</small>
-            </Link>
-          </div>
-        )}
+      {height > maxHeight && (
+        <div className="readmore-link mt-0-5">
+          <Link to={link}>
+            <small>Read more</small>
+          </Link>
+        </div>
+      )}
     </>
   );
 }
