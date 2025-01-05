@@ -40,7 +40,8 @@ export function Search<T>({
     timer.current = setTimeout(() => {
       params.current = {
         ...params.current,
-        [e.target.id]: e.target.value,
+        [e.target.id]:
+          e.target.type === "checkbox" ? e.target.checked : e.target.value,
       };
       setUrl(`${endpoint}?${paramsToString()}`);
     }, 750);

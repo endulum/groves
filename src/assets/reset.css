@@ -61,7 +61,7 @@ body {
 
 /* interactive elements */
 button,
-input,
+input:not([type="checkbox"]),
 select,
 textarea {
   appearance: none;

@@ -1,5 +1,11 @@
 import { DateTime } from "luxon";
-import { Park, Spa, WbSunny, ArrowForwardIos } from "@mui/icons-material";
+import {
+  Park,
+  Spa,
+  WbSunny,
+  ArrowForwardIos,
+  AcUnit,
+} from "@mui/icons-material";
 import { Link, useOutletContext } from "react-router-dom";
 
 import { type Community, type User } from "../../../types";
@@ -11,6 +17,7 @@ type PostResult = {
   id: string;
   title: string;
   datePosted: string;
+  readonly: boolean;
   _count: {
     upvotes: number;
     downvotes: number;
@@ -53,6 +60,9 @@ export function CommunityPostSearch({
             <option value="newest">Newest</option>
             <option value="replies">Most replies</option>
           </select>
+
+          <label htmlFor="includeFrozen">Include frozen</label>
+          <input type="checkbox" id="includeFrozen" />
         </>
       }
       itemsPropertyName="posts"
@@ -65,7 +75,21 @@ export function CommunityPostSearch({
               <div className="flex-row gap-0-75 align-start">
                 <Park style={{ width: "2rem", height: "2rem" }} />
                 <div>
-                  <h3>{post.title}</h3>
+                  <h3>
+                    {post.title}
+                    {post.readonly && (
+                      <span title="This post is frozen.">
+                        {" "}
+                        <AcUnit
+                          style={{
+                            color: "var(--info)",
+                            height: "1.25rem",
+                            verticalAlign: "text-top",
+                          }}
+                        />
+                      </span>
+                    )}
+                  </h3>
                   <small>
                     by{" "}
                     <Username
