@@ -1,4 +1,10 @@
-import { Air, ArrowForwardIos, Spa, WbSunny } from "@mui/icons-material";
+import {
+  Air,
+  ArrowForwardIos,
+  Spa,
+  WbSunny,
+  AcUnit,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 import { type Post } from "../../../types";
@@ -28,7 +34,21 @@ export function GlobalFeed() {
                   by <Username user={post.author} role={null} />{" "}
                   <DateWithTitle dateString={post.datePosted} />
                 </small>
-                <h3>{post.title}</h3>
+                <h3>
+                  {post.title}
+                  {post.readonly && (
+                    <span title="This post is frozen.">
+                      {" "}
+                      <AcUnit
+                        style={{
+                          color: "var(--info)",
+                          height: "1.25rem",
+                          verticalAlign: "text-top",
+                        }}
+                      />
+                    </span>
+                  )}
+                </h3>
               </div>
 
               <div className="flex-row gap-0-5">
