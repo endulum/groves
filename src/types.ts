@@ -28,6 +28,7 @@ export type Community = {
   // context
   context: {
     isFollowing: boolean;
+    hasPinnedPosts: boolean;
   };
 };
 
