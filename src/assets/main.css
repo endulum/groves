@@ -341,9 +341,20 @@ label {
       margin-bottom: 0;
     }
   }
+}
+
+ul {
+  margin-left: 1.125rem;
+  list-style: square;
   ul {
-    margin-left: 1.125rem;
-    list-style: square;
+    list-style: circle;
+  }
+}
+
+.icon-span {
+  svg {
+    vertical-align: bottom;
+    width: 1.25rem;
   }
 }
 

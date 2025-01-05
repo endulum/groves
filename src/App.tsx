@@ -94,6 +94,9 @@ export function App() {
         <Route path="/post/:post" element={<routes.PostRoute />} />
         <Route path="/post/:post/reply/:reply" element={<routes.PostRoute />} />
 
+        {/* etc */}
+        <Route path="/about" element={<routes.AboutRoute />} />
+
         <Route path="*" element={<routes.ErrorRoute />} />
       </Route>
     </Routes>

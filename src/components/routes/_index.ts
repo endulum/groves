@@ -27,3 +27,5 @@ export { PostCreateRoute } from "./PostCreateRoute"; // /community/:community/ne
 export { CommunityErrorRoute } from "./CommunityErrorRoute"; // /community/:community/*
 
 export { PostRoute } from "./PostRoute"; // /post/:post
+
+export { AboutRoute } from "./AboutRoute";
