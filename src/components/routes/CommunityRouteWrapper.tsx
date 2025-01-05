@@ -52,6 +52,7 @@ export function CommunityRouteWrapper() {
             { to: `/community/${community}/moderation`, title: "Moderation" },
           ]}
         />
+        <br />
         <Outlet
           context={{
             user,

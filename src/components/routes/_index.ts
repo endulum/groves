@@ -2,10 +2,13 @@
 
 export { SiteRouteWrapper } from "./SiteRouteWrapper";
 export { CommunityRouteWrapper } from "./CommunityRouteWrapper";
+export { IndexRouteWrapper } from "./IndexRouteWrapper";
+export { GlobalFeedRoute, PersonalFeedRoute } from "./FeedRoutes";
 
 // routes
 
-export { IndexRoute } from "./IndexRoute"; // /
+export { IndexGuestRoute } from "./IndexGuestRoute"; // /
+
 export { ErrorRoute } from "./ErrorRoute"; // *
 
 export { LoginRoute } from "./LoginRoute"; // /login

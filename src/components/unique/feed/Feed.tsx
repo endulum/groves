@@ -14,10 +14,10 @@ import { Username } from "../../reusable/Username";
 import { ReadMore } from "../../reusable/ReadMore";
 import { DateWithTitle } from "../../reusable/DateWithTitle";
 
-export function GlobalFeed() {
+export function Feed({ type }: { type: "global" | "following" }) {
   return (
     <Paginator<Post>
-      startingUrl="/all"
+      startingUrl={type === "following" ? "/feed" : "/all"}
       itemsPropertyName="posts"
       mapItems={(post: Post) => {
         const { upvotes, downvotes } = post._count;
@@ -92,7 +92,8 @@ export function GlobalFeed() {
       emptyElement={
         <div className="spacer">
           <Air />
-          <p>No site activity to show.</p>
+          <p>No activity to show.</p>
+          {type === "following" && <p>Consider following some communities!</p>}
         </div>
       }
     />

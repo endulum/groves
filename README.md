@@ -10,6 +10,7 @@ Groves is an arboreal semiclone of Reddit.
 
 ### Missing features
 
+- CTA on guest index route that "introduces" Groves briefly
 - Wrap textareas with word counters
 - Pin replies
 - "Bookmark" or "go to last unread" posts on global and personal feed

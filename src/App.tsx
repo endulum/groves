@@ -36,18 +36,25 @@ export function App() {
       >
         {user ? (
           <>
+            <Route path="/" element={<routes.IndexRouteWrapper />}>
+              <Route path="/" element={<Navigate to="/feed" />} />
+              <Route path="/feed" element={<routes.PersonalFeedRoute />} />
+              <Route path="/all" element={<routes.GlobalFeedRoute />} />
+            </Route>
             <Route path="/account" element={<routes.AccountRoute />} />
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/signup" element={<Navigate to="/" />} />
           </>
         ) : (
           <>
+            <Route path="/" element={<routes.IndexGuestRoute />} />
+            <Route path="/feed" element={<Navigate to="/" />} />
+            <Route path="/all" element={<Navigate to="/" />} />
             <Route path="/login" element={<routes.LoginRoute />} />
             <Route path="/signup" element={<routes.SignupRoute />} />
           </>
         )}
 
-        <Route path="/" element={<routes.IndexRoute />} />
         <Route path="/user/:user" element={<routes.UserRoute />} />
         <Route path="/explore" element={<routes.ExploreRoute />} />
         <Route path="/new" element={<routes.CommunityCreateRoute />} />
