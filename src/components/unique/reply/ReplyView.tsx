@@ -5,6 +5,7 @@ import { type Post, type PostComponentContext } from "../../../types";
 import { Alert } from "../../reusable/Alert";
 import { AllReplies } from "./AllReplies";
 import { IsolatedReply } from "./IsolatedReply";
+import { PinnedReply } from "./PinnedReply";
 
 export function ReplyView({
   data,
@@ -19,6 +20,12 @@ export function ReplyView({
   return (
     <>
       <hr className="mt-1 mb-1" />
+      {!reply && postContext.pinnedReplyID && (
+        <div className="mb-1">
+          <PinnedReply postId={data.id} postContext={postContext} />
+        </div>
+      )}
+
       <div className="flex-row jc-spb">
         <h3>Replies</h3>
         <label htmlFor="sort" className="flex-row gap-1">
@@ -38,7 +45,6 @@ export function ReplyView({
           </select>
         </label>
       </div>
-
       {reply && (
         <Alert type="info" className="mt-1 mb-1">
           <p>
@@ -49,7 +55,6 @@ export function ReplyView({
           </p>
         </Alert>
       )}
-
       <div className="replies">
         {reply ? (
           <IsolatedReply

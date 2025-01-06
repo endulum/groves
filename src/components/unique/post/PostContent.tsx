@@ -1,20 +1,3 @@
-/* import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { DateTime } from "luxon";
-import { useBoolean } from "usehooks-ts";
-import { toast } from "react-toastify";
-
-import { type PostComponentContext, type Post } from "../../types";
-import { VoteWidget } from "../VoteWidget";
-import { Alert } from "../Alert";
-import { PostEditForm } from "../all/PostEditForm";
-import { ReplyForm } from "../all/ReplyForm";
-import { FreezePost } from "../all/ModActionForms";
-import { MDWrapper } from "../MDWrapper";
-import { Username } from "../Username";
-
-*/
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useBoolean } from "usehooks-ts";
@@ -36,15 +19,11 @@ export function PostContent({
   context,
   readonly,
   setReadonly,
-}: // pinned,
-// setPinned,
-{
+}: {
   data: Post;
   context: PostComponentContext;
   readonly: boolean;
   setReadonly: React.Dispatch<React.SetStateAction<boolean>>;
-  // pinned: boolean;
-  // setPinned: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
 

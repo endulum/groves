@@ -19,7 +19,8 @@ Groves is an arboreal semiclone of Reddit.
 - Pin replies
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Darkmode!
+- Check document title consistency
 
 ### Remaining issues
 
-- ...
+- Make reply pinning stateful for a consistent UI

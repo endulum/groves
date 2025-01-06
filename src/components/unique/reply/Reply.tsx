@@ -26,6 +26,12 @@ export function Reply({
   } = useBoolean(data.hidden);
 
   const {
+    value: pinned,
+    setTrue: pin,
+    setFalse: unpin,
+  } = useBoolean(data.pinned);
+
+  const {
     loading,
     children,
     countChildren,
@@ -67,6 +73,11 @@ export function Reply({
             hide,
             unhide,
             hidden,
+          }}
+          pinning={{
+            pin,
+            unpin,
+            pinned,
           }}
           addNewChild={addNewChild}
         />

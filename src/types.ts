@@ -38,6 +38,7 @@ type PostContext = {
   isPostAuthorMod: boolean;
   isPostAuthorAdmin: boolean;
   isCommReadonly: boolean;
+  pinnedReplyID: string | null;
 };
 
 export type Post = {
@@ -76,6 +77,7 @@ export type Reply = {
   parentId: string | null;
   postId: string;
   hidden: boolean;
+  pinned: boolean;
   // children
   loadChildren?: string;
   loadMoreChildren?: string;

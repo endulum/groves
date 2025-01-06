@@ -10,11 +10,13 @@ import { ReplyForm } from "../../forms/ReplyForm";
 import { VoteWidget } from "../../reusable/VoteWidget";
 import { FlyoutMenu } from "../../reusable/FlyoutMenu";
 import { HideReplyButton } from "../../forms/buttons/HideReplyButton";
+import { PinReplyButton } from "../../forms/buttons/PinReplyButton";
 
 export function ReplyActionRow({
   data,
   context,
   hiding,
+  pinning,
   addNewChild,
 }: {
   data: Reply;
@@ -23,6 +25,11 @@ export function ReplyActionRow({
     hidden: boolean;
     hide: () => void;
     unhide: () => void;
+  };
+  pinning: {
+    pinned: boolean;
+    pin: () => void;
+    unpin: () => void;
   };
   addNewChild: (reply: Reply) => void;
 }) {
@@ -126,6 +133,13 @@ export function ReplyActionRow({
             !context.isCommReadonly &&
             context.isMod && (
               <HideReplyButton replyId={data.id} hideActions={hiding} />
+            )}
+          {/* pin reply */}
+          {!context.isPostReadonly &&
+            !context.isCommReadonly &&
+            (!context.pinnedReplyID || context.pinnedReplyID === data.id) &&
+            context.postAuthorID === context.authUserID && (
+              <PinReplyButton replyId={data.id} pinActions={pinning} />
             )}
         </FlyoutMenu>
       </div>
