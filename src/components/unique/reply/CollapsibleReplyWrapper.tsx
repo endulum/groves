@@ -32,7 +32,7 @@ export function CollapsibleReplyWrapper({
       {collapsed ? (
         <button
           className="button plain reply-collapse collapsed"
-          title="Hide reply tree"
+          title="Expand reply tree"
           onClick={expand}
         >
           <ExpandMore />

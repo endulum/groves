@@ -21,4 +21,3 @@ Groves is an arboreal semiclone of Reddit.
 ### Remaining issues
 
 - What if OP is also an admin/mod? Extend `Username` to account for that?
-- inconsistent expand/collapse button text
