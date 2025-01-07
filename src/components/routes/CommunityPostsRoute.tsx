@@ -1,4 +1,3 @@
-import { useDocumentTitle } from "usehooks-ts";
 import { useOutletContext } from "react-router-dom";
 import { Air } from "@mui/icons-material";
 
@@ -11,9 +10,6 @@ export function CommunityPostsRoute() {
     community: Community;
     user: User;
   }>();
-  useDocumentTitle(
-    `${community.canonicalName} :: ${import.meta.env.VITE_APP_NAME}`
-  );
 
   return (
     <>

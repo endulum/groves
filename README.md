@@ -19,6 +19,7 @@ Groves is an arboreal semiclone of Reddit.
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Darkmode!
 - Check document title consistency
+- Consider making global feed ranked by hotness rather than date posted?
 
 ### Remaining issues
 

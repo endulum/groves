@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Explore } from "@mui/icons-material";
+import { useDocumentTitle } from "usehooks-ts";
 
 import { Feed } from "../unique/feed/Feed";
 
 export function IndexGuestRoute() {
+  useDocumentTitle(`${import.meta.env.VITE_APP_NAME}`);
   return (
     <>
       <div className="flex-row jc-spb mb-1">

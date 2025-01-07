@@ -1,17 +1,8 @@
 import { QuestionMark } from "@mui/icons-material";
-import { useLocation, useOutletContext, useNavigate } from "react-router-dom";
-import { useDocumentTitle } from "usehooks-ts";
-
-import { type Community } from "../../types";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function CommunityErrorRoute() {
   const navigate = useNavigate();
-  const { community } = useOutletContext<{ community: Community }>();
-  useDocumentTitle(
-    `${community.canonicalName} :: Not Found :: ${
-      import.meta.env.VITE_APP_NAME
-    }`
-  );
   const { pathname } = useLocation();
   return (
     <div>

@@ -1,6 +1,8 @@
 import { Forest, Park, Spa, WbSunny } from "@mui/icons-material";
+import { useDocumentTitle } from "usehooks-ts";
 
 export function AboutRoute() {
+  useDocumentTitle(`About ${import.meta.env.VITE_APP_NAME}`);
   return (
     <>
       <h2>About Groves</h2>
