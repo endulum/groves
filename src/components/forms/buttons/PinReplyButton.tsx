@@ -7,7 +7,7 @@ import { PostContext } from "../../unique/post/PostContext";
 import { type VisibleReply } from "../../../types";
 
 export function PinReplyButton({ data }: { data: VisibleReply }) {
-  const { pinning, pinnedReply, setPinnedReply } = useContext(PostContext);
+  const { pinnedReply, setPinnedReply } = useContext(PostContext);
   const { loading, error, handleSubmit } = useForm(
     { endpoint: `/reply/${data.id}/pin`, method: "PUT" },
     (submissionData, _submissionResult) => {
@@ -22,7 +22,6 @@ export function PinReplyButton({ data }: { data: VisibleReply }) {
         }
       );
       if (submissionData.pin === "true") {
-        pinning.pin();
         setPinnedReply({
           id: data.id,
           author: data.author,
@@ -32,7 +31,6 @@ export function PinReplyButton({ data }: { data: VisibleReply }) {
         });
       }
       if (submissionData.pin === "false") {
-        pinning.unpin();
         setPinnedReply(null);
       }
     }
