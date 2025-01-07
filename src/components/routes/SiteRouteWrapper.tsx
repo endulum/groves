@@ -17,7 +17,10 @@ export function SiteRouteWrapper({
     <>
       <header>
         <div className="body flex-row jc-spb">
-          <Link to="/" className="logo flex-row gap-1">
+          <Link
+            to={context.user ? "/feed" : "/"}
+            className="logo flex-row gap-1"
+          >
             <Forest />
             <h1>{import.meta.env.VITE_APP_NAME}</h1>
           </Link>
