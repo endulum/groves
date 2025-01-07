@@ -69,7 +69,11 @@ export function FollowingSearch() {
             </div>
           </div>
         )}
-        emptyElement={<NoResultsSpacer />}
+        emptyElement={
+          <NoResultsSpacer>
+            <p>No communities to show.</p>
+          </NoResultsSpacer>
+        }
       />
     </>
   );

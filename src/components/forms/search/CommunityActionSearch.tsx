@@ -260,7 +260,11 @@ export function CommunityActionSearch({
           </div>
         );
       }}
-      emptyElement={<NoResultsSpacer />}
+      emptyElement={
+        <NoResultsSpacer>
+          <p>No activity to show.</p>
+        </NoResultsSpacer>
+      }
     />
   );
 }

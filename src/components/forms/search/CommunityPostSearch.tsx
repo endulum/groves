@@ -141,7 +141,11 @@ export function CommunityPostSearch({
           </div>
         );
       }}
-      emptyElement={<NoResultsSpacer />}
+      emptyElement={
+        <NoResultsSpacer>
+          <p>No posts to show.</p>
+        </NoResultsSpacer>
+      }
     />
   );
 }

@@ -1,10 +1,4 @@
-import {
-  Air,
-  ArrowForwardIos,
-  Spa,
-  WbSunny,
-  AcUnit,
-} from "@mui/icons-material";
+import { ArrowForwardIos, Spa, WbSunny, AcUnit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 import { type Post } from "../../../types";
@@ -13,6 +7,7 @@ import { MDWrapper } from "../../reusable/MDWrapper";
 import { Username } from "../../reusable/Username";
 import { ReadMore } from "../../reusable/ReadMore";
 import { DateWithTitle } from "../../reusable/DateWithTitle";
+import { NoResultsSpacer } from "../../reusable/NoResultsSpacer";
 
 export function Feed({ type }: { type: "global" | "following" }) {
   return (
@@ -90,11 +85,17 @@ export function Feed({ type }: { type: "global" | "following" }) {
         );
       }}
       emptyElement={
-        <div className="spacer">
-          <Air />
-          <p>No activity to show.</p>
-          {type === "following" && <p>Consider following some communities!</p>}
-        </div>
+        <NoResultsSpacer>
+          <p>
+            No community activity to show.
+            {type === "following" && (
+              <>
+                <br />
+                Consider following some communities!
+              </>
+            )}
+          </p>
+        </NoResultsSpacer>
       }
     />
   );

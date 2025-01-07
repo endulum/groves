@@ -1,10 +1,10 @@
-import { VisibilityOff } from "@mui/icons-material";
+import { Air } from "@mui/icons-material";
 
-export function NoResultsSpacer() {
+export function NoResultsSpacer({ children }: { children: React.ReactNode }) {
   return (
     <div className="spacer">
-      <VisibilityOff />
-      <p>No results found. Try another search.</p>
+      <Air />
+      {children}
     </div>
   );
 }

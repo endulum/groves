@@ -10,7 +10,7 @@ import {
 import { useReplyChildren } from "../../../hooks/useReplyChildren";
 import { PostContext } from "../post/PostContext";
 import { Reply } from "./Reply";
-import { NoReplySpacer } from "./NoReplySpacer";
+import { NoResultsSpacer } from "../../reusable/NoResultsSpacer";
 
 export function TopLevelReplies({ data }: { data: TReply }) {
   const { user } = useOutletContext<{ user: User }>();
@@ -29,10 +29,17 @@ export function TopLevelReplies({ data }: { data: TReply }) {
           />
         ))
       ) : (
-        <NoReplySpacer
-          isUser={!!user}
-          isReadonly={postData.community.readonly || postData.readonly}
-        />
+        <NoResultsSpacer>
+          <p>
+            This post doesn't have any replies yet.
+            {user && !(postData.community.readonly || postData.readonly) && (
+              <>
+                <br />
+                Be the first to reply!
+              </>
+            )}
+          </p>
+        </NoResultsSpacer>
       )}
       {loadMoreChildren && (
         <button

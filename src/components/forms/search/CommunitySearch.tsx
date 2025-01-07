@@ -91,7 +91,11 @@ export function CommunitySearch() {
           </div>
         </div>
       )}
-      emptyElement={<NoResultsSpacer />}
+      emptyElement={
+        <NoResultsSpacer>
+          <p>No communities to show.</p>
+        </NoResultsSpacer>
+      }
     />
   );
 }
