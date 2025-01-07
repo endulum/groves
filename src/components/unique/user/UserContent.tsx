@@ -24,6 +24,10 @@ type UserPost = Result & {
     id: string;
     title: string;
     content: string;
+    _count: {
+      upvotes: number;
+      downvotes: number;
+    };
   };
 };
 
@@ -36,6 +40,10 @@ type UserReply = Result & {
       title: string;
     };
     content: string;
+    _count: {
+      upvotes: number;
+      downvotes: number;
+    };
   };
 };
 
@@ -51,6 +59,9 @@ export function UserContent({ data }: { data: UserData }) {
           const link = action.post
             ? `/post/${action.post.id}`
             : `/post/${action.reply.post.id}/reply/${action.reply.id}`;
+          const score = action.post
+            ? action.post._count.upvotes - action.post._count.downvotes
+            : action.reply._count.upvotes - action.reply._count.downvotes;
           return (
             <div className="search-result" key={action.id}>
               <p>
@@ -60,7 +71,8 @@ export function UserContent({ data }: { data: UserData }) {
                   <DateWithTitle dateString={action.date} /> in{" "}
                   <Link to={`/community/${action.community.urlName}`}>
                     {action.community.canonicalName}
-                  </Link>
+                  </Link>{" "}
+                  with {score} points
                 </small>
               </p>
 

@@ -10,9 +10,6 @@ Groves is an arboreal semiclone of Reddit.
 
 ### Missing features
 
-- Stuff on profiles:
-- - Most frequented communities
-- - Verdancy score, with best posts/best replies?
 - Wrap textareas with word counters
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Darkmode!

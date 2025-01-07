@@ -10,6 +10,10 @@ export type UserData = User & {
     posts: number;
     replies: number;
   };
+  verdancy: {
+    postVerdancy: number;
+    replyVerdancy: number;
+  };
 };
 
 export type Community = {

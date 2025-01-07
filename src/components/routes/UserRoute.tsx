@@ -1,7 +1,7 @@
 import { Link, useParams, useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
 import { useDocumentTitle } from "usehooks-ts";
-import { ManageAccounts } from "@mui/icons-material";
+import { ManageAccounts, WbSunny } from "@mui/icons-material";
 import { DateTime } from "luxon";
 
 import { type User, type UserData } from "../../types";
@@ -63,6 +63,27 @@ export function UserRoute() {
               month: "long",
               day: "numeric",
             })}
+          </small>
+        </p>
+
+        {/* verdancy */}
+        <p className="mt-1">
+          <WbSunny
+            style={{
+              color:
+                data.verdancy.postVerdancy + data.verdancy.replyVerdancy > 0
+                  ? "var(--accent2)"
+                  : "var(--border)",
+              verticalAlign: "text-bottom",
+              height: "1.25rem",
+              marginRight: "0.25rem",
+            }}
+          />
+          {data.verdancy.postVerdancy + data.verdancy.replyVerdancy} verdancy
+          <br />
+          <small>
+            {data.verdancy.postVerdancy} post verdancy,{" "}
+            {data.verdancy.replyVerdancy} reply verdancy
           </small>
         </p>
 
