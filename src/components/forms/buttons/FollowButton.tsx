@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { Loop, PersonAdd, PersonRemove } from "@mui/icons-material";
 
-import { Community } from "../../../types";
 import { useForm } from "../../../hooks/useForm";
 import { useBoolean } from "usehooks-ts";
 
@@ -11,9 +10,15 @@ export function FollowButton({
   followers,
   setFollowers,
 }: {
-  data: Community;
-  followers: number;
-  setFollowers: React.Dispatch<React.SetStateAction<number>>;
+  data: {
+    id: number;
+    canonicalName: string;
+    meta: {
+      isFollowing: boolean;
+    };
+  };
+  followers?: number;
+  setFollowers?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const {
     value: isFollowing,
@@ -26,7 +31,7 @@ export function FollowButton({
     (submissionData, _submissionResult) => {
       if (submissionData.follow === "true") {
         follow();
-        setFollowers(followers + 1);
+        if (followers && setFollowers) setFollowers(followers + 1);
         toast(
           <p>
             You are now following <b>{data.canonicalName}</b>.
@@ -39,7 +44,7 @@ export function FollowButton({
       }
       if (submissionData.follow === "false") {
         unfollow();
-        setFollowers(followers - 1);
+        if (followers && setFollowers) setFollowers(followers - 1);
         toast(
           <p>
             You are no longer following <b>{data.canonicalName}</b>.

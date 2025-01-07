@@ -12,12 +12,11 @@ Groves is an arboreal semiclone of Reddit.
 
 - Stuff on profiles:
 - - Most frequented communities
-- - Following communities (with buttons to unfollow if you're the user)
 - - Verdancy score, with best posts/best replies?
 - Wrap textareas with word counters
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Darkmode!
-- Own following page with sorting options and "unfollow" for each entry
+- actual nav
 
 ### Remaining issues
 

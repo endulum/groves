@@ -29,3 +29,4 @@ export { CommunityErrorRoute } from "./CommunityErrorRoute"; // /community/:comm
 export { PostRoute } from "./PostRoute"; // /post/:post
 
 export { AboutRoute } from "./AboutRoute";
+export { FollowingRoute } from "./FollowingRoute";

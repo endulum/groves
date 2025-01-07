@@ -41,6 +41,7 @@ export function App() {
               <Route path="/feed" element={<routes.PersonalFeedRoute />} />
               <Route path="/all" element={<routes.GlobalFeedRoute />} />
             </Route>
+            <Route path="/following" element={<routes.FollowingRoute />} />
             <Route path="/account" element={<routes.AccountRoute />} />
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/signup" element={<Navigate to="/" />} />
@@ -50,6 +51,7 @@ export function App() {
             <Route path="/" element={<routes.IndexGuestRoute />} />
             <Route path="/feed" element={<Navigate to="/" />} />
             <Route path="/all" element={<Navigate to="/" />} />
+            <Route path="/following" element={<Navigate to="/" />} />
             <Route path="/login" element={<routes.LoginRoute />} />
             <Route path="/signup" element={<routes.SignupRoute />} />
           </>
