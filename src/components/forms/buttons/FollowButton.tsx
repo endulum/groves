@@ -19,7 +19,7 @@ export function FollowButton({
     value: isFollowing,
     setFalse: unfollow,
     setTrue: follow,
-  } = useBoolean(data.context.isFollowing);
+  } = useBoolean(data.meta.isFollowing);
 
   const { loading, error, handleSubmit } = useForm(
     { endpoint: `/community/${data.id}/followers`, method: "PUT" },

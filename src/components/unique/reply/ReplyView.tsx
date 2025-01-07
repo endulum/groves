@@ -1,28 +1,26 @@
-import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { type Post, type PostComponentContext } from "../../../types";
 import { Alert } from "../../reusable/Alert";
 import { AllReplies } from "./AllReplies";
 import { IsolatedReply } from "./IsolatedReply";
 import { PinnedReply } from "./PinnedReply";
+import { PostContext } from "../post/PostContext";
 
-export function ReplyView({
-  data,
-  postContext,
-}: {
-  data: Post;
-  postContext: PostComponentContext;
-}) {
-  const { reply } = useParams();
+export function ReplyView() {
+  const {
+    data: postData,
+    isolateReplyID,
+    pinnedReply,
+  } = useContext(PostContext);
   const [sort, setSort] = useState<string>("hot");
 
   return (
     <>
       <hr className="mt-1 mb-1" />
-      {!reply && postContext.pinnedReplyID && (
+      {!isolateReplyID && pinnedReply && (
         <div className="mb-1">
-          <PinnedReply postId={data.id} postContext={postContext} />
+          <PinnedReply data={pinnedReply} />
         </div>
       )}
 
@@ -45,27 +43,22 @@ export function ReplyView({
           </select>
         </label>
       </div>
-      {reply && (
-        <Alert type="info" className="mt-1 mb-1">
-          <p>
-            Viewing an isolated reply.{" "}
-            <Link to={`/post/${data.id}`} state={{ reload: true }}>
-              View all replies
-            </Link>
-          </p>
-        </Alert>
-      )}
       <div className="replies">
-        {reply ? (
-          <IsolatedReply
-            postContext={{
-              ...postContext,
-              isolateReplyID: reply,
-            }}
-            sort={sort}
-          />
+        {isolateReplyID && (
+          <Alert type="info" className="mt-1 mb-1">
+            <p>
+              Viewing an isolated reply.{" "}
+              <Link to={`/post/${postData.id}`} state={{ reload: true }}>
+                View all replies
+              </Link>
+            </p>
+          </Alert>
+        )}
+
+        {isolateReplyID ? (
+          <IsolatedReply sort={sort} />
         ) : (
-          <AllReplies postData={data} postContext={postContext} sort={sort} />
+          <AllReplies sort={sort} />
         )}
       </div>
     </>

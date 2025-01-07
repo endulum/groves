@@ -1,20 +1,15 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { PostContext } from "../../unique/post/PostContext";
 import { toast } from "react-toastify";
 import { Loop, ShieldOutlined } from "@mui/icons-material";
 
 import { useForm } from "../../../hooks/useForm";
 
-export function FreezePostButton({
-  postId,
-  readonly,
-  setReadonly,
-}: {
-  postId: string;
-  readonly: boolean;
-  setReadonly: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export function FreezePostButton() {
+  const { data, freezing } = useContext(PostContext);
+
   const { loading, error, handleSubmit } = useForm(
-    { endpoint: `/post/${postId}/status`, method: "PUT" },
+    { endpoint: `/post/${data.id}/status`, method: "PUT" },
     (submissionData, _submissionResult) => {
       toast(
         <p>
@@ -27,7 +22,8 @@ export function FreezePostButton({
           type: "success",
         }
       );
-      setReadonly(submissionData.readonly === "true");
+      if (submissionData.readonly === "true") freezing.freeze();
+      if (submissionData.readonly === "false") freezing.unfreeze();
     }
   );
 
@@ -45,11 +41,11 @@ export function FreezePostButton({
         type="submit"
         className="button plain secondary"
         id="readonly"
-        value={readonly ? "false" : "true"}
+        value={freezing.frozen ? "false" : "true"}
       >
         {loading ? <Loop className="spin" /> : <ShieldOutlined />}
 
-        <small>{readonly ? "unfreeze" : "freeze"}</small>
+        <small>{freezing.frozen ? "unfreeze" : "freeze"}</small>
       </button>
     </form>
   );

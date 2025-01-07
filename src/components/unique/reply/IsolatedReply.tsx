@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
 import {
-  type PostComponentContext,
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
@@ -9,21 +8,17 @@ import {
 import { useGet } from "../../../hooks/useGet";
 import { LoadingSpacer } from "../../reusable/LoadingSpacer";
 import { Reply } from "./Reply";
+import { PostContext } from "../post/PostContext";
 
-export function IsolatedReply({
-  postContext,
-  sort,
-}: {
-  postContext: PostComponentContext;
-  sort: string;
-}) {
+export function IsolatedReply({ sort }: { sort: string }) {
+  const { isolateReplyID } = useContext(PostContext);
   const { loading, error, data, get } = useGet<TReply>(
-    `/reply/${postContext.isolateReplyID}/replies?sort=${sort}`
+    `/reply/${isolateReplyID}/replies?sort=${sort}`
   );
 
   useEffect(() => {
     get();
-  }, [sort, postContext.isolateReplyID]);
+  }, [sort, isolateReplyID]);
 
   return (
     <>
@@ -37,11 +32,7 @@ export function IsolatedReply({
       {data && (
         <Reply
           data={data as VisibleReply | HiddenReply}
-          context={{
-            ...postContext,
-            ...data.context,
-            isTopLevel: true,
-          }}
+          isTopLevel={true}
           key={data.id}
         />
       )}

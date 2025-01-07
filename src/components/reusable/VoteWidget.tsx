@@ -1,35 +1,39 @@
+import { useContext } from "react";
 import { toast } from "react-toastify";
+import { useOutletContext } from "react-router-dom";
 import {
-  Loop,
-  WbSunny,
   AddCircle,
   AddCircleOutline,
+  Loop,
+  WbSunny,
   RemoveCircle,
   RemoveCircleOutline,
 } from "@mui/icons-material";
 
-import {
-  type VisibleReply,
-  type Post,
-  type PostComponentContext,
-  type ReplyComponentContext,
-} from "../../types";
+import { type User } from "../../types";
 import { useVote } from "../../hooks/useVote";
+import { PostContext } from "../unique/post/PostContext";
 
 export function VoteWidget({
   data,
-  context,
   type,
-  isReadonly,
 }: {
-  data: Post | VisibleReply;
-  context: PostComponentContext | ReplyComponentContext;
+  data: {
+    id: string;
+    author: User;
+    _count: { downvotes: number; upvotes: number };
+    meta: {
+      isVoted: { downvoted: boolean; upvoted: boolean };
+    };
+  };
   type: "post" | "reply";
-  isReadonly: boolean;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
+  const { data: postData, freezing } = useContext(PostContext);
+
   const { loading, vote, isVoted, score } = useVote({
     endpoint: type === "reply" ? `/reply/${data.id}` : `/post/${data.id}`,
-    isVoted: context.isVoted,
+    isVoted: data.meta.isVoted,
     score: { upvotes: data._count.upvotes, downvotes: data._count.downvotes },
     onError: (error: string) => {
       toast(<p>{error}</p>, {
@@ -43,10 +47,11 @@ export function VoteWidget({
     voteType: "upvote" | "downvote",
     action: "add" | "remove"
   ) => {
-    if (!context.authUserID) return "You must be logged in to vote on content.";
-    if (context.authUserID === data.author.id)
+    if (!user) return "You must be logged in to vote on content.";
+    if (user.id === data.author.id)
       return "You cannot vote on your own content.";
-    if (isReadonly) return "Voting is disabled on readonly content.";
+    if (postData.community.readonly || freezing.frozen)
+      return "Voting is disabled on readonly content.";
     if (voteType === "upvote") {
       if (action === "add") {
         return isVoted.upvoted === true
@@ -75,9 +80,10 @@ export function VoteWidget({
 
   const getDisabled = (voteType: "upvote" | "downvote") => {
     if (
-      !context.authUserID ||
-      context.authUserID === data.author.id ||
-      isReadonly ||
+      !user ||
+      user.id === data.author.id ||
+      postData.community.readonly ||
+      freezing.frozen ||
       (voteType === "upvote" && isVoted.downvoted === true) ||
       (voteType === "downvote" && isVoted.upvoted === true)
     )
@@ -94,7 +100,6 @@ export function VoteWidget({
 
   return (
     <div className="vote-widget flex-row gap-0-25">
-      {/* upvote */}
       <button
         className="button plain"
         disabled={getDisabled("upvote")}
@@ -109,7 +114,6 @@ export function VoteWidget({
         {isVoted.upvoted ? <AddCircle /> : <AddCircleOutline />}
       </button>
 
-      {/* score */}
       <div
         className="flex-col gap-0-25"
         title={
@@ -134,7 +138,6 @@ export function VoteWidget({
         <small>{score.upvotes - score.downvotes}</small>
       </div>
 
-      {/* downvote */}
       <button
         className="button plain"
         disabled={getDisabled("downvote")}

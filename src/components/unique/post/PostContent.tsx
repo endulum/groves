@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useBoolean } from "usehooks-ts";
-import { PushPin } from "@mui/icons-material";
 
-import { type Post, type PostComponentContext } from "../../../types";
-import { Username } from "../../reusable/Username";
+import { type User } from "../../../types";
+import { PostContext } from "./PostContext";
+import { PushPin } from "@mui/icons-material";
 import { DateWithTitle } from "../../reusable/DateWithTitle";
+import { Username } from "../../reusable/Username";
 import { VoteWidget } from "../../reusable/VoteWidget";
 import { Alert } from "../../reusable/Alert";
 import { PostEditForm } from "../../forms/PostEditForm";
@@ -14,20 +15,11 @@ import { ReplyForm } from "../../forms/ReplyForm";
 import { FreezePostButton } from "../../forms/buttons/FreezePostButton";
 import { PinPostButton } from "../../forms/buttons/PinPostButton";
 
-export function PostContent({
-  data,
-  context,
-  readonly,
-  setReadonly,
-}: {
-  data: Post;
-  context: PostComponentContext;
-  readonly: boolean;
-  setReadonly: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export function PostContent() {
   const navigate = useNavigate();
 
-  const { value: pinned, setValue: setPinned } = useBoolean(data.pinned);
+  const { user } = useOutletContext<{ user: User }>();
+  const { data, pinning, freezing, getRole } = useContext(PostContext);
 
   const {
     value: replying,
@@ -60,17 +52,7 @@ export function PostContent({
             <Link to={`/community/${data.community.urlName}`}>
               {data.community.canonicalName}
             </Link>{" "}
-            by{" "}
-            <Username
-              user={data.author}
-              role={
-                context.isPostAuthorMod
-                  ? "mod"
-                  : context.isPostAuthorAdmin
-                  ? "admin"
-                  : null
-              }
-            />{" "}
+            by <Username user={data.author} role={getRole(data.author)} />{" "}
             <DateWithTitle dateString={data.datePosted} />
             {postContent.lastEdited && (
               <>
@@ -82,7 +64,7 @@ export function PostContent({
           {!editing && (
             <h2>
               {postContent.title}
-              {pinned && (
+              {pinning.pinned && (
                 <span title="This post is pinned.">
                   {" "}
                   <PushPin
@@ -93,15 +75,10 @@ export function PostContent({
             </h2>
           )}
         </div>
-        <VoteWidget
-          data={data}
-          context={context}
-          type="post"
-          isReadonly={readonly || context.isCommReadonly}
-        />
+        <VoteWidget data={data} type="post" />
       </div>
 
-      {data.context.isCommReadonly && (
+      {data.community.readonly && (
         <Alert type="info" className="mt-1">
           <p>
             The community this post belongs to is frozen. Voting, replying, and
@@ -110,7 +87,7 @@ export function PostContent({
         </Alert>
       )}
 
-      {readonly && (
+      {freezing.frozen && (
         <Alert type="info" className="mt-1">
           <p>This post is frozen. Voting, replying, and editing are blocked.</p>
         </Alert>
@@ -128,7 +105,7 @@ export function PostContent({
         )}
       </div>
 
-      {replying && context.authUserID && (
+      {replying && user && (
         <>
           <ReplyForm
             postId={data.id}
@@ -145,11 +122,11 @@ export function PostContent({
         </>
       )}
 
-      {!data.context.isCommReadonly && (
+      {!data.community.readonly && (
         <div className="linkrow flex-row gap-0-5 mt-1">
-          {!readonly &&
-            context.authUserID &&
-            data.author.id === context.authUserID &&
+          {!freezing.frozen &&
+            user &&
+            data.author.id === user.id &&
             (editing ? (
               <button
                 type="button"
@@ -167,8 +144,8 @@ export function PostContent({
                 <small>edit</small>
               </button>
             ))}
-          {!readonly &&
-            context.authUserID &&
+          {!freezing.frozen &&
+            user &&
             (replying ? (
               <button
                 type="button"
@@ -186,18 +163,10 @@ export function PostContent({
                 <small>reply</small>
               </button>
             ))}
-          {data.context.isMod && (
+          {getRole(user) !== null && (
             <>
-              <FreezePostButton
-                postId={data.id}
-                readonly={readonly}
-                setReadonly={setReadonly}
-              />
-              <PinPostButton
-                postId={data.id}
-                pinned={pinned}
-                setPinned={setPinned}
-              />
+              <FreezePostButton />
+              <PinPostButton />
             </>
           )}
         </div>

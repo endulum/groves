@@ -16,11 +16,10 @@ Groves is an arboreal semiclone of Reddit.
 - - Following communities (with buttons to unfollow if you're the user)
 - - Verdancy
 - Wrap textareas with word counters
-- Pin replies
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Darkmode!
 - Check document title consistency
 
 ### Remaining issues
 
-- Make reply pinning stateful for a consistent UI
+- What if OP is also an admin/mod? Extend `Username` to account for that?

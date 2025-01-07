@@ -1,22 +1,15 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Loop, PushPin } from "@mui/icons-material";
 
 import { useForm } from "../../../hooks/useForm";
+import { PostContext } from "../../unique/post/PostContext";
+import { type VisibleReply } from "../../../types";
 
-export function PinReplyButton({
-  replyId,
-  pinActions,
-}: {
-  replyId: string;
-  pinActions: {
-    pinned: boolean;
-    pin: () => void;
-    unpin: () => void;
-  };
-}) {
+export function PinReplyButton({ data }: { data: VisibleReply }) {
+  const { pinning, pinnedReply, setPinnedReply } = useContext(PostContext);
   const { loading, error, handleSubmit } = useForm(
-    { endpoint: `/reply/${replyId}/pin`, method: "PUT" },
+    { endpoint: `/reply/${data.id}/pin`, method: "PUT" },
     (submissionData, _submissionResult) => {
       toast(
         <p>
@@ -28,8 +21,20 @@ export function PinReplyButton({
           type: "success",
         }
       );
-      if (submissionData.pin === "true") pinActions.pin();
-      if (submissionData.pin === "false") pinActions.unpin();
+      if (submissionData.pin === "true") {
+        pinning.pin();
+        setPinnedReply({
+          id: data.id,
+          author: data.author,
+          datePosted: data.datePosted,
+          content: data.content,
+          _count: data._count,
+        });
+      }
+      if (submissionData.pin === "false") {
+        pinning.unpin();
+        setPinnedReply(null);
+      }
     }
   );
 
@@ -47,9 +52,9 @@ export function PinReplyButton({
         type="submit"
         className="button plain secondary"
         id="pin"
-        value={pinActions.pinned ? "false" : "true"}
+        value={pinnedReply ? "false" : "true"}
       >
-        <small>{pinActions.pinned ? "unpin" : "pin"}</small>
+        <small>{pinnedReply ? "unpin" : "pin"}</small>
         {loading ? <Loop className="spin" /> : <PushPin />}
       </button>
     </form>

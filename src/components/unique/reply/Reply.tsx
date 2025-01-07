@@ -4,7 +4,6 @@ import {
   type Reply,
   type VisibleReply,
   type HiddenReply,
-  type ReplyComponentContext,
 } from "../../../types";
 import { useReplyChildren } from "../../../hooks/useReplyChildren";
 import { CollapsibleReplyWrapper } from "./CollapsibleReplyWrapper";
@@ -14,22 +13,16 @@ import { ReplyActionRow } from "./ReplyActionRow";
 
 export function Reply({
   data,
-  context,
+  isTopLevel,
 }: {
   data: VisibleReply | HiddenReply;
-  context: ReplyComponentContext;
+  isTopLevel: boolean;
 }) {
   const {
     value: hidden,
     setTrue: hide,
     setFalse: unhide,
   } = useBoolean(data.hidden);
-
-  const {
-    value: pinned,
-    setTrue: pin,
-    setFalse: unpin,
-  } = useBoolean(data.pinned);
 
   const {
     loading,
@@ -45,12 +38,11 @@ export function Reply({
     <div className="reply" id={data.id}>
       <CollapsibleReplyWrapper
         data={data}
-        context={context}
         hidden={hidden}
         childrenCount={countChildren()}
       >
         {import.meta.env.MODE === "development" && <pre>{data.id}</pre>}
-        {/* determine if content should be shown or not */}
+
         {hidden && (
           <Alert type="blind">
             <p>This reply's content is hidden.</p>
@@ -68,18 +60,13 @@ export function Reply({
 
         <ReplyActionRow
           data={data}
-          context={context}
           hiding={{
             hide,
             unhide,
             hidden,
           }}
-          pinning={{
-            pin,
-            unpin,
-            pinned,
-          }}
           addNewChild={addNewChild}
+          isTopLevel={isTopLevel}
         />
 
         {loadChildren && (
@@ -100,11 +87,7 @@ export function Reply({
               {children.map((child) => (
                 <Reply
                   data={child as VisibleReply | HiddenReply}
-                  context={{
-                    ...context,
-                    ...child.context,
-                    isTopLevel: false,
-                  }}
+                  isTopLevel={false}
                   key={child.id}
                 />
               ))}

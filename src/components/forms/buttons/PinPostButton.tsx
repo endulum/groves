@@ -1,20 +1,14 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Loop, ShieldOutlined } from "@mui/icons-material";
 
 import { useForm } from "../../../hooks/useForm";
+import { PostContext } from "../../unique/post/PostContext";
 
-export function PinPostButton({
-  postId,
-  pinned,
-  setPinned,
-}: {
-  postId: string;
-  pinned: boolean;
-  setPinned: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export function PinPostButton() {
+  const { data, pinning } = useContext(PostContext);
   const { loading, error, handleSubmit } = useForm(
-    { endpoint: `/post/${postId}/pin`, method: "PUT" },
+    { endpoint: `/post/${data.id}/pin`, method: "PUT" },
     (submissionData, _submissionResult) => {
       toast(
         <p>
@@ -26,7 +20,8 @@ export function PinPostButton({
           type: "success",
         }
       );
-      setPinned(submissionData.pin === "true");
+      if (submissionData.pin === "true") pinning.pin();
+      if (submissionData.pin === "false") pinning.unpin();
     }
   );
 
@@ -44,11 +39,11 @@ export function PinPostButton({
         type="submit"
         className="button plain secondary"
         id="pin"
-        value={pinned ? "false" : "true"}
+        value={pinning.pinned ? "false" : "true"}
       >
         {loading ? <Loop className="spin" /> : <ShieldOutlined />}
 
-        <small>{pinned ? "unpin" : "pin"}</small>
+        <small>{pinning.pinned ? "unpin" : "pin"}</small>
       </button>
     </form>
   );

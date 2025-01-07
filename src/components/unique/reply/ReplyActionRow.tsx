@@ -1,43 +1,46 @@
 import { useBoolean } from "usehooks-ts";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
-import {
-  type Reply,
-  type VisibleReply,
-  type ReplyComponentContext,
-} from "../../../types";
+import { type User, type Reply, type VisibleReply } from "../../../types";
 import { ReplyForm } from "../../forms/ReplyForm";
 import { VoteWidget } from "../../reusable/VoteWidget";
 import { FlyoutMenu } from "../../reusable/FlyoutMenu";
 import { HideReplyButton } from "../../forms/buttons/HideReplyButton";
 import { PinReplyButton } from "../../forms/buttons/PinReplyButton";
+import { useContext } from "react";
+import { PostContext } from "../post/PostContext";
 
 export function ReplyActionRow({
   data,
-  context,
   hiding,
-  pinning,
+  isTopLevel,
   addNewChild,
 }: {
-  data: Reply;
-  context: ReplyComponentContext;
+  data: Reply | VisibleReply;
   hiding: {
     hidden: boolean;
     hide: () => void;
     unhide: () => void;
   };
-  pinning: {
-    pinned: boolean;
-    pin: () => void;
-    unpin: () => void;
-  };
+  isTopLevel: boolean;
   addNewChild: (reply: Reply) => void;
 }) {
+  const { user } = useOutletContext<{ user: User }>();
+  const {
+    data: postData,
+    freezing,
+    isolateReplyID,
+    getRole,
+    pinnedReply,
+  } = useContext(PostContext);
   const {
     value: replying,
     setTrue: openReplying,
     setFalse: cancelReplying,
   } = useBoolean(false);
+
+  const frozen = postData.community.readonly || freezing.frozen;
+  const isolated = !!isolateReplyID && isolateReplyID === data.id;
 
   return (
     <>
@@ -60,18 +63,12 @@ export function ReplyActionRow({
       <div className="flex-row gap-0-5 mt-0-5">
         {/* voting */}
         {!hiding.hidden && !data.hidden && (
-          <VoteWidget
-            data={data as VisibleReply}
-            type="reply"
-            isReadonly={context.isPostReadonly || context.isCommReadonly}
-            context={context}
-          />
+          <VoteWidget data={data as VisibleReply} type="reply" />
         )}
 
         {/* replying or cancelling replying */}
-        {context.authUserID !== null &&
-          !context.isPostReadonly &&
-          !context.isCommReadonly &&
+        {user &&
+          !frozen &&
           !hiding.hidden &&
           (replying ? (
             <button
@@ -95,7 +92,7 @@ export function ReplyActionRow({
         <FlyoutMenu x="left" y="top">
           {/* link to, or jump to, parent */}
           {data.parentId &&
-            (context.isTopLevel ? (
+            (isTopLevel ? (
               <Link
                 type="button"
                 className="button plain secondary"
@@ -116,7 +113,7 @@ export function ReplyActionRow({
             ))}
 
           {/* link to render this reply in isolation in ReplyView */}
-          {!(context.isolateReplyID && context.isolateReplyID === data.id) && (
+          {!isolated && (
             // don't show the isolate link if we're already isolating this reply
             <Link
               type="button"
@@ -129,17 +126,19 @@ export function ReplyActionRow({
           )}
 
           {/* hide reply */}
-          {!context.isPostReadonly &&
-            !context.isCommReadonly &&
-            context.isMod && (
-              <HideReplyButton replyId={data.id} hideActions={hiding} />
-            )}
+          {!frozen && getRole(user) !== null && (
+            <HideReplyButton replyId={data.id} hideActions={hiding} />
+          )}
           {/* pin reply */}
-          {!context.isPostReadonly &&
-            !context.isCommReadonly &&
-            (!context.pinnedReplyID || context.pinnedReplyID === data.id) &&
-            context.postAuthorID === context.authUserID && (
-              <PinReplyButton replyId={data.id} pinActions={pinning} />
+          {!frozen &&
+            !hiding.hidden &&
+            !data.hidden &&
+            user &&
+            // only the post op should be able to see pin settings
+            postData.author.id === user.id &&
+            // if there is a pinned reply then this should only show next to the pinned reply
+            (!pinnedReply || pinnedReply.id === data.id) && (
+              <PinReplyButton data={data as VisibleReply} />
             )}
         </FlyoutMenu>
       </div>

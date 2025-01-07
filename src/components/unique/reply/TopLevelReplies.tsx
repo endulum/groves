@@ -1,24 +1,20 @@
+import { useContext } from "react";
 import { useOutletContext } from "react-router-dom";
 
 import {
   type Reply as TReply,
   type VisibleReply,
   type HiddenReply,
-  type PostComponentContext,
   type User,
 } from "../../../types";
 import { useReplyChildren } from "../../../hooks/useReplyChildren";
+import { PostContext } from "../post/PostContext";
 import { Reply } from "./Reply";
 import { NoReplySpacer } from "./NoReplySpacer";
 
-export function TopLevelReplies({
-  data,
-  postContext,
-}: {
-  data: TReply;
-  postContext: PostComponentContext;
-}) {
+export function TopLevelReplies({ data }: { data: TReply }) {
   const { user } = useOutletContext<{ user: User }>();
+  const { data: postData } = useContext(PostContext);
   const { loading, children, loadMoreChildren, setNextUrl } =
     useReplyChildren(data);
 
@@ -28,18 +24,14 @@ export function TopLevelReplies({
         children.map((child) => (
           <Reply
             data={child as VisibleReply | HiddenReply}
-            context={{
-              ...postContext,
-              ...child.context,
-              isTopLevel: true,
-            }}
             key={child.id}
+            isTopLevel={true}
           />
         ))
       ) : (
         <NoReplySpacer
           isUser={!!user}
-          isReadonly={postContext.isCommReadonly || postContext.isPostReadonly}
+          isReadonly={postData.community.readonly || postData.readonly}
         />
       )}
       {loadMoreChildren && (

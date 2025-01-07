@@ -1,23 +1,13 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 
-import {
-  type Post,
-  type PostComponentContext,
-  type Reply,
-} from "../../../types";
+import { type Reply } from "../../../types";
+import { PostContext } from "../post/PostContext";
 import { useGet } from "../../../hooks/useGet";
 import { LoadingSpacer } from "../../reusable/LoadingSpacer";
 import { TopLevelReplies } from "./TopLevelReplies";
 
-export function AllReplies({
-  postData,
-  postContext,
-  sort,
-}: {
-  postData: Post;
-  postContext: PostComponentContext;
-  sort: string;
-}) {
+export function AllReplies({ sort }: { sort: string }) {
+  const { data: postData } = useContext(PostContext);
   const { loading, error, data, get } = useGet<Reply>(
     `/post/${postData.id}/replies?sort=${sort}`
   );
@@ -35,7 +25,7 @@ export function AllReplies({
           customLoadingText="Getting replies..."
         />
       )}
-      {data && <TopLevelReplies data={data} postContext={postContext} />}
+      {data && <TopLevelReplies data={data} />}
     </>
   );
 }

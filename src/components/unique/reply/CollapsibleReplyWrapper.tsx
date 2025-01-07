@@ -3,26 +3,24 @@ import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
 import { DateWithTitle } from "../../reusable/DateWithTitle";
 
-import {
-  type VisibleReply,
-  type HiddenReply,
-  type ReplyComponentContext,
-} from "../../../types";
+import { type VisibleReply, type HiddenReply } from "../../../types";
 import { Username } from "../../reusable/Username";
+import { useContext } from "react";
+import { PostContext } from "../post/PostContext";
 
 export function CollapsibleReplyWrapper({
   data,
-  context,
   hidden,
   childrenCount,
   children,
 }: {
   data: VisibleReply | HiddenReply;
-  context: ReplyComponentContext;
   hidden: boolean;
   childrenCount: number;
   children: React.ReactNode;
 }) {
+  const { data: postData, getRole } = useContext(PostContext);
+
   const {
     value: collapsed,
     setTrue: collapse,
@@ -59,11 +57,8 @@ export function CollapsibleReplyWrapper({
                   <Username
                     user={data.author}
                     role={
-                      context.isReplyAuthorAdmin
-                        ? "admin"
-                        : context.isReplyAuthorMod
-                        ? "mod"
-                        : data.author.id === context.postAuthorID
+                      getRole(data.author) ??
+                      data.author.id === postData.author.id
                         ? "op"
                         : null
                     }
@@ -87,11 +82,8 @@ export function CollapsibleReplyWrapper({
                   <Username
                     user={data.author}
                     role={
-                      context.isReplyAuthorAdmin
-                        ? "admin"
-                        : context.isReplyAuthorMod
-                        ? "mod"
-                        : data.author.id === context.postAuthorID
+                      getRole(data.author) ??
+                      data.author.id === postData.author.id
                         ? "op"
                         : null
                     }

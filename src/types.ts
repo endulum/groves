@@ -24,21 +24,11 @@ export type Community = {
   // relational
   admin: User;
   moderators: User[];
-  _count: { followers: number; posts: number };
-  // context
-  context: {
+  _count: { followers: number; posts: number; pinnedPosts: number };
+  // meta
+  meta: {
     isFollowing: boolean;
-    hasPinnedPosts: boolean;
   };
-};
-
-type PostContext = {
-  isVoted: { upvoted: boolean; downvoted: boolean };
-  isMod: boolean;
-  isPostAuthorMod: boolean;
-  isPostAuthorAdmin: boolean;
-  isCommReadonly: boolean;
-  pinnedReplyID: string | null;
 };
 
 export type Post = {
@@ -54,21 +44,10 @@ export type Post = {
   author: User;
   community: Pick<Community, "id" | "urlName" | "canonicalName">;
   _count: { upvotes: number; downvotes: number; replies: number };
-  // context
-  context: PostContext;
-};
-
-export type PostComponentContext = PostContext & {
-  isPostReadonly: boolean;
-  authUserID: number | null;
-  postAuthorID: number;
-  isolateReplyID: string | null;
-};
-
-type ReplyContext = {
-  isVoted: { upvoted: boolean; downvoted: boolean };
-  isReplyAuthorMod: boolean;
-  isReplyAuthorAdmin: boolean;
+  // meta
+  meta: {
+    isVoted: { upvoted: boolean; downvoted: boolean };
+  };
 };
 
 export type Reply = {
@@ -82,14 +61,10 @@ export type Reply = {
   loadChildren?: string;
   loadMoreChildren?: string;
   children?: Reply[];
-  // context
-  context: ReplyContext;
-};
-
-export type ReplyComponentContext = PostComponentContext &
-  ReplyContext & {
-    isTopLevel: boolean;
+  meta: {
+    isVoted: { upvoted: boolean; downvoted: boolean };
   };
+};
 
 export type VisibleReply = Reply & {
   hidden: false;
@@ -105,4 +80,23 @@ export type HiddenReply = Reply & {
   datePosted: null;
   _count: { upvotes: null; downvotes: null; children: number };
   author: null;
+};
+
+export type PinnedReply = {
+  id: string;
+  author: { id: number; username: string };
+  datePosted: string;
+  content: string;
+  _count: {
+    upvotes: number;
+    downvotes: number;
+  };
+} | null;
+
+export type PostWithMeta = Post & {
+  community: Pick<
+    Community,
+    "id" | "urlName" | "canonicalName" | "moderators" | "admin" | "readonly"
+  >;
+  pinnedReply: PinnedReply;
 };

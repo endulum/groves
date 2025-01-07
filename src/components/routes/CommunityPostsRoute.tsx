@@ -17,7 +17,7 @@ export function CommunityPostsRoute() {
 
   return (
     <>
-      {community.context.hasPinnedPosts && (
+      {community._count.pinnedPosts > 0 && (
         <>
           <h3 className="mb-1">Pinned Posts</h3>
           <div>
