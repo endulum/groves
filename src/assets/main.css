@@ -52,6 +52,14 @@ i {
   flex-direction: column;
   align-items: center;
   background-color: var(--bg2);
+  background-image: linear-gradient(
+      to top,
+      var(--bg2),
+      oklch(from var(--bg2) l c h / 0.875)
+    ),
+    linear-gradient(to top, var(--bg2), transparent), url("./green-deco.gif");
+  background-blend-mode: luminosity;
+  background-attachment: fixed;
   header,
   main,
   footer {
