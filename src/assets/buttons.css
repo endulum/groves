@@ -64,7 +64,8 @@
   }
 }
 
-header .button {
+header .button,
+.cta .button {
   &.primary {
     background-color: transparent;
     border: 1px solid oklch(from var(--color) calc(l + 0.5) c h / 0.25);

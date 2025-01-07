@@ -10,17 +10,16 @@ Groves is an arboreal semiclone of Reddit.
 
 ### Missing features
 
-- CTA on guest index route that "introduces" Groves briefly
 - Stuff on profiles:
 - - Most frequented communities
 - - Following communities (with buttons to unfollow if you're the user)
-- - Verdancy
+- - Verdancy score, with best posts/best replies?
 - Wrap textareas with word counters
 - "Bookmark" or "go to last unread" posts on global and personal feed
 - Darkmode!
-- Check document title consistency
-- Consider making global feed ranked by hotness rather than date posted?
+- Own following page with sorting options and "unfollow" for each entry
 
 ### Remaining issues
 
 - What if OP is also an admin/mod? Extend `Username` to account for that?
+- inconsistent expand/collapse button text
