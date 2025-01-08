@@ -39,7 +39,7 @@ export function CommunityInfo({
           ) : (
             <button
               type="button"
-              className="button plain primary"
+              className="button plain secondary"
               onClick={startEditing}
             >
               <Edit />

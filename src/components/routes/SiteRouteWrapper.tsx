@@ -1,8 +1,18 @@
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Forest, Login, Logout, Star } from "@mui/icons-material";
+import {
+  Forest,
+  Login,
+  Logout,
+  Star,
+  DarkMode,
+  LightMode,
+} from "@mui/icons-material";
 
 import { type UserData } from "../../types";
 import { clearStoredToken } from "../../functions/tokenUtils";
+import { getStoredTheme, storeTheme } from "../../functions/themeUtils";
+import { useLogger } from "../../hooks/useLogger";
 
 export function SiteRouteWrapper({
   context,
@@ -58,6 +68,7 @@ export function SiteRouteWrapper({
                 </Link>
               </>
             )}
+            <ThemeButton />
           </nav>
         </div>
       </header>
@@ -74,5 +85,26 @@ export function SiteRouteWrapper({
         </div>
       </footer>
     </>
+  );
+}
+
+function ThemeButton() {
+  const [theme, setTheme] = useState<string>(getStoredTheme());
+  useLogger({ theme });
+
+  return (
+    <button
+      type="button"
+      className="button primary"
+      title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+      onClick={() => {
+        const newTheme = theme === "light" ? "dark" : "light";
+        storeTheme(newTheme);
+        setTheme(newTheme);
+      }}
+    >
+      {theme === "light" && <DarkMode />}
+      {theme === "dark" && <LightMode />}
+    </button>
   );
 }

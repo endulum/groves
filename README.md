@@ -12,7 +12,6 @@ Groves is an arboreal semiclone of Reddit.
 
 - Wrap textareas with word counters
 - "Bookmark" or "go to last unread" posts on global and personal feed
-- Darkmode!
 - actual nav
 - clientside validation
 

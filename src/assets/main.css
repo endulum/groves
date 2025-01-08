@@ -19,12 +19,15 @@
 }
 
 :root {
-  --fontstack: Helvetica, Arial, sans-serif;
-  --fg: #333;
-  --bg: #fff;
-  --bg2: #eee;
-  --border: #ddd;
-  --radius: 5px;
+  /* tailwind "stone" palette */
+  --white1: #fafaf9;
+  --white2: #f5f5f4;
+  --white3: #e7e5e4;
+  --black1: #1c1917;
+  --black2: #292524;
+  --black3: #44403c;
+
+  /* html colors */
   --accent1: darkslategray;
   --accent2: mediumaquamarine;
   --warning: crimson;
@@ -32,8 +35,29 @@
   --info: lightseagreen;
   --user-admin: goldenrod;
   --user-mod: var(--info);
-  --cardshadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
+  --fontstack: Helvetica, Arial, sans-serif;
+  --radius: 5px;
+  --cardshadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+[data-theme="light"] {
+  --fg: var(--black2);
+  --bg: var(--white1);
+  --bg2: var(--white2);
+  --border: var(--white3);
+  --alert-bg-opac: 0.25;
+  --alert-txt-lumi: -0.125;
+}
+
+[data-theme="dark"] {
+  --fg: var(--white3);
+  --bg: var(--black2);
+  --bg2: var(--black1);
+  --border: var(--black3);
+  --alert-bg-opac: 0.05;
+  --alert-txt-lumi: 0.125;
 }
 
 body {
@@ -79,6 +103,7 @@ header {
   background-color: var(--accent1);
   color: white;
   padding-bottom: 3rem;
+  box-shadow: var(--cardshadow);
   a {
     color: white;
   }
@@ -105,7 +130,7 @@ header .body {
 }
 
 main .body {
-  background-color: white;
+  background-color: var(--bg);
   border-radius: var(--radius);
   box-shadow: var(--cardshadow);
   container: main / inline-size;
@@ -208,10 +233,12 @@ main hr {
   &.warning,
   &.success,
   &.info {
-    background-color: oklch(from var(--color) calc(l + 0.5) c h / 0.25);
-    color: oklch(from var(--color) calc(l - 0.125) c h);
+    background-color: oklch(
+      from var(--color) calc(l + 0.5) c h / var(--alert-bg-opac)
+    );
+    color: oklch(from var(--color) calc(l + var(--alert-txt-lumi)) c h);
     a {
-      color: oklch(from var(--color) calc(l - 0.125) c h);
+      color: oklch(from var(--color) calc(l + var(--alert-txt-lumi)) c h);
     }
     svg {
       color: var(--color);
@@ -220,9 +247,9 @@ main hr {
 
   &.blind {
     background-color: oklch(from var(--fg) calc(l + 0.5) c h / 0.125);
-    color: oklch(from var(--fg) calc(l - 0.125) c h / 0.625);
+    color: oklch(from var(--fg) calc(l + var(--alert-txt-lumi)) c h / 0.625);
     a {
-      color: oklch(from var(--fg) calc(l - 0.125) c h / 0.625);
+      color: oklch(from var(--fg) calc(l + var(--alert-txt-lumi)) c h / 0.625);
     }
     svg {
       color: oklch(from var(--fg) calc(l - 0.125) c h / 0.625);
@@ -427,6 +454,7 @@ ul {
   .menu {
     z-index: 1;
     box-shadow: var(--cardshadow);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     background-color: var(--bg);
     position: absolute;
@@ -467,6 +495,8 @@ button.reply-collapse:not(:has(span)).plain {
 }
 
 .custom-toast {
+  --toastify-color-light: var(--bg);
+  --toastify-text-color-light: var(--fg);
   --toastify-color-info: var(--info);
   --toastify-color-success: var(--success);
   --toastify-color-warning: var(--warning);
@@ -474,6 +504,7 @@ button.reply-collapse:not(:has(span)).plain {
   --toastify-color-progress-success: var(--toastify-color-success);
   --toastify-color-progress-warning: var(--toastify-color-warning);
   box-shadow: var(--cardshadow);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   align-items: start;
   font-family: "Roboto Condensed", var(--fontstack);
@@ -488,6 +519,10 @@ button.reply-collapse:not(:has(span)).plain {
     }
   }
 
+  .Toastify__close-button--light {
+    color: var(--fg);
+  }
+
   p {
     margin-top: 0.25rem;
     font-family: unset;
@@ -495,7 +530,7 @@ button.reply-collapse:not(:has(span)).plain {
 }
 
 .navtabs {
-  border-bottom: 1px solid oklch(from var(--border) calc(l + 0.05) c h);
+  border-bottom: 1px solid var(--border);
   button {
     color: oklch(from var(--fg) l c h / 0.75);
     background-color: transparent;
@@ -508,7 +543,7 @@ button.reply-collapse:not(:has(span)).plain {
     }
     &:hover:not([aria-selected="true"]) {
       cursor: pointer;
-      border-bottom: 3px solid oklch(from var(--border) calc(l + 0.05) c h);
+      border-bottom: 3px solid var(--border);
     }
   }
 }
@@ -520,7 +555,7 @@ button.reply-collapse:not(:has(span)).plain {
 }
 
 .community-stat {
-  background-color: oklch(from var(--fg) calc(l + 0.5) c h / 0.125);
+  background-color: oklch(from var(--border) l c h / 0.5);
   padding: 1rem;
   border-radius: var(--radius);
   flex-grow: 1;
@@ -597,7 +632,7 @@ button.reply-collapse:not(:has(span)).plain {
 .cta {
   background-color: var(--accent1);
   border-radius: var(--radius);
-  color: var(--bg);
+  color: var(--white1);
   display: flex;
   flex-direction: row;
   height: 250px;
