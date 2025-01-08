@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   Forest,
   Login,
-  Logout,
   Star,
   DarkMode,
   LightMode,
+  Close,
+  AccountCircle,
+  Explore,
+  LocalLibrary,
+  Menu,
 } from "@mui/icons-material";
 
 import { type UserData } from "../../types";
 import { clearStoredToken } from "../../functions/tokenUtils";
 import { getStoredTheme, storeTheme } from "../../functions/themeUtils";
-import { useLogger } from "../../hooks/useLogger";
+import { useBoolean, useWindowSize } from "usehooks-ts";
 
 export function SiteRouteWrapper({
   context,
@@ -23,53 +27,189 @@ export function SiteRouteWrapper({
     changeUsername: (username: string) => void;
   };
 }) {
+  const { width } = useWindowSize();
+  const { value: isMobile, setValue: setIsMobile } = useBoolean(width <= 750);
+  const { value: isMenuExpanded, setValue: setMenuExpanded } =
+    useBoolean(false);
+  const expandingMenu = useRef<HTMLDivElement>(null);
+
+  const links = [
+    {
+      to: "/following",
+      icon: <Forest />,
+      text: "Following",
+    },
+    {
+      to: "/explore",
+      icon: <Explore />,
+      text: "Explore",
+    },
+    {
+      to: "/account",
+      icon: <AccountCircle />,
+      text: "Account",
+    },
+    {
+      to: "/about",
+      icon: <LocalLibrary />,
+      text: "About",
+    },
+  ];
+
+  useEffect(() => {
+    if (isMobile && width > 750) {
+      setIsMobile(false);
+      setMenuExpanded(false);
+    }
+    if (!isMobile && width <= 750) {
+      setIsMobile(true);
+    }
+  }, [width]);
   return (
     <>
       <header>
-        <div className="body flex-row jc-spb">
-          <Link
-            to={context.user ? "/feed" : "/"}
-            className="logo flex-row gap-1"
-          >
-            <Forest />
-            <h1>{import.meta.env.VITE_APP_NAME}</h1>
-          </Link>
-
-          <nav className="flex-row gap-0-75">
-            {context.user ? (
-              <>
-                <p>
-                  Logged in as{" "}
-                  <Link to={`/user/${context.user.username}`}>
-                    {context.user.username}
+        <div className="body flex-col gap-0-5">
+          <div className="flex-row jc-spb w100 align-end">
+            <Link
+              to={context.user ? "/feed" : "/"}
+              className="logo flex-row gap-1"
+              onClick={() => {
+                if (isMenuExpanded) setMenuExpanded(false);
+              }}
+            >
+              <Forest />
+              {!isMobile && <h1>{import.meta.env.VITE_APP_NAME}</h1>}
+            </Link>
+            <div className="flex-row gap-0-5">
+              {!context.user && (
+                <>
+                  <Link type="button" className="button primary" to="/login">
+                    {!isMobile && <Login />}
+                    <span>Log In</span>
                   </Link>
-                </p>
+                  <Link type="button" className="button secondary" to="/signup">
+                    {!isMobile && <Star />}
+                    <span>Sign Up</span>
+                  </Link>
+                </>
+              )}
+              {isMobile && context.user && (
                 <button
                   type="button"
-                  className="button primary"
+                  className="button plain primary"
+                  aria-controls="menu"
+                  aria-expanded={isMenuExpanded ? "true" : "false"}
+                  title={isMenuExpanded ? "Close menu" : "Open menu"}
                   onClick={() => {
-                    clearStoredToken();
-                    context.initUser();
+                    setMenuExpanded(!isMenuExpanded);
                   }}
                 >
-                  <Logout />
-                  <span>Log out</span>
+                  {isMenuExpanded ? <Close /> : <Menu />}
                 </button>
-              </>
-            ) : (
-              <>
-                <Link type="button" className="button primary" to="/login">
-                  <Login />
-                  <span>Log In</span>
-                </Link>
-                <Link type="button" className="button secondary" to="/signup">
-                  <Star />
-                  <span>Sign Up</span>
-                </Link>
-              </>
-            )}
-            <ThemeButton />
-          </nav>
+              )}
+              <ThemeButton />
+            </div>
+          </div>
+          {isMobile && context.user && (
+            <div
+              className="expanding-menu w100"
+              ref={expandingMenu}
+              style={{
+                height: isMenuExpanded
+                  ? `${expandingMenu.current?.scrollHeight}px`
+                  : "0px",
+              }}
+            >
+              <div className="flex-col w100 gap-1">
+                <div className="flex-row w100 jc-spb mt-0-5">
+                  <p aria-hidden={!isMenuExpanded}>
+                    Logged in as{" "}
+                    <Link
+                      to={`/user/${context.user.username}`}
+                      tabIndex={isMenuExpanded ? undefined : -1}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setMenuExpanded(false);
+                      }}
+                    >
+                      {context.user.username}
+                    </Link>
+                  </p>
+                  <button
+                    type="button"
+                    className="button plain primary"
+                    onClick={() => {
+                      clearStoredToken();
+                      context.initUser();
+                    }}
+                    tabIndex={isMenuExpanded ? undefined : -1}
+                    aria-hidden={!isMenuExpanded}
+                  >
+                    <small>Log out</small>
+                  </button>
+                </div>
+                <hr />
+                <nav className="expanding-menu-links w100 flex-col gap-0-25">
+                  {links.map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      type="button"
+                      className="button plain primary"
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setMenuExpanded(false);
+                      }}
+                      tabIndex={isMenuExpanded ? undefined : -1}
+                      aria-hidden={!isMenuExpanded}
+                    >
+                      {link.icon}
+                      <span>{link.text}</span>
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          )}
+          {!isMobile && context.user && (
+            <>
+              <hr />
+              <div className="flex-row jc-spb w100">
+                <div className="flex-row gap-0-5">
+                  <p>
+                    Logged in as{" "}
+                    <Link to={`/user/${context.user.username}`}>
+                      {context.user.username}
+                    </Link>
+                  </p>
+                  <button
+                    type="button"
+                    className="button plain primary"
+                    onClick={() => {
+                      clearStoredToken();
+                      context.initUser();
+                    }}
+                  >
+                    <small>Log out</small>
+                  </button>
+                </div>
+
+                <nav className="flex-row">
+                  {links.map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      type="button"
+                      className="button plain primary"
+                    >
+                      {link.icon}
+                      <span>{link.text}</span>
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </>
+          )}
         </div>
       </header>
 
@@ -93,7 +233,6 @@ export function SiteRouteWrapper({
 
 function ThemeButton() {
   const [theme, setTheme] = useState<string>(getStoredTheme());
-  useLogger({ theme });
 
   return (
     <button
