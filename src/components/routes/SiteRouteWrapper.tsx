@@ -81,7 +81,10 @@ export function SiteRouteWrapper({
 
       <footer>
         <div className="body">
-          <small>&copy; endulum, for The Odin Project</small>
+          <small>
+            &copy; endulum, for The Odin Project. "Green Deco" graphic pattern
+            from <a href="https://dinpattern.com/">DinPattern</a>
+          </small>
         </div>
       </footer>
     </>
