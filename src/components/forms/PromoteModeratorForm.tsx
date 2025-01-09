@@ -37,7 +37,7 @@ export function PromoteModeratorForm({
       </p>
       <label htmlFor="username">
         <span>Username</span>
-        <input type="text" id="username" />
+        <input type="text" id="username" required />
       </label>
       <label htmlFor="type" style={{ display: "none" }} aria-hidden>
         <span>Type</span>

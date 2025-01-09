@@ -29,6 +29,7 @@ export function CommunityWikiForm({
           id="content"
           defaultValue={content}
           style={{ minHeight: "500px" }}
+          maxLength={10000}
         />
       </label>
     </Form>

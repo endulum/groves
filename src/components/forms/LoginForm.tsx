@@ -38,11 +38,12 @@ export function LoginForm() {
           id="username"
           autoComplete="on"
           defaultValue={state ? state.newAccountUsername : ""}
+          required
         />
       </label>
       <label htmlFor="password">
         <span>Password</span>
-        <input type="password" id="password" autoComplete="on" />
+        <input type="password" id="password" autoComplete="on" required />
       </label>
     </Form>
   );

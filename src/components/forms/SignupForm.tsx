@@ -37,7 +37,15 @@ export function SignupForm() {
       <label htmlFor="username">
         <span>Username</span>
         <InputChecklist
-          input={<input type="text" id="username" autoComplete="off" />}
+          input={
+            <input
+              type="text"
+              id="username"
+              autoComplete="off"
+              maxLength={32}
+              required
+            />
+          }
           requirements={[
             {
               description: "Must be between 2 and 32 characters in length",
@@ -54,7 +62,9 @@ export function SignupForm() {
       <label htmlFor="password">
         <span>Password</span>
         <InputChecklist
-          input={<input type="password" id="password" autoComplete="off" />}
+          input={
+            <input type="password" id="password" autoComplete="off" required />
+          }
           requirements={[
             {
               description: "Must be 8 or more chatacters long",
@@ -65,7 +75,12 @@ export function SignupForm() {
       </label>
       <label htmlFor="confirmPassword">
         <span>Confirm password</span>
-        <input type="password" id="confirmPassword" autoComplete="off" />
+        <input
+          type="password"
+          id="confirmPassword"
+          autoComplete="off"
+          required
+        />
       </label>
     </Form>
   );

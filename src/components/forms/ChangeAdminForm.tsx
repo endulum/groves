@@ -36,7 +36,7 @@ export function ChangeAdminForm({
       </p>
       <label htmlFor="username">
         <span>Username</span>
-        <input type="text" id="username" />
+        <input type="text" id="username" required />
       </label>
     </Form>
   );

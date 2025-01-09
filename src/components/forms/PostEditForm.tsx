@@ -45,13 +45,20 @@ export function PostEditForm({
           id="title"
           autoComplete="off"
           defaultValue={data.title}
+          max={64}
+          required
         />
       </label>
 
       <label htmlFor="content">
         <span>Content</span>
         <small>Limited markdown is available.</small>
-        <textarea id="content" defaultValue={data.content} />
+        <textarea
+          id="content"
+          defaultValue={data.content}
+          maxLength={10000}
+          required
+        />
       </label>
     </Form>
   );

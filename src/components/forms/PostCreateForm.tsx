@@ -22,13 +22,19 @@ export function PostCreateForm({ communityUrl }: { communityUrl: string }) {
     >
       <label htmlFor="title">
         <span>Title</span>
-        <input type="text" id="title" autoComplete="off" />
+        <input
+          type="text"
+          id="title"
+          autoComplete="off"
+          maxLength={64}
+          required
+        />
       </label>
 
       <label htmlFor="content">
         <span>Content</span>
         <small>Limited markdown is available.</small>
-        <textarea id="content" />
+        <textarea id="content" maxLength={10000} required />
       </label>
     </Form>
   );

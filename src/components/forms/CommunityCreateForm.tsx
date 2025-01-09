@@ -22,7 +22,15 @@ export function CommunityCreateForm() {
         <span>URL Name</span>
         <small>Your community will be accessible in-url with this name.</small>
         <InputChecklist
-          input={<input type="text" id="urlName" autoComplete="off" />}
+          input={
+            <input
+              type="text"
+              id="urlName"
+              autoComplete="off"
+              maxLength={32}
+              required
+            />
+          }
           requirements={[
             {
               description: "Must be between 2 and 32 characters in length",
@@ -43,7 +51,15 @@ export function CommunityCreateForm() {
           punctuation.
         </small>
         <InputChecklist
-          input={<input type="text" id="canonicalName" autoComplete="off" />}
+          input={
+            <input
+              type="text"
+              id="canonicalName"
+              autoComplete="off"
+              maxLength={32}
+              required
+            />
+          }
           requirements={[
             {
               description: "Must be between 2 and 64 characters in length",
@@ -55,7 +71,7 @@ export function CommunityCreateForm() {
 
       <label htmlFor="description">
         <span>Description</span>
-        <textarea id="description" />
+        <textarea id="description" maxLength={200} required />
       </label>
     </Form>
   );

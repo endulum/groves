@@ -31,6 +31,8 @@ export function AccountForm() {
               id="username"
               autoComplete="off"
               defaultValue={user ? user.username : ""}
+              maxLength={32}
+              required
             />
           }
           requirements={[
@@ -49,7 +51,7 @@ export function AccountForm() {
 
       <label htmlFor="bio">
         <span>Bio</span>
-        <textarea id="bio" defaultValue={user.bio} />
+        <textarea id="bio" defaultValue={user.bio} maxLength={200} />
       </label>
 
       {!user.githubId && (

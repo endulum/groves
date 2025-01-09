@@ -39,6 +39,8 @@ export function CommunityEditForm({
               id="urlName"
               autoComplete="off"
               defaultValue={data.urlName}
+              maxLength={32}
+              required
             />
           }
           requirements={[
@@ -67,6 +69,8 @@ export function CommunityEditForm({
               id="canonicalName"
               autoComplete="off"
               defaultValue={data.canonicalName}
+              maxLength={32}
+              required
             />
           }
           requirements={[
@@ -80,7 +84,12 @@ export function CommunityEditForm({
 
       <label htmlFor="description">
         <span>Description</span>
-        <textarea id="description" defaultValue={data.description} />
+        <textarea
+          id="description"
+          defaultValue={data.description}
+          maxLength={200}
+          required
+        />
       </label>
     </Form>
   );

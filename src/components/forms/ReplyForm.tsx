@@ -29,7 +29,7 @@ export function ReplyForm({
     >
       <label htmlFor="content">
         <span>Write a reply:</span>
-        <textarea id="content" />
+        <textarea id="content" maxLength={10000} required />
       </label>
 
       <label htmlFor="parent" style={{ display: "none" }} aria-hidden>
