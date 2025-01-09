@@ -6,6 +6,8 @@ export type User = {
 export type UserData = User & {
   joined: string;
   bio: string;
+  githubId: string | null;
+  githubUser: string | null;
   _count: {
     posts: number;
     replies: number;
