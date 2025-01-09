@@ -128,13 +128,6 @@ export function AboutRoute() {
         manage a post by freezing it, ceasing all voting and replying activity,
         or hiding any of its replies, ceasing voting activity on it.
       </p>
-
-      <h2 className="mt-1">The API</h2>
-      <p>
-        This frontend currently makes its requests to{" "}
-        <code>{import.meta.env.VITE_API_URL}</code>. You can find API
-        documentation <a href="#">here.</a>
-      </p>
     </>
   );
 }
