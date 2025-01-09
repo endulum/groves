@@ -395,8 +395,13 @@ label {
 }
 
 ul {
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
   margin-left: 1.125rem;
   list-style: square;
+  li + li {
+    margin-top: 0.25rem;
+  }
   ul {
     list-style: circle;
   }
