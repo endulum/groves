@@ -51,6 +51,7 @@ export function App() {
             <Route path="/following" element={<Navigate to="/" />} />
             <Route path="/login" element={<routes.LoginRoute />} />
             <Route path="/signup" element={<routes.SignupRoute />} />
+            <Route path="/github" element={<routes.GithubRoute />} />
           </>
         )}
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
   Forest,
   Login,
@@ -27,6 +27,7 @@ export function SiteRouteWrapper({
     changeUsername: (username: string) => void;
   };
 }) {
+  const navigate = useNavigate();
   const { width } = useWindowSize();
   const { value: isMobile, setValue: setIsMobile } = useBoolean(width <= 750);
   const { value: isMenuExpanded, setValue: setMenuExpanded } =
@@ -55,6 +56,12 @@ export function SiteRouteWrapper({
       text: "About",
     },
   ];
+
+  const logOut = () => {
+    clearStoredToken();
+    context.initUser();
+    navigate("/");
+  };
 
   useEffect(() => {
     if (isMobile && width > 750) {
@@ -138,10 +145,7 @@ export function SiteRouteWrapper({
                   <button
                     type="button"
                     className="button plain primary"
-                    onClick={() => {
-                      clearStoredToken();
-                      context.initUser();
-                    }}
+                    onClick={logOut}
                     tabIndex={isMenuExpanded ? undefined : -1}
                     aria-hidden={!isMenuExpanded}
                   >
@@ -185,10 +189,7 @@ export function SiteRouteWrapper({
                   <button
                     type="button"
                     className="button plain primary"
-                    onClick={() => {
-                      clearStoredToken();
-                      context.initUser();
-                    }}
+                    onClick={logOut}
                   >
                     <small>Log out</small>
                   </button>

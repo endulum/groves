@@ -30,3 +30,4 @@ export { PostRoute } from "./PostRoute"; // /post/:post
 
 export { AboutRoute } from "./AboutRoute";
 export { FollowingRoute } from "./FollowingRoute";
+export { GithubRoute } from "./GithubRoute";
