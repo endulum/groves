@@ -58,31 +58,41 @@ export function AccountForm() {
           <p className="mb-1">
             Leave these fields blank if you do not wish to alter your password.
           </p>
-
-          <label htmlFor="password">
-            <span>New password</span>
-            <InputChecklist
-              input={<input type="password" id="password" autoComplete="off" />}
-              requirements={[
-                {
-                  description: "Must be 8 or more chatacters long",
-                  function: (x: string) => x.length >= 8,
-                },
-              ]}
-            />
-          </label>
-
-          <label htmlFor="confirmPassword">
-            <span>Confirm new password</span>
-            <input type="password" id="confirmPassword" />
-          </label>
-
-          <label htmlFor="currentPassword">
-            <span>Current password</span>
-            <input type="password" id="currentPassword" />
-          </label>
         </>
       )}
+
+      {!user.githubId && (
+        <label htmlFor="password">
+          <span>New password</span>
+          <InputChecklist
+            input={<input type="password" id="password" autoComplete="off" />}
+            requirements={[
+              {
+                description: "Must be 8 or more chatacters long",
+                function: (x: string) => x.length >= 8,
+              },
+            ]}
+          />
+        </label>
+      )}
+
+      {!user.githubId && (
+        <label htmlFor="confirmPassword">
+          <span>Confirm new password</span>
+          <input type="password" id="confirmPassword" />
+        </label>
+      )}
+
+      {!user.githubId && (
+        <label htmlFor="currentPassword">
+          <span>Current password</span>
+          <input type="password" id="currentPassword" />
+        </label>
+      )}
+
+      {/* 
+      separate and not in one fragment, because the Form component only transforms labels at the first level... 
+      */}
     </Form>
   );
 }
