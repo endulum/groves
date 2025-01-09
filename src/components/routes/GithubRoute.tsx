@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { useLocation, useOutletContext, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../reusable/LoadingSpacer";
 import { setStoredToken } from "../../functions/tokenUtils";
 
-export function GithubRoute() {
+export function GithubRoute({ initUser }: { initUser: () => Promise<void> }) {
   const location = useLocation();
   const code = location.search.split("=")[1];
-  const { initUser } = useOutletContext<{ initUser: () => Promise<void> }>();
   const navigate = useNavigate();
 
   const { loading, error, data } = useGet<{ token: string }>(
@@ -25,12 +24,10 @@ export function GithubRoute() {
 
   if (loading || error)
     return (
-      <div className="w100">
-        <LoadingSpacer
-          loading={loading}
-          error={error}
-          customLoadingText="Authenticating with Github..."
-        />
-      </div>
+      <LoadingSpacer
+        loading={loading}
+        error={error}
+        customLoadingText="Authenticating with Github..."
+      />
     );
 }
