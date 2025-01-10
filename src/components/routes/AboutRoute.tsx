@@ -5,9 +5,9 @@ export function AboutRoute() {
   useDocumentTitle(`About ${import.meta.env.VITE_APP_NAME}`);
   return (
     <>
-      <h2>About Groves</h2>
+      <h2>About {import.meta.env.VITE_APP_NAME}</h2>
       <p>
-        Groves is a semiclone of{" "}
+        {import.meta.env.VITE_APP_NAME} is a semiclone of{" "}
         <a href="https://redditinc.com/" target="_blank">
           Reddit
         </a>{" "}
@@ -21,7 +21,8 @@ export function AboutRoute() {
       <p>This project reflects some, but not all, features that Reddit has.</p>
       <ul className="mt-0-5 mb-0-5">
         <li>
-          Content can be voted on. Groves' analogue for Reddit karma is{" "}
+          Content can be voted on. {import.meta.env.VITE_APP_NAME}'s analogue
+          for Reddit karma is{" "}
           <IconSpan
             icon={<WbSunny style={{ color: "var(--accent2)" }} />}
             text="verdancy"

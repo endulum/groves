@@ -23,7 +23,9 @@ export function GlobalFeedRoute() {
   return (
     <>
       <p className="mt-1">
-        <small>Hottest content from across Groves</small>
+        <small>
+          Hottest content from across {import.meta.env.VITE_APP_NAME}
+        </small>
       </p>
       <Feed type="global" />
     </>

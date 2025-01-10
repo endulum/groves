@@ -15,7 +15,7 @@ export function IndexGuestRoute() {
           <p className="mb-1">
             Explore and cultivate communities centered around any and every
             interest under the sun, engaging in vibrant, flourishing discussion.
-            Grow your bonds at Groves.
+            Grow your bonds at {import.meta.env.VITE_APP_NAME}.
           </p>
           <div className="cta-buttons flex-row gap-1 mt-1">
             <Link type="button" className="button secondary" to="signup">
@@ -31,7 +31,9 @@ export function IndexGuestRoute() {
       </div>
       <br />
       <div className="flex-row jc-spb mb-1 align-end">
-        <h2 style={{ lineHeight: "2rem" }}>Hottest on Groves</h2>
+        <h2 style={{ lineHeight: "2rem" }}>
+          Hottest on {import.meta.env.VITE_APP_NAME}
+        </h2>
         <Link to="/explore" type="button" className="button primary">
           <Explore />
           <span>Explore</span>
