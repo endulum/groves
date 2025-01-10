@@ -74,7 +74,7 @@ export function SiteRouteWrapper({
   }, [width]);
   return (
     <>
-      <header>
+      <header className="dark">
         <div className="body flex-col gap-0-5">
           <div className="flex-row jc-spb w100 align-end">
             <Link
@@ -224,7 +224,10 @@ export function SiteRouteWrapper({
         <div className="body">
           <small>
             &copy; endulum, for The Odin Project. "Green Deco" graphic pattern
-            from <a href="https://dinpattern.com/">DinPattern</a>
+            from{" "}
+            <a href="https://dinpattern.com/" target="_blank">
+              DinPattern
+            </a>
           </small>
         </div>
       </footer>

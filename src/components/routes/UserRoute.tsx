@@ -8,7 +8,6 @@ import { type User, type UserData } from "../../types";
 import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../reusable/LoadingSpacer";
 import { UserContent } from "../unique/user/UserContent";
-import { useLogger } from "../../hooks/useLogger";
 
 export function UserRoute() {
   const { user } = useParams();
@@ -26,8 +25,6 @@ export function UserRoute() {
         : "Viewing user..."
     }`
   );
-
-  useLogger({ data });
 
   if (loading || error)
     return (

@@ -8,7 +8,7 @@ export function IndexGuestRoute() {
   useDocumentTitle(`${import.meta.env.VITE_APP_NAME}`);
   return (
     <>
-      <div className="cta mb-1">
+      <div className="cta mb-1 dark">
         <div className="cta-top" />
         <div className="cta-bottom flex-col align-start jcc">
           <h2>Share what matters to you</h2>

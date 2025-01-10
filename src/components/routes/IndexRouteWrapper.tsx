@@ -1,5 +1,5 @@
 import { Outlet, Link, useOutletContext } from "react-router-dom";
-import { Explore, Forest } from "@mui/icons-material";
+import { Explore } from "@mui/icons-material";
 
 import { NavTabs } from "../reusable/NavTabs";
 import { type User } from "../../types";

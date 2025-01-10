@@ -71,7 +71,45 @@
   }
 }
 
-header .button,
+.dark {
+  /* anything with the dark accent background */
+  background-color: var(--accent1);
+
+  button.primary,
+  a[type="button"].primary {
+    background-color: transparent;
+    border: 1px solid oklch(from var(--color) calc(l + 0.5) c h / 0.25);
+    svg {
+      color: oklch(from var(--color) calc(l + 0.5) c h / 0.5);
+    }
+    &:not(.plain):not([disabled]):hover {
+      background-color: transparent;
+      border: 1px solid oklch(from var(--color) calc(l + 0.5) c h / 0.5);
+      svg {
+        color: oklch(from var(--color) calc(l + 0.5) c h / 0.75);
+      }
+    }
+    &.plain {
+      color: var(--white1);
+      border: 1px solid transparent;
+      &:has(span),
+      &:has(small) {
+        padding: 0.5rem 0.75rem;
+      }
+      svg {
+        color: oklch(from var(--accent1) calc(l + 0.5) c h / 0.5);
+      }
+      &:not([disabled]):hover {
+        background-color: oklch(from var(--accent1) calc(l + 0.125) c h / 0.5);
+        svg {
+          color: oklch(from var(--accent1) calc(l + 0.5) c h / 0.5);
+        }
+      }
+    }
+  }
+}
+
+/* header .button,
 .cta .button {
   &.primary {
     background-color: transparent;
@@ -106,3 +144,4 @@ header .button,
     }
   }
 }
+ */
