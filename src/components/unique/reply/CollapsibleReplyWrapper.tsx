@@ -56,12 +56,8 @@ export function CollapsibleReplyWrapper({
                 <>
                   <Username
                     user={data.author}
-                    role={
-                      getRole(data.author) ??
-                      data.author.id === postData.author.id
-                        ? "op"
-                        : null
-                    }
+                    role={getRole(data.author) ?? null}
+                    isOP={data.author.id === postData.author.id}
                   />{" "}
                   replied <DateWithTitle dateString={data.datePosted} /> with{" "}
                   <span>
@@ -81,12 +77,8 @@ export function CollapsibleReplyWrapper({
                 <>
                   <Username
                     user={data.author}
-                    role={
-                      getRole(data.author) ??
-                      data.author.id === postData.author.id
-                        ? "op"
-                        : null
-                    }
+                    role={getRole(data.author) ?? null}
+                    isOP={data.author.id === postData.author.id}
                   />{" "}
                   replied <DateWithTitle dateString={data.datePosted} />
                 </>
