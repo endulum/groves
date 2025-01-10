@@ -52,17 +52,25 @@ export function CommunityPostSearch({
           <label htmlFor="sort" className="search-label">
             Sort by
           </label>
-          <select id="sort">
-            <option value="top">Top</option>
-            <option value="hot">Hot</option>
-            <option value="controversial">Controversial</option>
-            <option value="best">Best</option>
-            <option value="newest">Newest</option>
-            <option value="replies">Most replies</option>
-          </select>
 
-          <label htmlFor="includeFrozen">Include frozen</label>
-          <input type="checkbox" id="includeFrozen" />
+          <div className="flex-row gap-1 w100">
+            <select id="sort">
+              <option value="top">Top</option>
+              <option value="hot">Hot</option>
+              <option value="controversial">Controversial</option>
+              <option value="best">Best</option>
+              <option value="newest">Newest</option>
+              <option value="replies">Most replies</option>
+            </select>
+
+            <label
+              htmlFor="includeFrozen"
+              style={{ width: "min-content", whiteSpace: "nowrap" }}
+            >
+              Include frozen
+            </label>
+            <input type="checkbox" id="includeFrozen" />
+          </div>
         </>
       }
       itemsPropertyName="posts"
