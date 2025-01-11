@@ -19,9 +19,15 @@ export function useUser(): {
   async function initUser() {
     if (user) setUser(null);
     if (error) setError(null);
-    if (!loading) setLoading(true);
 
     const token = getStoredToken();
+    if (!token) {
+      if (loading) setLoading(false);
+      fetching.current = false;
+      return;
+    }
+
+    if (!loading) setLoading(true);
 
     const fetchResult = await doFetch<UserData>("/me", {
       method: "GET",
