@@ -24,10 +24,13 @@ export function App() {
 
   return (
     <Routes>
-      <Route
-        path="/github"
-        element={<routes.GithubRoute initUser={initUser} />}
-      />
+      {import.meta.env.VITE_GH_CLIENT_ID &&
+        import.meta.env.VITE_GH_CLIENT_ID.trim !== "" && (
+          <Route
+            path="/github"
+            element={<routes.GithubRoute initUser={initUser} />}
+          />
+        )}
       <Route
         element={
           <routes.SiteRouteWrapper

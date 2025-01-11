@@ -9,7 +9,8 @@ export function LoginRoute() {
     <>
       <div className="flex-row jc-spb mb-1">
         <h2>Log In</h2>
-        <GithubAuthButton />
+        {import.meta.env.VITE_GH_CLIENT_ID &&
+          import.meta.env.VITE_GH_CLIENT_ID.trim !== "" && <GithubAuthButton />}
       </div>
       <LoginForm />
     </>
