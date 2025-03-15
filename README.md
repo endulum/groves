@@ -2,6 +2,10 @@
 
 Groves is an arboreal semiclone of Reddit.
 
+![A screenshot of the landing page of Groves. The client is not logged in.](https://github.com/endulum/groves/blob/main/src/assets/previews/frontpreview.png?raw=true)
+
+![A screenshot of a post on Groves, with a tree of replies. The client is logged in, and has voted on the post and a reply.](https://github.com/endulum/groves/blob/main/src/assets/previews/repliespreview.png)
+
 [Project Spec](https://www.theodinproject.com/lessons/node-path-nodejs-odin-book)
 
 ## Technologies
@@ -28,7 +32,7 @@ npm install
 
 ### Environment
 
-This project uses two env files: `development`, and `production`. The repo supplies a file `.env.example` with the variables necessary for the project to run. Copy this file to the three envs described. A handy script for this is provided for you:
+This project uses two env files: `development` and `production`. The repo supplies a file `.env.example` with the variables necessary for the project to run. Copy this file to the three envs described. A handy script for this is provided for you:
 
 ```
 npm run initenv
