@@ -77,7 +77,7 @@ export function Reply({
             }}
             disabled={loading}
           >
-            <small>{loading ? "Loading..." : "Load replies"}</small>
+            <small>{loading ? "Loading..." : "Load replies to this"}</small>
           </button>
         )}
 
