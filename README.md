@@ -37,7 +37,7 @@ This repo hosts a frontend that interacts with the [Groves API](https://github.c
 Navigate to the root directory where you'd like this project to be, and clone this repo:
 
 ```sh
-git clone https://github.com/endulum/bonfires
+git clone https://github.com/endulum/groves
 ```
 
 Navigate to the root of the newly created `/groves`, and install all required packages.
@@ -57,7 +57,7 @@ cp -n .env.example .env.development && cp -n .env.example .env.production
 This frontend uses very few variables:
 
 - `VITE_APP_NAME`: A string representing the name of this app, set to `Groves` by default.
-- `VITE_API_URL`: You should have the [Bonfires API](https://github.com/endulum/bonfires-api) up and running somewhere; this var represents the API's URL.
+- `VITE_API_URL`: You should have the [Groves API](https://github.com/endulum/groves-api) up and running somewhere; this var represents the API's URL.
 - `VITE_GH_CLIENT_ID`: If you've connected a GitHub App to the Groves API, you should add its client ID here, too.
 
 ### Graphics acknowledgements
