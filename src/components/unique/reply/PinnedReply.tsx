@@ -21,11 +21,8 @@ export function PinnedReply({ data }: { data: PinnedReply }) {
               pinned reply by{" "}
               <Username
                 user={data.author}
-                role={
-                  getRole(data.author) ?? data.author.id === postData.author.id
-                    ? "op"
-                    : null
-                }
+                role={getRole(data.author)}
+                isOP={data.author.id === postData.author.id}
               />{" "}
               with{" "}
               <span>{data._count.upvotes - data._count.downvotes} points,</span>{" "}

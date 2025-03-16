@@ -10,7 +10,7 @@ export function Username({
 }: {
   user: User;
   role: "mod" | "admin" | null;
-  isOP: boolean;
+  isOP?: boolean;
 }) {
   const title =
     role === "mod"
@@ -32,7 +32,7 @@ export function Username({
     >
       {role === "mod" && <Shield />}
       {role === "admin" && <LocalPolice />} <span>{user.username}</span>{" "}
-      {isOP && <Mode />}
+      {isOP === true && <Mode />}
     </Link>
   );
 }
