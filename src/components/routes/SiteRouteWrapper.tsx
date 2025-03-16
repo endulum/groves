@@ -222,12 +222,7 @@ export function SiteRouteWrapper({
 
       <footer>
         <div className="body">
-          <small>
-            &copy; endulum, for The Odin Project.
-            <a href="https://dinpattern.com/" target="_blank">
-              DinPattern
-            </a>
-          </small>
+          <small>&copy; endulum, for The Odin Project.</small>
         </div>
       </footer>
     </>
